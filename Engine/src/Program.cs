@@ -7,7 +7,7 @@ class Program
 		// Setup raylib
 		Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
 		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow | ConfigFlags.AlwaysRunWindow);
-		Raylib.InitWindow(10, 10, "Marl Engine");
+		Raylib.InitWindow(500, 400, "Marl Engine");
 		Raylib.SetExitKey(KeyboardKey.Null);
 
 		// Set the window to be half the size of the monitor rn
@@ -23,6 +23,10 @@ class Program
 				(Raylib.GetMonitorHeight(Raylib.GetCurrentMonitor()) / 2) / 2
 			);
 		}
+
+		//! debug temp
+		// TODO: Remove
+		Project.Path = @"D:\code\c#\raylib\Marl\test-game";
 
 		// Main program loop
 		while (Raylib.WindowShouldClose() == false)
