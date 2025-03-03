@@ -26,13 +26,24 @@ class Program
 		}
 
 		// Main program loop
+		Game.Start();
 		while (Raylib.WindowShouldClose() == false)
 		{
+			Game.Update();
+
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
+
+			// TODO: Do camera stuff
+			Game.Render3D();
+			Game.RenderDebug3D();
+
+			Game.Render2D();
+			Game.RenderDebug2D();
+
 			Raylib.EndDrawing();
 		}
-
+		Game.TidyUp();
 		Raylib.CloseWindow();
 	}
 }
