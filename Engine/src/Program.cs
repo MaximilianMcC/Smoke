@@ -1,4 +1,5 @@
-﻿using Raylib_cs;
+﻿using System.Diagnostics;
+using Raylib_cs;
 
 class Program
 {
@@ -24,15 +25,21 @@ class Program
 			);
 		}
 
-		//! debug temp
-		// TODO: Remove
-		Project.Path = @"D:\code\c#\raylib\Marl\test-game";
-
 		// Main program loop
 		while (Raylib.WindowShouldClose() == false)
 		{
+			// TODO: Put somewhere else
+			// If we press F5 then run the game
+			if (Raylib.IsKeyPressed(KeyboardKey.F5))
+			{
+				// TODO: Don't hardcode
+				string gameExecutablePath = @"D:\code\c#\raylib\MarlEngine\Game\bin\Release\net8.0\win-x64\publish\Game.exe";
+				Process.Start(gameExecutablePath);
+			}
+
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
+			Raylib.DrawText("Press F5 to run", 100, 100, 50, Color.White);
 			Raylib.EndDrawing();
 		}
 
