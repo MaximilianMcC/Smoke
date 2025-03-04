@@ -13,7 +13,7 @@ All together there are four total C# projects:
 | Developed Game | Where you write code with the library in conjunction with the engine to be used by game | N/A |
 
 ## Compiling the developed game
-To allow individual hot-reloading, the game is compiled into separate scripts. This is done with a powershell script that uses `csc`
+To allow individual hot-reloading, the game is compiled into separate scripts. This uses `csc`. If you don't have it you can install it with `dotnet tool install -g csc`
 
 ## Compiling the game
 Still not sure what the full thing should be so idk. Command is here though

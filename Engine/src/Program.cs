@@ -25,6 +25,9 @@ class Program
 			);
 		}
 
+		// TODO: Don't hardcode
+		Project.Path = @"D:\code\c#\raylib\MarlEngine\developed-game";
+
 		// Main program loop
 		while (Raylib.WindowShouldClose() == false)
 		{

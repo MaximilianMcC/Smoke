@@ -7,6 +7,9 @@ class ScriptManager
 
 	public static void Initialise(string scriptsPath)
 	{
+		LoadedScripts = new Dictionary<string, IUpdatable>();
+		// LoadScript(@"D:\code\c#\raylib\MarlEngine\developed-game\bin\Test.dll");
+
 		// First manually load all scripts initially
 		Directory.GetFiles(scriptsPath, "*.dll", SearchOption.AllDirectories)
 			.ToList().ForEach(path => {
@@ -25,6 +28,11 @@ class ScriptManager
 		// Load the script when the file changes
 		fileWatcher.Changed += (s, e) => LoadScript(e.FullPath);
 		fileWatcher.EnableRaisingEvents = true;
+
+		foreach (KeyValuePair<string, IUpdatable> item in LoadedScripts)
+		{
+			Console.WriteLine(item.Key);
+		}
 	}
 
 	private static void LoadScript(string path)
@@ -46,11 +54,15 @@ class ScriptManager
 		// If we're loading an updatable script then
 		// load it as an interface (updatable is an interface)
 		// TODO: Use typeof
-		if (scriptType is IUpdatable)
+		// if (scriptType is IUpdatable)
 		{
 			// Turn the assembly into an updatable
 			IUpdatable loadedScript = (IUpdatable)Activator.CreateInstance(scriptType);
-			LoadedScripts[path] = loadedScript;
+			LoadedScripts.Add("idk", loadedScript);
+
+			Console.WriteLine("!!!!");
+
+			loadedScript.Start();
 		}
 	}
 }

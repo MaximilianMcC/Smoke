@@ -3,7 +3,7 @@ class Game : IUpdatable
 	public static void Start()
 	{
 		// Load in all the scripts
-		ScriptManager.Initialise("./test");
+		ScriptManager.Initialise(@"D:\code\c#\raylib\MarlEngine\developed-game\bin\");
 
 		// Run all scripts
 		foreach (KeyValuePair<string, IUpdatable> script in ScriptManager.LoadedScripts)
