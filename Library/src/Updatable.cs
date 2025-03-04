@@ -4,6 +4,9 @@
 	time or something like that. Basically all objects.
 */
 
+/// <summary>
+/// Something that can be manipulated each frame. Normally attached to an object of sorts.
+/// </summary>
 public interface IUpdatable
 {
 	/// <summary>

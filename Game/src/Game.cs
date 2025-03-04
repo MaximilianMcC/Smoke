@@ -3,66 +3,66 @@ class Game : IUpdatable
 	public static void Start()
 	{
 		// Load in all the scripts
-		ScriptManager.Initialise(@"D:\code\c#\raylib\MarlEngine\developed-game\bin\");
+		ScriptManager.Initialise(@"D:\code\c#\raylib\MarlEngine\developed-game\compiled\");
 
 		// Run all scripts
-		foreach (KeyValuePair<string, IUpdatable> script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedScripts)
 		{
-			script.Value.Start();
+			script.Start();
 		}
 	}
 
 	public static void Update()
 	{
 		// Run all scripts
-		foreach (KeyValuePair<string, IUpdatable> script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedScripts)
 		{
-			script.Value. Update();
+			script.Update();
 		}
 	}
 
 	public static void Render2D()
 	{
 		// Run all scripts
-		foreach (KeyValuePair<string, IUpdatable> script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedScripts)
 		{
-			script.Value.Render2D();
+			script.Render2D();
 		}
 	}
 
 	public static void Render3D()
 	{
 		// Run all scripts
-		foreach (KeyValuePair<string, IUpdatable> script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedScripts)
 		{
-			script.Value.Render3D();
+			script.Render3D();
 		}
 	}
 
 	public static void RenderDebug2D()
 	{
 		// Run all scripts
-		foreach (KeyValuePair<string, IUpdatable> script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedScripts)
 		{
-			script.Value.RenderDebug2D();
+			script.RenderDebug2D();
 		}		
 	}
 
 	public static void RenderDebug3D()
 	{
 		// Run all scripts
-		foreach (KeyValuePair<string, IUpdatable> script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedScripts)
 		{
-			script.Value.RenderDebug3D();
+			script.RenderDebug3D();
 		}
 	}
 
 	public static void TidyUp()
 	{
 		// Run all scripts
-		foreach (KeyValuePair<string, IUpdatable> script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedScripts)
 		{
-			script.Value.TidyUp();
+			script.TidyUp();
 		}		
 	}
 }

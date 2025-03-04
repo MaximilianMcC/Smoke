@@ -28,6 +28,9 @@ class Program
 		// TODO: Don't hardcode
 		Project.Path = @"D:\code\c#\raylib\MarlEngine\developed-game";
 
+		//! debug
+		Builder.Build();
+
 		// Main program loop
 		while (Raylib.WindowShouldClose() == false)
 		{
@@ -36,7 +39,8 @@ class Program
 			if (Raylib.IsKeyPressed(KeyboardKey.F5))
 			{
 				// TODO: Don't hardcode
-				string gameExecutablePath = @"D:\code\c#\raylib\MarlEngine\Game\bin\Release\net8.0\win-x64\publish\Game.exe";
+				// string gameExecutablePath = @"D:\code\c#\raylib\MarlEngine\Game\bin\Release\net8.0\win-x64\publish\Game.exe";
+				string gameExecutablePath = @"D:/code/c#/raylib/MarlEngine/Game/bin/Debug/net8.0/Game.exe";
 				Process.Start(gameExecutablePath);
 			}
 
