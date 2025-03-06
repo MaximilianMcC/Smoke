@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-class Test : IUpdatable
+class Test : IRenderable
 {
 	public void Render3D()
 	{

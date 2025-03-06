@@ -3,10 +3,10 @@ class Game : IUpdatable
 	public static void Start()
 	{
 		// Load in all the scripts
-		ScriptManager.Initialise(@"D:\code\c#\raylib\MarlEngine\developed-game\compiled\");
+		ScriptManager.Initialise(@"C:\Users\max\Documents\code\cs\MarlEngine\developed-game\bin\assemblies");
 
 		// Run all scripts
-		foreach (IUpdatable script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedLogicScripts)
 		{
 			script.Start();
 		}
@@ -15,7 +15,7 @@ class Game : IUpdatable
 	public static void Update()
 	{
 		// Run all scripts
-		foreach (IUpdatable script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedLogicScripts)
 		{
 			script.Update();
 		}
@@ -24,7 +24,7 @@ class Game : IUpdatable
 	public static void Render2D()
 	{
 		// Run all scripts
-		foreach (IUpdatable script in ScriptManager.LoadedScripts)
+		foreach (IRenderable script in ScriptManager.LoadedRenderableScripts)
 		{
 			script.Render2D();
 		}
@@ -33,7 +33,7 @@ class Game : IUpdatable
 	public static void Render3D()
 	{
 		// Run all scripts
-		foreach (IUpdatable script in ScriptManager.LoadedScripts)
+		foreach (IRenderable script in ScriptManager.LoadedRenderableScripts)
 		{
 			script.Render3D();
 		}
@@ -42,7 +42,7 @@ class Game : IUpdatable
 	public static void RenderDebug2D()
 	{
 		// Run all scripts
-		foreach (IUpdatable script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedLogicScripts)
 		{
 			script.RenderDebug2D();
 		}		
@@ -51,7 +51,7 @@ class Game : IUpdatable
 	public static void RenderDebug3D()
 	{
 		// Run all scripts
-		foreach (IUpdatable script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedLogicScripts)
 		{
 			script.RenderDebug3D();
 		}
@@ -60,7 +60,7 @@ class Game : IUpdatable
 	public static void TidyUp()
 	{
 		// Run all scripts
-		foreach (IUpdatable script in ScriptManager.LoadedScripts)
+		foreach (IUpdatable script in ScriptManager.LoadedLogicScripts)
 		{
 			script.TidyUp();
 		}		

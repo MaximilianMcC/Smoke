@@ -20,19 +20,9 @@ public interface IUpdatable
 	void Update() {}
 
 	/// <summary>
-	/// Render 3D things in here
-	/// </summary>
-	void Render3D() {}
-
-	/// <summary>
 	/// 3D things rendered in here will only be visible when debug mode is on
 	/// </summary>
 	void RenderDebug3D() {}
-
-	/// <summary>
-	/// Render 2D things in here
-	/// </summary>
-	void Render2D() {}
 
 	/// <summary>
 	/// 2D things rendered in here will only be visible when debug mode is on
