@@ -25,6 +25,10 @@ class Program
 			);
 		}
 
+		// Load the project and scripts
+		Project.Load(args[0]);
+		ScriptManager.Initialise();
+
 		// Main program loop
 		Game.Start();
 		while (Raylib.WindowShouldClose() == false)

@@ -2,13 +2,35 @@ using System.Diagnostics;
 
 class Builder
 {
-	public static void Build()
+	public static string GamePath;
+	public static bool CurrentlyBuilding = false;
+
+	public static void BuildAndRun()
 	{
-		Compile();
+		Build();
+		Run();
 	}
 
-	public static void Compile()
-	{	
+	public static void Run()
+	{
+		// Run the game as a child of engine
+		Process game = Process.Start(GamePath, Project.ProjectFilePath);
+		game.EnableRaisingEvents = true;
+
+		// If we close the engine then also close the game
+		AppDomain.CurrentDomain.ProcessExit += (s, e) => game.Kill();
+	}
+
+	public static void Build()
+	{
+		// Start to compile the code in a new thread
+		CurrentlyBuilding = true;
+		Thread compileThread = new Thread(Compile);
+		compileThread.Start();
+	}
+
+	private static void Compile()
+	{
 		// Get the assembly output path
 		// and the csproj path
 		string outputPath = Path.Combine(Project.Path, "bin", "assemblies");
@@ -28,15 +50,13 @@ class Builder
 			RedirectStandardError = true
 		};
 
-		Console.WriteLine(command.FileName + " " + command.Arguments);
-
 		// Run the command to compile everything
 		Process process = new Process();
 		process.StartInfo = command;
 		process.Start();
 
 		// Wait for it to run
-		// TODO: Do this in another thread
 		process.WaitForExit();
+		CurrentlyBuilding = false;
 	}
 }

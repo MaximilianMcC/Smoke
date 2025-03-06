@@ -6,15 +6,19 @@ class ScriptManager
 	public static List<IUpdatable> LoadedLogicScripts;
 	public static List<IRenderable> LoadedRenderableScripts;
 
-	public static void Initialise(string scriptsPath)
+	public static void Initialise()
 	{
 		// Store all the loaded scripts
 		LoadedLogicScripts = new List<IUpdatable>();
 		LoadedRenderableScripts = new List<IRenderable>();
 
+		// Get the path to all the assemblies
+		string assembliesPath = Path.Join(Project.Path, "bin", "assemblies");
+
 		// First manually load all scripts initially
-		Directory.GetFiles(scriptsPath, "*.dll", SearchOption.AllDirectories)
-			.ToList().ForEach(path => LoadScript(path));
+		Directory.GetFiles(assembliesPath, "*.dll", SearchOption.AllDirectories)
+			.ToList().ForEach(path => LoadAssembly(path));
+
 
 		/*
 		// Set up a listener to listen for any
@@ -28,19 +32,19 @@ class ScriptManager
 		*/
 	}
 
-	private static void LoadScript(string path)
+	private static void LoadAssembly(string path)
 	{
 		// Double check the change isn't the file being removed
 		//! Pretty sure this won't happen for the changed event
 		if (File.Exists(path) == false) return;
 
-		// Dynamically load the script
-		byte[] scriptBytes = File.ReadAllBytes(path);
-		Assembly script = Assembly.Load(scriptBytes);
+		// Dynamically load the assembly
+		byte[] assemblyBytes = File.ReadAllBytes(path);
+		Assembly assembly = Assembly.Load(assemblyBytes);
 
-		// Get the type of class in the script
+		// Get the types of class in the script
 		// TODO: Rewrite to be pretty
-		Type scriptType = script.GetTypes()
+		Type scriptType = assembly.GetTypes()
 		    .FirstOrDefault(type => typeof(IUpdatable).IsAssignableFrom(type) || typeof(IRenderable).IsAssignableFrom(type));
 
 		// Turn the assembly into whatever object it is

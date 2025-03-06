@@ -2,9 +2,6 @@ class Game : IUpdatable
 {
 	public static void Start()
 	{
-		// Load in all the scripts
-		ScriptManager.Initialise(@"C:\Users\max\Documents\code\cs\MarlEngine\developed-game\bin\assemblies");
-
 		// Run all scripts
 		foreach (IUpdatable script in ScriptManager.LoadedLogicScripts)
 		{
