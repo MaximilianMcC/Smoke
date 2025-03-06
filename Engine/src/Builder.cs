@@ -3,12 +3,23 @@ using System.Diagnostics;
 class Builder
 {
 	public static string GamePath;
-	public static bool CurrentlyBuilding = false;
+
+	public static string Status;
 
 	public static void BuildAndRun()
 	{
-		Build();
-		Run();
+		// Start to compile the code in a new thread
+		Task.Run(() => {
+			
+			// Chuck it all in an assembly
+			Status = "building rn";
+			Compile();
+			Status = "ok its done";
+
+			// Run the game
+			Status = "running game rn";
+			Run();
+		});
 	}
 
 	public static void Run()
@@ -19,14 +30,9 @@ class Builder
 
 		// If we close the engine then also close the game
 		AppDomain.CurrentDomain.ProcessExit += (s, e) => game.Kill();
-	}
 
-	public static void Build()
-	{
-		// Start to compile the code in a new thread
-		CurrentlyBuilding = true;
-		Thread compileThread = new Thread(Compile);
-		compileThread.Start();
+		// If we close the game then update the status
+		game.Exited += (s, e) => Status = "js finished running game";
 	}
 
 	private static void Compile()
@@ -57,6 +63,5 @@ class Builder
 
 		// Wait for it to run
 		process.WaitForExit();
-		CurrentlyBuilding = false;
 	}
 }

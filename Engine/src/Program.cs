@@ -37,7 +37,7 @@ class Program
 			// If we press F5 then run the game
 			if (Raylib.IsKeyPressed(KeyboardKey.F5)) Builder.BuildAndRun();
 
-			Graphics.DrawText($"building rn: {Builder.CurrentlyBuilding}", 10, 50, 30);
+			Graphics.DrawText(Builder.Status, 10, 50, 30);
 
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
