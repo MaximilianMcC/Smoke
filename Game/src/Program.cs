@@ -29,6 +29,9 @@ class Program
 		Project.Load(args[0]);
 		ScriptManager.Initialise();
 
+		// Set the game title
+		Raylib.SetWindowTitle(Project.DisplayName);
+
 		// Main program loop
 		Game.Start();
 		while (Raylib.WindowShouldClose() == false)

@@ -1,6 +1,7 @@
 public struct Project
 {
 	public static string Name { get; private set; }
+	public static string DisplayName { get; private set; }
 	public static string Path { get; private set; }
 	public static string ProjectFilePath { get; private set; }
 
@@ -10,10 +11,9 @@ public struct Project
 		string[] projectFile = File.ReadAllLines(projectFilePath);
 		ProjectFilePath = projectFilePath;
 
-		// Get the name and filepath (lines 1 and 2)
+		// Get the name, display name, and filepath (lines 1, two, and 3ree)
 		Name = projectFile[0].Trim();
-		Path = projectFile[1].Trim();
-
-		Console.WriteLine($"Loaded project \"{Name}\"");
+		DisplayName = projectFile[1].Trim();
+		Path = projectFile[2].Trim();
 	}
 }
