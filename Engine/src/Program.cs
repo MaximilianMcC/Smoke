@@ -34,10 +34,11 @@ class Program
 		while (Raylib.WindowShouldClose() == false)
 		{
 			// TODO: Put somewhere else
-			// If we press F5 then run the game
 			if (Raylib.IsKeyPressed(KeyboardKey.F5)) Builder.BuildAndRun();
+			if (Raylib.IsKeyPressed(KeyboardKey.R) && Raylib.IsKeyDown(KeyboardKey.LeftControl)) Builder.HotReload();
 
-			Graphics.DrawText(Builder.Status, 10, 50, 30);
+			Graphics.DrawText("f5 to run\nctrl+r to hot reload", 10, 10, 50);
+			Graphics.DrawText(Builder.Status, 10, 120, 30);
 
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);

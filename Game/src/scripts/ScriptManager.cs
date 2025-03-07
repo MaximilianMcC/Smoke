@@ -1,17 +1,16 @@
 using System.Reflection;
+using System.Runtime.Loader;
 
 class ScriptManager
 {
 	private static FileSystemWatcher fileWatcher;
-	public static List<IUpdatable> LoadedLogicScripts;
-	public static List<IRenderable> LoadedRenderableScripts;
+	private static List<AssemblyLoadContext> loadedAssemblies = [];
+
+	public static List<IUpdatable> LoadedLogicScripts = [];
+	public static List<IRenderable> LoadedRenderableScripts = [];
 
 	public static void Initialise()
 	{
-		// Store all the loaded scripts
-		LoadedLogicScripts = new List<IUpdatable>();
-		LoadedRenderableScripts = new List<IRenderable>();
-
 		// Get the path to all the assemblies
 		string assembliesPath = Path.Join(Project.Path, "bin", "assemblies");
 
@@ -19,17 +18,14 @@ class ScriptManager
 		Directory.GetFiles(assembliesPath, "*.dll", SearchOption.AllDirectories)
 			.ToList().ForEach(path => LoadAssembly(path));
 
-
-		/*
 		// Set up a listener to listen for any
 		// file changes in the scripts folder
-		fileWatcher = new FileSystemWatcher(scriptsPath, "*.dll");
+		fileWatcher = new FileSystemWatcher(assembliesPath, "*.dll");
 		fileWatcher.IncludeSubdirectories = true;
 
 		// Load the script when the file changes
-		fileWatcher.Changed += (s, e) => LoadScript(e.FullPath);
 		fileWatcher.EnableRaisingEvents = true;
-		*/
+		fileWatcher.Changed += (s, e) => ReloadAssembly(e.FullPath);
 	}
 
 	private static void LoadAssembly(string path)
@@ -38,9 +34,15 @@ class ScriptManager
 		//! Pretty sure this won't happen for the changed event
 		if (File.Exists(path) == false) return;
 
+		// Make the assembly context thing
+		// so we can keep track of it
+		AssemblyLoadContext context = new AssemblyLoadContext(path, isCollectible: true);
+		loadedAssemblies.Add(context);
+
 		// Dynamically load the assembly
-		byte[] assemblyBytes = File.ReadAllBytes(path);
-		Assembly assembly = Assembly.Load(assemblyBytes);
+		//? Need to use stream because we replace the file (still using it)
+		Stream assemblyBytes = new MemoryStream(File.ReadAllBytes(path));
+		Assembly assembly = context.LoadFromStream(assemblyBytes);
 
 		// Get the types of class in the script
 		// TODO: Rewrite to be pretty
@@ -55,9 +57,42 @@ class ScriptManager
 
 			// Cast and add to list depending on type
 			if (newObject is IUpdatable logicScript) LoadedLogicScripts.Add(logicScript);
-			if (newObject is IRenderable renderableScript) LoadedLogicScripts.Add(renderableScript);
+			if (newObject is IRenderable renderableScript) LoadedRenderableScripts.Add(renderableScript);
 		}
 
-		Console.WriteLine($"Loaded \"{Path.GetFileName(path)}\" assembly");
+		Console.WriteLine($"Loaded \"{Path.GetFileName(path)}\"");
+	}
+
+	private static void ReloadAssembly(string path)
+	{
+		// Find the assembly we wanna
+		// reload then unload it
+		AssemblyLoadContext oldContext = loadedAssemblies.Where(assembly => assembly.Name == path).FirstOrDefault();
+		if (oldContext != null)
+		{
+			// Get rid of the old stuff
+			SpringCleaning();
+
+			// Unload the assembly and take
+			// it out of circulation
+			oldContext.Unload();
+			loadedAssemblies.Remove(oldContext);
+		}
+
+		// Load the assembly again
+		LoadAssembly(path);
+	}
+
+	// Remove all old instances of dynamically loaded assemblies
+	private static void SpringCleaning()
+	{
+		// Run the clean methods on them to unload any
+		// potentially previously loaded resources
+		LoadedLogicScripts.ForEach(script => script.TidyUp());
+		LoadedRenderableScripts.ForEach(script => script.TidyUp());
+
+		// Clear the lists
+		LoadedLogicScripts.Clear();
+		LoadedRenderableScripts.Clear();
 	}
 }

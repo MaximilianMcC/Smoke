@@ -4,7 +4,7 @@ class Builder
 {
 	public static string GamePath;
 
-	public static string Status;
+	public static string Status = "erhm";
 
 	public static void BuildAndRun()
 	{
@@ -22,7 +22,22 @@ class Builder
 		});
 	}
 
-	public static void Run()
+	public static void HotReload()
+	{
+		// Start to compile the code in a new thread
+		Task.Run(() => {
+			
+			// Chuck it all in an assembly
+			Status = "hot reloading rn";
+			Compile();
+			Status = "ok its done";
+
+			//? The game will detect the new 
+			//? files and load them and stuff
+		});
+	}
+
+	private static void Run()
 	{
 		// Run the game as a child of engine
 		Process game = Process.Start(GamePath, Project.ProjectFilePath);
@@ -56,12 +71,10 @@ class Builder
 			RedirectStandardError = true
 		};
 
+
 		// Run the command to compile everything
 		Process process = new Process();
 		process.StartInfo = command;
 		process.Start();
-
-		// Wait for it to run
-		process.WaitForExit();
 	}
 }
