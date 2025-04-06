@@ -40,7 +40,7 @@ class Builder
 	private static void Run()
 	{
 		// Run the game as a child of engine
-		Process game = Process.Start(GamePath, Project.ProjectFilePath);
+		Process game = Process.Start(GamePath, Project.RootPath);
 		game.EnableRaisingEvents = true;
 
 		// If we close the engine then also close the game
@@ -54,8 +54,8 @@ class Builder
 	{
 		// Get the assembly output path
 		// and the csproj path
-		string outputPath = Path.Combine(Project.Path, "bin", "assemblies");
-		string csprojPath = Path.Combine(Project.Path, Project.Name + ".csproj");
+		string outputPath = Path.Combine(Project.RootPath, "bin", "assemblies");
+		string csprojPath = Path.Combine(Project.RootPath, Project.Info.Name + ".csproj");
 
 		// TODO: Maybe like delete the assemblies folder every like 10 runs to clean it
 

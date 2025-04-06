@@ -4,8 +4,7 @@ class Program
 {
 	public static void Main(string[] args)
 	{
-		// make raylib window for the actual game
-		// Setup raylib
+		// Make raylib window for the actual game
 		Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
 		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow | ConfigFlags.AlwaysRunWindow);
 		Raylib.InitWindow(500, 400, "Loading title name or something idk");
@@ -30,7 +29,7 @@ class Program
 		ScriptManager.Initialise();
 
 		// Set the game title
-		Raylib.SetWindowTitle(Project.DisplayName);
+		Raylib.SetWindowTitle(Project.Info.DisplayName);
 
 		// Main program loop
 		Game.Start();

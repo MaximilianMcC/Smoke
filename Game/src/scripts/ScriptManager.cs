@@ -12,7 +12,7 @@ class ScriptManager
 	public static void Initialise()
 	{
 		// Get the path to all the assemblies
-		string assembliesPath = Path.Join(Project.Path, "bin", "assemblies");
+		string assembliesPath = Path.Join(Project.RootPath, "bin", "assemblies");
 
 		// First manually load all scripts initially
 		Directory.GetFiles(assembliesPath, "*.dll", SearchOption.AllDirectories)
