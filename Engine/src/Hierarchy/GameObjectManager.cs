@@ -1,4 +1,7 @@
 class GameObjectManager
 {
-    public static List<GameObject> GameObjects;
+	public static void GetGameObjects()
+	{
+		
+	}
 }

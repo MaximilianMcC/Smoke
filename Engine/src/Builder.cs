@@ -71,7 +71,6 @@ class Builder
 			RedirectStandardError = true
 		};
 
-
 		// Run the command to compile everything
 		Process process = new Process();
 		process.StartInfo = command;

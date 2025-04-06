@@ -1,0 +1,21 @@
+{
+	"Name": "developed-game",
+	"DisplayName": "Developed game test 123 idk bru",
+	"ProjectPath": "D:/code/c#/raylib/MarlEngine/developed-game",
+	
+	"GameObjects": [
+		{
+			"Id": "idk",
+			"Components": [
+				{
+					"Type": "Transform",
+					"X": 100,
+					"Y": 100
+				}
+			],
+			"Scripts": [
+				"./Test.cs"
+			]
+		}
+	]
+}
