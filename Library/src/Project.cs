@@ -34,6 +34,7 @@ public class Project
 
 public class ProjectInfo
 {
+	// TODO: Rename Name to Namespace
 	public string Name { get; set; }
 	public string DisplayName { get; set; }
 	public string ProjectPath { get; set; }

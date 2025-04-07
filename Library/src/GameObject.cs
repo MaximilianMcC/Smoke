@@ -2,17 +2,18 @@
 public class GameObject
 {
 	// Just used for in the hierarchy thing
-	string DisplayName { get; set; }
+	public string DisplayName { get; set; }
 
 	// Unique to every instance of this
-	ulong Id { get; set; }
+	public ulong Id { get; set; }
 
 	// Stuff
-	List<GameObjectComponent> Components { get; set; }
-	List<string> ScriptPaths { get; set; }
+	public List<Component> Components { get; set; }
+	public List<string> ScriptPaths { get; set; }
 }
 
-class GameObjectComponent
+public class GameObjectComponent
 {
-	public string Type;
+	public string Type { get; set; }
 }
+

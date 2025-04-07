@@ -1,8 +1,7 @@
 using System.Numerics;
 
-class Transform : GameObjectComponent
+public class Transform : Component
 {
-	//! Might not be able to use getters/setters on vectors
-	public Vector3 Position { get; set; }
-	public Vector3 Scale { get; set; }
+	public Vector2 Position;
+	public Vector2 Scale;
 }

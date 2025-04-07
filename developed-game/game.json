@@ -5,16 +5,20 @@
 	
 	"GameObjects": [
 		{
-			"Id": "idk",
+			"Id": "Player",
 			"Components": [
 				{
 					"Type": "Transform",
 					"X": 100,
 					"Y": 100
+				},
+				{
+					"Type": "Renderer"
+				},
+				{
+					"Type": "Script",
+					"ClassPath": "Player"
 				}
-			],
-			"Scripts": [
-				"./Test.cs"
 			]
 		}
 	]

@@ -1,4 +1,5 @@
-﻿using Raylib_cs;
+﻿using System.ComponentModel;
+using Raylib_cs;
 
 class Program
 {
@@ -26,30 +27,42 @@ class Program
 
 		// Load the project and scripts
 		Project.Load(args[0]);
-		ScriptManager.Initialise();
+		GameObjectLoader.Init();
+		GameObjectLoader.LoadAllGameObjects();
+
+		// Load all the actual code
+		List<ISystem> systems = new List<ISystem>()
+		{
+			new ScriptComponent()
+		};
 
 		// Set the game title
 		Raylib.SetWindowTitle(Project.Info.DisplayName);
 
 		// Main program loop
-		Game.Start();
+		// Game.Start();
 		while (Raylib.WindowShouldClose() == false)
 		{
-			Game.Update();
+			// Update
+			foreach (Component system in systems)
+			{
+				system.
+			}
+
 
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
 
 			// TODO: Do camera stuff
-			Game.Render3D();
-			Game.RenderDebug3D();
+			// Game.Render3D();
+			// Game.RenderDebug3D();
 
-			Game.Render2D();
-			Game.RenderDebug2D();
+			// Game.Render2D();
+			// Game.RenderDebug2D();
 
 			Raylib.EndDrawing();
 		}
-		Game.TidyUp();
+		// Game.TidyUp();
 		Raylib.CloseWindow();
 	}
 }
