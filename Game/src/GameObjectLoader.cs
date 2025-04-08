@@ -23,47 +23,34 @@ class GameObjectLoader
 	// Load all components of a game object
 	private static void LoadGameObject(GameObject gameObject)
 	{
-		// Make an entity for the game object
-		Entity entity = EntityManager.CreateEntity();
+		// Make the entity
+		Entity entity = EntityManager.CreateEntity(gameObject.DisplayName);
+		Console.WriteLine("🧑‍🦯‍➡️ " + entity);
 
-		// Loop through all components
-		foreach (Component component in gameObject.Components)
+		// Load/apply all components
+		foreach (IComponent component in gameObject.Components)
 		{
-
-			// Check for what component we're
-			// dealing with and load accordingly
-			// TODO: Put the load methods in the same class as the components
-			switch (component.Type)
-			{
-				case "Script":
-					LoadScript(entity, (ScriptComponent)component);
-					break;
-				
-				case "Transform":
-					LoadTransform(entity, (Transform)component);
-					break;
-			}
+			// If it's a "special" component then handle accordingly
+			// TODO: switch
+			if (component is ScriptComponent) LoadScript(entity, component);
 		}
+
 	}
 
-	private static void LoadScript(Entity entity, ScriptComponent component)
+	private static void LoadScript(Entity entity, IComponent component)
 	{
+		ScriptComponent scriptComponent = component as ScriptComponent;
+
 		// Load the script
-		// TODO: Don't if the script has previously been loaded
-		Type scriptType = assembly.GetType($"{Project.Info.Name}.{component.Url}");
+		// TODO: Don't load if the script/class has previously been loaded
+		Type scriptType = assembly.GetType($"{Project.Info.Name}.{scriptComponent.ClassPath}");
 		if (scriptType == null) return;
 
 		// Actually get/make the script
-		IScript script = Activator.CreateInstance(scriptType) as IScript;
-		component.Script = script;
+		Script script = Activator.CreateInstance(scriptType) as Script;
+		scriptComponent.Script = script;
 
 		// Put the script onto the entity
-		EntityManager.AddComponent(component, entity);
-	}
-
-	private static void LoadTransform(Entity entity, Transform component)
-	{
-		// Put the transform onto the entity
-		EntityManager.AddComponent(component, entity);
+		EntityManager.AddComponentToEntity(scriptComponent, entity);
 	}
 }

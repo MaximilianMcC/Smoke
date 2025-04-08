@@ -1,22 +1,14 @@
-public interface IScript
+public class ScriptComponent : IComponent
 {
-	void Update(Entity entity);
+	public string ClassPath { get; set; }
+
+	// TODO: Json ignore maybe but also never gonna be reading from this so like all goods
+	public Script Script;
 }
 
-public class ScriptComponent : Component
+public class Script
 {
-	public string Url;
-	public IScript Script;
-}
-
-class ScriptSystem : ISystem
-{
-	public void Run()
-	{
-		// Loop through all script components and run their update
-		foreach ((Entity entity, ScriptComponent script) in EntityManager.GetAllEntitiesWithComponent<ScriptComponent>())
-		{
-			script.Script.Update(entity);
-		}
-	}
+	public virtual void Update() {  }
+	public virtual void Render() {  }
+	public virtual void TidyUp() {  }
 }

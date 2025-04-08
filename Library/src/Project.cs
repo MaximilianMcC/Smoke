@@ -12,9 +12,17 @@ public class Project
 		RootPath = Path.GetDirectoryName(projectFilePath);
 		projectJsonPath = projectFilePath;
 
+		// Custom parsing stuff
+		JsonSerializerOptions options = new JsonSerializerOptions()
+		{
+			Converters = {
+				new ComponentConverter()
+			}
+		};
+
 		// Parse the whole project JSON file
 		string projectJson = File.ReadAllText(projectJsonPath);
-		Info = JsonSerializer.Deserialize<ProjectInfo>(projectJson);
+		Info = JsonSerializer.Deserialize<ProjectInfo>(projectJson, options);
 	}
 
 	//! do NOT modify the project settings in the game. Only engine

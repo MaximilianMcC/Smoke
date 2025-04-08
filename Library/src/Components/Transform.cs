@@ -1,7 +1,11 @@
 using System.Numerics;
 
-public class Transform : Component
+public class Transform : IComponent
 {
-	public Vector2 Position;
-	public Vector2 Scale;
+	// public Vector2 Position;
+	// public Vector2 Scale;
+
+	//TODO: Switch to vector2. primitives for testing
+	public float X;
+	public float Y;
 }

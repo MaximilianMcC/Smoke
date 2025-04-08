@@ -5,7 +5,7 @@
 	
 	"GameObjects": [
 		{
-			"Id": "Player",
+			"DisplayName": "Player",
 			"Components": [
 				{
 					"Type": "Transform",
