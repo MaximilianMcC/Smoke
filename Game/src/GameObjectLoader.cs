@@ -8,16 +8,18 @@ class GameObjectLoader
 	{
 		// Get the path to the DLL file
 		//? This dll has all the game code in it
-		string dllPath = Path.Join(Project.RootPath, "bin", "assemblies");
+		string dllFile = Project.Info.Name + ".dll";
+		string dllPath = Path.Join(Project.RootPath, "bin", "assemblies", dllFile);
 
 		// Dynamically load the assembly from the DLL
+		Console.WriteLine("Loading stuff from " + dllPath);
 		assembly = Assembly.LoadFrom(dllPath);
 	}
 
 	public static void LoadAllGameObjects()
 	{
 		// Loop through all game objects and load them
-		Project.Info.gameObjects.ForEach(gameObject => LoadGameObject(gameObject));
+		Project.Info.GameObjects.ForEach(LoadGameObject);
 	}
 
 	// Load all components of a game object
@@ -33,6 +35,11 @@ class GameObjectLoader
 			// If it's a "special" component then handle accordingly
 			// TODO: switch
 			if (component is ScriptComponent) LoadScript(entity, component);
+			else
+			{
+				// Kinda "normal" component
+				EntityManager.AddComponentToEntity(component, entity);
+			}
 		}
 
 	}

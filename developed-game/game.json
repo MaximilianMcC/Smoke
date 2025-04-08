@@ -1,7 +1,7 @@
 {
 	"Name": "developed-game",
 	"DisplayName": "Developed game test 123 idk bru",
-	"ProjectPath": "D:/code/c#/raylib/MarlEngine/developed-game",
+	"ProjectPath": "C:/Users/max/Documents/code/cs/MarlEngine/developed-game",
 	
 	"GameObjects": [
 		{
@@ -13,11 +13,18 @@
 					"Y": 100
 				},
 				{
-					"Type": "Renderer"
-				},
-				{
 					"Type": "Script",
 					"ClassPath": "Player"
+				}
+			]
+		},
+		{
+			"DisplayName": "test",
+			"Components": [
+				{
+					"Type": "Transform",
+					"X": 123,
+					"Y": 456
 				}
 			]
 		}

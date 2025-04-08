@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Library;
 using Raylib_cs;
 
 class Program
@@ -37,11 +36,12 @@ class Program
 			if (Raylib.IsKeyPressed(KeyboardKey.F5)) Builder.BuildAndRun();
 			if (Raylib.IsKeyPressed(KeyboardKey.R) && Raylib.IsKeyDown(KeyboardKey.LeftControl)) Builder.HotReload();
 
-			Graphics.DrawText("f5 to run\nctrl+r to hot reload", 10, 10, 50);
-			Graphics.DrawText(Builder.Status, 10, 120, 30);
+			// Graphics.DrawText("f5 to run\nctrl+r to hot reload", 10, 10, 50);
+			// Graphics.DrawText(Builder.Status, 10, 120, 30);
 
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
+			Raylib.DrawText("this the engine", 10, 10, 120, Color.White);
 			Raylib.EndDrawing();
 		}
 

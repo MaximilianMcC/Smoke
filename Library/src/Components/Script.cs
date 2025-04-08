@@ -8,7 +8,11 @@ public class ScriptComponent : IComponent
 
 public class Script
 {
-	public virtual void Update() {  }
-	public virtual void Render() {  }
-	public virtual void TidyUp() {  }
+	// TODO:
+	// private Entity entity;
+	// then like assign this when initially parsing idk
+
+	public virtual void Update(Entity entity) {  }
+	public virtual void Render(Entity entity) {  }
+	public virtual void TidyUp(Entity entity) {  }
 }

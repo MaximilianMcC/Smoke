@@ -25,6 +25,19 @@ public class EntityManager
 		// TODO: Make it so you can do .GetComponent("transform") or something yk. use strings so you can name the components (easier to reference)
 		return Entities[entity].OfType<T>().FirstOrDefault();
 	}
+
+	// TODO: instead do GetAllComponents(IComponent componentType)
+	// TODO: enumerable + yield
+	public static IEnumerable<(Entity, List<Script>)> GetAllScripts()
+	{
+		// Loop over all entities
+		foreach (Entity entity in Entities.Keys)
+		{
+			// Get all script components
+			List<Script> scripts = Entities[entity].OfType<Script>().ToList();
+			yield return (entity, scripts);
+		}
+	}
 }
 
 

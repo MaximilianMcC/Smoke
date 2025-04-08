@@ -30,11 +30,6 @@ class Program
 		GameObjectLoader.Init();
 		GameObjectLoader.LoadAllGameObjects();
 
-		// Load all the actual code
-		List<ISystem> systems = new List<ISystem>()
-		{
-			new ScriptComponent()
-		};
 
 		// Set the game title
 		Raylib.SetWindowTitle(Project.Info.DisplayName);
@@ -43,12 +38,16 @@ class Program
 		// Game.Start();
 		while (Raylib.WindowShouldClose() == false)
 		{
-			// Update
-			foreach (Component system in systems)
-			{
-				system.
-			}
+			Console.WriteLine(EntityManager.Entities.Count);
 
+			// Run all the update scripts
+			foreach ((Entity entity, List<Script> scripts) in EntityManager.GetAllScripts())
+			{
+				foreach (Script script in scripts)
+				{
+					script.Update(entity);
+				}
+			}
 
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
