@@ -56,6 +56,14 @@ class Program
 			// Game.Render2D();
 			// Game.RenderDebug2D();
 
+			foreach ((Entity entity, List<Script> scripts) in EntityManager.GetAllScripts())
+			{
+				foreach (Script script in scripts)
+				{
+					script.Render(entity);
+				}
+			}
+
 			Raylib.EndDrawing();
 		}
 		// Game.TidyUp();
