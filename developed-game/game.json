@@ -13,8 +13,8 @@
 				},
 				{
 					"Type": "Transform",
-					"X": 10,
-					"Y": 20
+					"Position": { "X": 10, "Y": 10 },
+					"Scale": { "X": 1, "Y": 1 }
 				}
 			]
 		}

@@ -5,6 +5,7 @@ public class Project
 	public static ProjectInfo Info;
 	public static string RootPath;
 	public static string ProjectJsonPath;
+	private static JsonSerializerOptions options;
 
 	public static void Load(string projectFilePath)
 	{
@@ -13,10 +14,12 @@ public class Project
 		ProjectJsonPath = projectFilePath;
 
 		// Custom parsing stuff
-		JsonSerializerOptions options = new JsonSerializerOptions()
+		options = new JsonSerializerOptions()
 		{
 			Converters = {
-				new ComponentConverter()
+				new ComponentConverter(),
+				new Vector2Converter(),
+				new Vector3Converter()
 			}
 		};
 
@@ -32,11 +35,7 @@ public class Project
 	public static void Save(bool withIndentation = false)
 	{
 		// Serialize the json as camelCase
-		string projectJson = JsonSerializer.Serialize(Info, new JsonSerializerOptions {
-
-			PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-			WriteIndented = withIndentation,
-		});
+		string projectJson = JsonSerializer.Serialize(Info, options);
 
 		// Rewrite the project json
 		File.WriteAllText(ProjectJsonPath, projectJson);
