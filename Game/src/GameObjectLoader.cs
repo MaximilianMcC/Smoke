@@ -14,6 +14,11 @@ class GameObjectLoader
 		// Dynamically load the assembly from the DLL
 		Console.WriteLine("Loading stuff from " + dllPath);
 		assembly = Assembly.LoadFrom(dllPath);
+
+		foreach (Type type in assembly.GetTypes())
+		{
+			Console.WriteLine("🖲️ " +  type.FullName);
+		}
 	}
 
 	public static void LoadAllGameObjects()
@@ -42,20 +47,24 @@ class GameObjectLoader
 			}
 		}
 
+		Console.WriteLine("🚶‍➡️ " + entity);
 	}
 
 	private static void LoadScript(Entity entity, IComponent component)
 	{
+		Console.WriteLine("Loading script");
 		ScriptComponent scriptComponent = component as ScriptComponent;
 
 		// Load the script
 		// TODO: Don't load if the script/class has previously been loaded
-		Type scriptType = assembly.GetType($"{Project.Info.Name}.{scriptComponent.ClassPath}");
+		Type scriptType = assembly.GetType(scriptComponent.ClassPath);
 		if (scriptType == null) return;
 
 		// Actually get/make the script
 		Script script = Activator.CreateInstance(scriptType) as Script;
 		scriptComponent.Script = script;
+
+		scriptComponent.Script.Update(entity);
 
 		// Put the script onto the entity
 		EntityManager.AddComponentToEntity(scriptComponent, entity);

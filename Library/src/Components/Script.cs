@@ -12,7 +12,7 @@ public class Script
 	// private Entity entity;
 	// then like assign this when initially parsing idk
 
-	public virtual void Update(Entity entity) {  }
+	public virtual void Update(Entity entity) { Console.WriteLine("upfating rn!!!!!!!!!!!!!!!!!!!!!!1 ");  }
 	public virtual void Render(Entity entity) {  }
 	public virtual void TidyUp(Entity entity) {  }
 }

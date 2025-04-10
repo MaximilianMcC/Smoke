@@ -8,23 +8,8 @@
 			"DisplayName": "Player",
 			"Components": [
 				{
-					"Type": "Transform",
-					"X": 100,
-					"Y": 100
-				},
-				{
 					"Type": "Script",
 					"ClassPath": "Player"
-				}
-			]
-		},
-		{
-			"DisplayName": "test",
-			"Components": [
-				{
-					"Type": "Transform",
-					"X": 123,
-					"Y": 456
 				}
 			]
 		}

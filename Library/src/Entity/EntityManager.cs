@@ -47,5 +47,9 @@ public class Entity
 	public Guid guid;
 	public string name;
 
-	public override string ToString() => $"{name}({guid})";
+	public List<IComponent> Components {
+		get { return EntityManager.Entities[this]; }
+	}
+
+	public override string ToString() => $"{name} ({guid})";
 }

@@ -5,6 +5,8 @@ class Program
 {
 	public static void Main(string[] args)
 	{
+		Console.WriteLine("RUNNING GAME RN");
+
 		// Make raylib window for the actual game
 		Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
 		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow | ConfigFlags.AlwaysRunWindow);
@@ -38,8 +40,6 @@ class Program
 		// Game.Start();
 		while (Raylib.WindowShouldClose() == false)
 		{
-			Console.WriteLine(EntityManager.Entities.Count);
-
 			// Run all the update scripts
 			foreach ((Entity entity, List<Script> scripts) in EntityManager.GetAllScripts())
 			{

@@ -11,10 +11,6 @@ class ComponentConverter : JsonConverter<IComponent>
 		using JsonDocument json = JsonDocument.ParseValue(ref reader);
 		JsonElement root = json.RootElement;
 
-
-		Console.WriteLine(root.GetRawText());
-
-
 		// All components
 		// TODO: make this const static or whatever yk
 		Dictionary<string, Type> components = new Dictionary<string, Type>()
@@ -26,10 +22,11 @@ class ComponentConverter : JsonConverter<IComponent>
 		// Read the type of component, then deserialize the
 		// correct class based on the type string
 		string type = root.GetProperty("Type").GetString();
-		if (components.ContainsKey(type))
+		if (components.TryGetValue(type, out Type component))
 		{
 			// Parse the raw text into the required type
-			return (IComponent)JsonSerializer.Deserialize(root.GetRawText(), components[type], options);
+			Console.WriteLine("🚢 loading a " + type);
+			return (IComponent)JsonSerializer.Deserialize(root.GetRawText(), component, options);
 		}
 
 		// Wrong type or something

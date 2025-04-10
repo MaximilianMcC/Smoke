@@ -39,8 +39,7 @@ class Builder
 
 	private static void Run()
 	{
-		// Run the game as a child of engine
-		Process game = Process.Start(GamePath, Project.RootPath);
+		Process game = Process.Start(GamePath, Project.ProjectJsonPath);
 		game.EnableRaisingEvents = true;
 
 		// If we close the engine then also close the game
@@ -50,7 +49,7 @@ class Builder
 		game.Exited += (s, e) => Status = "js finished running game";
 	}
 
-	private static void Compile()
+	private static void Compile(bool release = false)
 	{
 		// Get the assembly output path
 		// and the csproj path
@@ -59,12 +58,15 @@ class Builder
 
 		// TODO: Maybe like delete the assemblies folder every like 10 runs to clean it
 
+		// Check for if we're like fully building it (finished game)
+		string configuration = release ? "Release" : "Debug";
+
 		// Make the compile command
 		ProcessStartInfo command = new ProcessStartInfo()
 		{
 			// TODO: Make so you can toggle between debug and not
 			FileName = "dotnet",
-			Arguments = $"build \"{csprojPath}\" --no-dependencies -o \"{outputPath}\"",
+			Arguments = $"build \"{csprojPath}\" --no-dependencies -c {configuration} -o \"{outputPath}\"",
 
 			CreateNoWindow = true,
 			RedirectStandardOutput = true,
@@ -75,5 +77,7 @@ class Builder
 		Process process = new Process();
 		process.StartInfo = command;
 		process.Start();
+
+		Console.WriteLine("building/built to " + outputPath);
 	}
 }

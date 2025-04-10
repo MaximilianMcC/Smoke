@@ -4,13 +4,13 @@ public class Project
 {
 	public static ProjectInfo Info;
 	public static string RootPath;
-	private static string projectJsonPath;
+	public static string ProjectJsonPath;
 
 	public static void Load(string projectFilePath)
 	{
 		// Set the project file path
 		RootPath = Path.GetDirectoryName(Path.GetFullPath(projectFilePath));
-		projectJsonPath = projectFilePath;
+		ProjectJsonPath = projectFilePath;
 
 		// Custom parsing stuff
 		JsonSerializerOptions options = new JsonSerializerOptions()
@@ -21,7 +21,7 @@ public class Project
 		};
 
 		// Parse the whole project JSON file
-		string projectJson = File.ReadAllText(projectJsonPath);
+		string projectJson = File.ReadAllText(ProjectJsonPath);
 		Info = JsonSerializer.Deserialize<ProjectInfo>(projectJson, options);
 
 		// say its loaded and stuff
@@ -39,7 +39,7 @@ public class Project
 		});
 
 		// Rewrite the project json
-		File.WriteAllText(projectJsonPath, projectJson);
+		File.WriteAllText(ProjectJsonPath, projectJson);
 	}
 }
 
