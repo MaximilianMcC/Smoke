@@ -50,6 +50,7 @@ class GameObjectLoader
 		Console.WriteLine("🚶‍➡️ " + entity);
 	}
 
+	// TODO: Move this into the script class (library)
 	private static void LoadScript(Entity entity, IComponent component)
 	{
 		Console.WriteLine("Loading script");
@@ -62,9 +63,10 @@ class GameObjectLoader
 
 		// Actually get/make the script
 		Script script = Activator.CreateInstance(scriptType) as Script;
-		scriptComponent.Script = script;
+		script.Entity = entity;
 
 		// Put the script onto the entity
+		scriptComponent.Script = script;
 		EntityManager.AddComponentToEntity(scriptComponent, entity);
 	}
 }

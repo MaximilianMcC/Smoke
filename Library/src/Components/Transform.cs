@@ -1,7 +1,8 @@
 using System.Numerics;
+using System.Text.Json.Serialization;
 
 public class Transform : IComponent
 {
-	public Vector2 Position { get; set; }
-	public Vector2 Scale { get; set; }
+	[JsonInclude] public Vector2 Position;
+	[JsonInclude] public Vector2 Scale;
 }

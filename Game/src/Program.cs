@@ -43,7 +43,7 @@ class Program
 			{
 				foreach (Script script in scripts)
 				{
-					script.Update(entity);
+					script.Update();
 				}
 			}
 
@@ -60,7 +60,7 @@ class Program
 			{
 				foreach (Script script in scripts)
 				{
-					script.Render(entity);
+					script.Render();
 				}
 			}
 

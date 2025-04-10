@@ -8,11 +8,14 @@ public class ScriptComponent : IComponent
 
 public class Script
 {
-	// TODO:
-	// private Entity entity;
-	// then like assign this when initially parsing idk
+	public Entity Entity;
 
-	public virtual void Update(Entity entity) { Console.WriteLine("upfating rn!!!!!!!!!!!!!!!!!!!!!!1 ");  }
-	public virtual void Render(Entity entity) {  }
-	public virtual void TidyUp(Entity entity) {  }
+	public virtual void Update() {  }
+	public virtual void Render() {  }
+	public virtual void TidyUp() {  }
+
+	protected T GetComponent<T>() where T : IComponent
+	{
+		return EntityManager.GetComponent<T>(Entity);
+	}
 }
