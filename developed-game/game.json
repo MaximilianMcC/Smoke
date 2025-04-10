@@ -5,7 +5,7 @@
 	
 	"GameObjects": [
 		{
-			"DisplayName": "Player",
+			"DisplayName": "Player game object",
 			"Components": [
 				{
 					"Type": "Script",

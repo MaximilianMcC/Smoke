@@ -64,8 +64,6 @@ class GameObjectLoader
 		Script script = Activator.CreateInstance(scriptType) as Script;
 		scriptComponent.Script = script;
 
-		scriptComponent.Script.Update(entity);
-
 		// Put the script onto the entity
 		EntityManager.AddComponentToEntity(scriptComponent, entity);
 	}

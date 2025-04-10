@@ -27,15 +27,13 @@ public class EntityManager
 	}
 
 	// TODO: instead do GetAllComponents(IComponent componentType)
-	// TODO: enumerable + yield
 	public static IEnumerable<(Entity, List<Script>)> GetAllScripts()
 	{
-		// Loop over all entities
-		foreach (Entity entity in Entities.Keys)
+		// TODO: Maybe don't use var (verbose)
+		foreach (var entity in Entities)
 		{
-			// Get all script components
-			List<Script> scripts = Entities[entity].OfType<Script>().ToList();
-			yield return (entity, scripts);
+			List<Script> scripts = entity.Value.OfType<ScriptComponent>().Select(component => component.Script).ToList();
+			yield return (entity.Key, scripts);
 		}
 	}
 }

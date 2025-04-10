@@ -40,7 +40,7 @@ class Program
 			// Graphics.DrawText(Builder.Status, 10, 120, 30);
 
 			Raylib.BeginDrawing();
-			Raylib.ClearBackground(Color.Magenta);
+			Raylib.ClearBackground(Color.DarkPurple);
 			Raylib.DrawText($"this the engine\n{Builder.Status}", 10, 10, 60, Color.White);
 			Raylib.EndDrawing();
 		}

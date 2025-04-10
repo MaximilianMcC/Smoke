@@ -32,7 +32,6 @@ class Program
 		GameObjectLoader.Init();
 		GameObjectLoader.LoadAllGameObjects();
 
-
 		// Set the game title
 		Raylib.SetWindowTitle(Project.Info.DisplayName);
 
@@ -40,7 +39,9 @@ class Program
 		// Game.Start();
 		while (Raylib.WindowShouldClose() == false)
 		{
-			// Run all the update scripts
+			ScriptComponent e = (ScriptComponent)(EntityManager.Entities.FirstOrDefault().Value.FirstOrDefault());
+			e.Script.Update(EntityManager.Entities.Keys.First());
+
 			foreach ((Entity entity, List<Script> scripts) in EntityManager.GetAllScripts())
 			{
 				foreach (Script script in scripts)
@@ -51,7 +52,6 @@ class Program
 
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
-
 			// TODO: Do camera stuff
 			// Game.Render3D();
 			// Game.RenderDebug3D();
