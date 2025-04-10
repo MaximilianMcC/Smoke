@@ -10,6 +10,11 @@
 				{
 					"Type": "Script",
 					"ClassPath": "Player"
+				},
+				{
+					"Type": "Transform",
+					"X": 10,
+					"Y": 20
 				}
 			]
 		}

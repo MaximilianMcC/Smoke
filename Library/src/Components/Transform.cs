@@ -6,6 +6,6 @@ public class Transform : IComponent
 	// public Vector2 Scale;
 
 	//TODO: Switch to vector2. primitives for testing
-	public float X;
-	public float Y;
+	public float X { get; set; }
+	public float Y { get; set; }
 }

@@ -39,9 +39,6 @@ class Program
 		// Game.Start();
 		while (Raylib.WindowShouldClose() == false)
 		{
-			ScriptComponent e = (ScriptComponent)(EntityManager.Entities.FirstOrDefault().Value.FirstOrDefault());
-			e.Script.Update(EntityManager.Entities.Keys.First());
-
 			foreach ((Entity entity, List<Script> scripts) in EntityManager.GetAllScripts())
 			{
 				foreach (Script script in scripts)

@@ -23,7 +23,11 @@ public class EntityManager
 	public static T GetComponent<T>(Entity entity) where T : IComponent
 	{
 		// TODO: Make it so you can do .GetComponent("transform") or something yk. use strings so you can name the components (easier to reference)
-		return Entities[entity].OfType<T>().FirstOrDefault();
+		T component = Entities[entity].OfType<T>().FirstOrDefault();
+		if (EqualityComparer<T>.Default.Equals(component, default))
+			throw new NullReferenceException($"There isn't a {typeof(T).Name} component on the current entity");
+		
+		return component;
 	}
 
 	// TODO: instead do GetAllComponents(IComponent componentType)
