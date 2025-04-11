@@ -51,6 +51,7 @@ class GameObjectLoader
 	}
 
 	// TODO: Move this into the script class (library)
+	//! scripts MUST be last in the components list of json
 	private static void LoadScript(Entity entity, IComponent component)
 	{
 		Console.WriteLine("Loading script");
@@ -68,5 +69,8 @@ class GameObjectLoader
 		// Put the script onto the entity
 		scriptComponent.Script = script;
 		EntityManager.AddComponentToEntity(scriptComponent, entity);
+
+		// Setup the script
+		script.InitialSetup();
 	}
 }

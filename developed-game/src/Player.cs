@@ -7,14 +7,11 @@ class Player : Script
 {
 	public override void Update()
 	{
-		// Transform transform = EntityManager.GetComponent<Transform>(entity);
-		Transform transform = GetComponent<Transform>();
-		Console.WriteLine(transform.Position);
+		Transform.Position.X += 100 * Raylib.GetFrameTime();
 	}
 
 	public override void Render()
 	{
-		// Transform transform = EntityManager.GetComponent<Transform>(entity);
-		// Raylib.DrawCircle((int)transform.X, (int)transform.Y, 50f, Color.White);
+		Raylib.DrawCircleV(Transform.Position, 50f, Color.White);
 	}
 }

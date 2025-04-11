@@ -1,3 +1,5 @@
+using System.Numerics;
+
 public class ScriptComponent : IComponent
 {
 	public string ClassPath { get; set; }
@@ -9,12 +11,23 @@ public class ScriptComponent : IComponent
 public class Script
 {
 	public Entity Entity;
+	public Transform Transform;
+
+	// Set up shorthands and stuff yk
+	//! do NOT run this more than once
+	public virtual void InitialSetup()
+	{
+		// Just get a heap of components ig
+		Transform = GetComponent<Transform>();
+	}
 
 	public virtual void Update() {  }
 	public virtual void Render() {  }
 	public virtual void TidyUp() {  }
 
-	protected T GetComponent<T>() where T : IComponent
+	// Just saves you calling on EntityManger (qol)
+	// TODO: Maybe make protected
+	public T GetComponent<T>() where T : IComponent
 	{
 		return EntityManager.GetComponent<T>(Entity);
 	}

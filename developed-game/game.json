@@ -8,13 +8,13 @@
 			"DisplayName": "Player game object",
 			"Components": [
 				{
-					"Type": "Script",
-					"ClassPath": "Player"
+					"Type": "Transform",
+					"Position": { "X": 0, "Y": 100 },
+					"Scale": { "X": 1, "Y": 1 }
 				},
 				{
-					"Type": "Transform",
-					"Position": { "X": 10, "Y": 10 },
-					"Scale": { "X": 1, "Y": 1 }
+					"Type": "Script",
+					"ClassPath": "Player"
 				}
 			]
 		}
