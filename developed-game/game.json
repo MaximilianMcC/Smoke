@@ -17,6 +17,20 @@
 					"ClassPath": "Player"
 				}
 			]
+		},
+		{
+			"DisplayName": "Ball",
+			"Components": [
+				{
+					"Type": "Transform",
+					"Position": { "X": 100, "Y": 100 },
+					"Scale": { "X": 1, "Y": 1 }
+				},
+				{
+					"Type": "Script",
+					"ClassPath": "BouncingBall"
+				}
+			]
 		}
 	]
 }
