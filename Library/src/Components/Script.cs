@@ -21,6 +21,7 @@ public class Script
 		Transform = GetComponent<Transform>();
 	}
 
+	public virtual void Start() {  }
 	public virtual void Update() {  }
 	public virtual void Render() {  }
 	public virtual void TidyUp() {  }

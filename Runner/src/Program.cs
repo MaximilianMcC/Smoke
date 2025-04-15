@@ -30,7 +30,7 @@ class Program
 		// Load the project and scripts
 		Project.Load(args[0]);
 		GameObjectLoader.Init();
-		GameObjectLoader.LoadAllGameObjects();
+		MapLoader.LoadMap(Project.Info.StartingMap);
 
 		// Set the game title
 		Raylib.SetWindowTitle(Project.Info.DisplayName);

@@ -21,14 +21,8 @@ class GameObjectLoader
 		}
 	}
 
-	public static void LoadAllGameObjects()
-	{
-		// Loop through all game objects and load them
-		Project.Info.GameObjects.ForEach(LoadGameObject);
-	}
-
 	// Load all components of a game object
-	private static void LoadGameObject(GameObject gameObject)
+	public static void LoadGameObject(GameObject gameObject)
 	{
 		// Make the entity
 		Entity entity = EntityManager.CreateEntity(gameObject.DisplayName);

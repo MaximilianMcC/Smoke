@@ -5,12 +5,13 @@
 	
 	"GameObjects": [
 		{
-			"DisplayName": "Player game object",
+			"DisplayName": "Player",
+			"Guid": "8d4d6010-c9a9-4dfa-a9ce-1e60d41afe79",
 			"Components": [
 				{
 					"Type": "Transform",
 					"Position": { "X": 0, "Y": 100 },
-					"Scale": { "X": 1, "Y": 1 }
+					"Scale": { "X": 100, "Y": 25 }
 				},
 				{
 					"Type": "Script",
@@ -19,18 +20,29 @@
 			]
 		},
 		{
-			"DisplayName": "Ball",
+			"DisplayName": "Bullet",
+			"Guid": "76da99fb-4fc8-44d6-a72e-0e257c43cbaa",
 			"Components": [
 				{
 					"Type": "Transform",
-					"Position": { "X": 100, "Y": 100 },
-					"Scale": { "X": 1, "Y": 1 }
+					"Position": { "X": 0, "Y": 100 },
+					"Scale": { "X": 10, "Y": 25 }
 				},
 				{
 					"Type": "Script",
-					"ClassPath": "BouncingBall"
+					"ClassPath": "Bullet"
 				}
 			]
 		}
-	]
+	],
+	
+	"Maps": [
+		{
+			"Name": "main",
+			"GameObjects": [
+				"8d4d6010-c9a9-4dfa-a9ce-1e60d41afe79"
+			]
+		}
+	],
+	"StartingMap": "main"
 }

@@ -50,4 +50,7 @@ public class ProjectInfo
 	public string ProjectPath { get; set; }
 
 	public List<GameObject> GameObjects { get; set; }
+
+	public string StartingMap { get; set; }
+	public List<Map> Maps { get; set; }
 }
