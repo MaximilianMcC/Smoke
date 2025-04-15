@@ -5,8 +5,6 @@ class Program
 {
 	public static void Main(string[] args)
 	{
-		Console.WriteLine("RUNNING GAME RN");
-
 		// Make raylib window for the actual game
 		Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
 		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow | ConfigFlags.AlwaysRunWindow);
@@ -29,21 +27,22 @@ class Program
 
 		// Load the project and scripts
 		Project.Load(args[0]);
-		GameObjectLoader.Init();
-		MapLoader.LoadMap(Project.Info.StartingMap);
+		AdvancedComponentLoader.Init();
+		LoadInitialMap();
 
 		// Set the game title
 		Raylib.SetWindowTitle(Project.Info.DisplayName);
 
 		// Main program loop
-		// Game.Start();
 		while (Raylib.WindowShouldClose() == false)
 		{
-			foreach ((Entity entity, List<Script> scripts) in EntityManager.GetAllScripts())
+
+			// Update everything
+			foreach (Entity entity in EntityManager.InstancedEntities)
 			{
-				foreach (Script script in scripts)
+				foreach (ScriptComponent script in EntityManager.GetComponents<ScriptComponent>(entity))
 				{
-					script.Update();
+					script.Script.Update();
 				}
 			}
 
@@ -56,11 +55,13 @@ class Program
 			// Game.Render2D();
 			// Game.RenderDebug2D();
 
-			foreach ((Entity entity, List<Script> scripts) in EntityManager.GetAllScripts())
+			// Basic render for everything
+			// TODO: Split up into 2d/3d/debug
+			foreach (Entity entity in EntityManager.InstancedEntities)
 			{
-				foreach (Script script in scripts)
+				foreach (ScriptComponent script in EntityManager.GetComponents<ScriptComponent>(entity))
 				{
-					script.Render();
+					script.Script.Render();
 				}
 			}
 
@@ -68,5 +69,13 @@ class Program
 		}
 		// Game.TidyUp();
 		Raylib.CloseWindow();
+	}
+
+
+
+	private static void LoadInitialMap()
+	{
+		// Load everything in the map
+		Project.Info.CurrentMap.InstancedPrefabs.ForEach(prefab => EntityManager.CreateFromPrefabAndAdd(prefab.Guid));
 	}
 }

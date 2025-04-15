@@ -13,7 +13,7 @@ public class Project
 		RootPath = Path.GetDirectoryName(Path.GetFullPath(projectFilePath));
 		ProjectJsonPath = projectFilePath;
 
-		// Custom parsing stuff
+		// Custom json parsing stuff
 		options = new JsonSerializerOptions()
 		{
 			Converters = {
@@ -27,12 +27,14 @@ public class Project
 		string projectJson = File.ReadAllText(ProjectJsonPath);
 		Info = JsonSerializer.Deserialize<ProjectInfo>(projectJson, options);
 
-		// say its loaded and stuff
-		Console.WriteLine("Loaded project " + Info.Name);
+		// Get the starting map
+		// TODO: Do another way
+		Map map = Info.Maps.FirstOrDefault(map => map.Name == Info.StartingMap);
+		if (map != null) Info.CurrentMap = map;
 	}
 
 	//! do NOT modify the project settings in the game. Only engine
-	public static void Save(bool withIndentation = false)
+	public static void Save()
 	{
 		// Serialize the json as camelCase
 		string projectJson = JsonSerializer.Serialize(Info, options);
@@ -49,8 +51,10 @@ public class ProjectInfo
 	public string DisplayName { get; set; }
 	public string ProjectPath { get; set; }
 
-	public List<GameObject> GameObjects { get; set; }
+	public List<Prefab> Prefabs { get; set; }
 
-	public string StartingMap { get; set; }
 	public List<Map> Maps { get; set; }
+	public string StartingMap { get; set; }
+
+	public Map CurrentMap { get; set; }
 }

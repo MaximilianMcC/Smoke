@@ -5,7 +5,7 @@ using Raylib_cs;
 
 class Bullet : Script
 {
-	private const float speed = 300f;
+	private const float speed = 500f;
 
 	public override void Update()
 	{

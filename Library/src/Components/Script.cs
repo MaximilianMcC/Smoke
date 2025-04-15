@@ -19,6 +19,9 @@ public class Script
 	{
 		// Just get a heap of components ig
 		Transform = GetComponent<Transform>();
+
+		// Run the start method automatically
+		Start();
 	}
 
 	public virtual void Start() {  }

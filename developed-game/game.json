@@ -3,14 +3,14 @@
 	"DisplayName": "Developed game test 123 idk bru",
 	"ProjectPath": "C:/Users/max/Documents/code/cs/MarlEngine/developed-game",
 	
-	"GameObjects": [
+	"Prefabs": [
 		{
 			"DisplayName": "Player",
 			"Guid": "8d4d6010-c9a9-4dfa-a9ce-1e60d41afe79",
 			"Components": [
 				{
 					"Type": "Transform",
-					"Position": { "X": 0, "Y": 100 },
+					"Position": { "X": 0, "Y": 0 },
 					"Scale": { "X": 100, "Y": 25 }
 				},
 				{
@@ -25,7 +25,7 @@
 			"Components": [
 				{
 					"Type": "Transform",
-					"Position": { "X": 0, "Y": 100 },
+					"Position": { "X": 0, "Y": 0 },
 					"Scale": { "X": 10, "Y": 25 }
 				},
 				{
@@ -39,8 +39,22 @@
 	"Maps": [
 		{
 			"Name": "main",
-			"GameObjects": [
-				"8d4d6010-c9a9-4dfa-a9ce-1e60d41afe79"
+			"InstancedPrefabs": [
+				{
+					"DisplayName": "Player",
+					"Guid": "4ceb8956-62d3-4179-815b-1d2cf955c6d2",
+					"Components": [
+						{
+							"Type": "Transform",
+							"Position": { "X": 0, "Y": 0 },
+							"Scale": { "X": 100, "Y": 25 }
+						},
+						{
+							"Type": "Script",
+							"ClassPath": "Player"
+						}
+					]
+				}
 			]
 		}
 	],

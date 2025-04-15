@@ -1,7 +1,0 @@
-// TODO: Make everything in here getters (not setters)
-public class GameObject
-{
-	public string DisplayName { get; set; }
-	public string Guid { get; set; }
-	public List<IComponent> Components { get; set; }
-}

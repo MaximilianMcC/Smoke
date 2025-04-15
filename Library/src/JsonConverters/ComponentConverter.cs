@@ -24,7 +24,6 @@ class ComponentConverter : JsonConverter<IComponent>
 		if (components.TryGetValue(type, out Type component))
 		{
 			// Parse the raw text into the required type
-			Console.WriteLine("🚢 loading a " + type);
 			return (IComponent)JsonSerializer.Deserialize(root.GetRawText(), component, options);
 		}
 

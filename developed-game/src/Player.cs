@@ -6,7 +6,7 @@ using System.Numerics;
 
 class Player : Script
 {
-	private const float speed = 100f;
+	private const float speed = 500f;
 
 	public override void Start()
 	{
@@ -30,6 +30,7 @@ class Player : Script
 	private static void Shoot()
 	{
 		// Spawn a bullet
+		// Cartographer.Spawn("76da99fb-4fc8-44d6-a72e-0e257c43cbaa");
 	}
 
 	public override void Render()
