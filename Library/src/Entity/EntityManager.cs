@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Force.DeepCloner;
 
 public class EntityManager
 {
@@ -25,7 +26,7 @@ public class EntityManager
 		foreach (IComponent component in prefab.Components)
 		{
 			// Make a clone of the component for this unique entity
-			IComponent currentComponent = CloneComponent(component);
+			IComponent currentComponent = component.DeepClone();
 
 			// If it's a "special" component then handle accordingly
 			// TODO: switch
@@ -39,21 +40,21 @@ public class EntityManager
 				// Chuck the standard component onto the entity
 				AddComponentToEntity(currentComponent, entity);
 			}
-		}	
+		}
 
 		// Give back the entity
 		return entity;
 	}
 
-	// TODO: Put somewhere else
-	private static IComponent CloneComponent(IComponent component)
-	{
-		// Serialize the component into JSON (getting rid of any personal identity)
-		string json = JsonSerializer.Serialize(component, component.GetType());
+	// // TODO: Put somewhere else
+	// private static IComponent CloneComponent(IComponent component)
+	// {
+	// 	// Serialize the component into JSON (getting rid of any personal identity)
+	// 	string json = JsonSerializer.Serialize(component, component.GetType());
 		
-		// Create a brand new component by parsing it
-		return JsonSerializer.Deserialize(json, component.GetType()) as IComponent;
-	}
+	// 	// Create a brand new component by parsing it
+	// 	return JsonSerializer.Deserialize(json, component.GetType()) as IComponent;
+	// }
 
 	// Instance an entity (actually put it in the game)
 	// TODO: Maybe make bool and return if it added it or not (already exists)

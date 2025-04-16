@@ -38,5 +38,6 @@ class Player : Script
 	public override void Render()
 	{
 		DrawSquare(Transform, Color.White);
+		// DrawCircle(Transform, 100f, Color.Orange);
 	}
 }
