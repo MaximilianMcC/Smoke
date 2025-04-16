@@ -16,9 +16,18 @@ public class Graphics
 		Raylib.DrawCircleV(position, radius, color);
 	}
 
+	// Squares
 	public static void DrawSquare(Transform transform, Color color) => DrawSquare(transform.Position, transform.Scale, color);
 	public static void DrawSquare(Vector2 position, Vector2 size, Color color)
 	{
 		Raylib.DrawRectanglePro(new Rectangle(position, size), Vector2.Zero, 0f, color);
+	}
+
+	// Text
+	public static void DrawText(string text, Transform transform, float fontSize, Color color) => DrawText(text, transform.Position, fontSize, color);
+	public static void DrawText(string text, float x, float y, float fontSize, Color color) => DrawText(text, new Vector2(x, y), fontSize, color);
+	public static void DrawText(string text, Vector2 position, float fontSize, Color color)
+	{
+		Raylib.DrawTextPro(Raylib.GetFontDefault(), text, position, Vector2.Zero, 0f, fontSize, (fontSize / 10), color);
 	}
 }

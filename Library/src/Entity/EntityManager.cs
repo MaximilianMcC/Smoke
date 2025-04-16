@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 public class EntityManager
 {
 	public static Dictionary<Entity, List<IComponent>> Entities = [];
@@ -22,17 +24,20 @@ public class EntityManager
 		// Add all components from the prefab onto the new entity
 		foreach (IComponent component in prefab.Components)
 		{
+			// Make a clone of the component for this unique entity
+			IComponent currentComponent = CloneComponent(component);
+
 			// If it's a "special" component then handle accordingly
 			// TODO: switch
-			if (component is ScriptComponent)
+			if (currentComponent is ScriptComponent)
 			{
 				// Load a script onto the entity
-				AdvancedComponentLoader.LoadScript(entity, component);
+				AdvancedComponentLoader.LoadScript(entity, currentComponent);
 			}
 			else
 			{
 				// Chuck the standard component onto the entity
-				AddComponentToEntity(component, entity);
+				AddComponentToEntity(currentComponent, entity);
 			}
 		}	
 
@@ -40,9 +45,19 @@ public class EntityManager
 		return entity;
 	}
 
+	// TODO: Put somewhere else
+	private static IComponent CloneComponent(IComponent component)
+	{
+		// Serialize the component into JSON (getting rid of any personal identity)
+		string json = JsonSerializer.Serialize(component, component.GetType());
+		
+		// Create a brand new component by parsing it
+		return JsonSerializer.Deserialize(json, component.GetType()) as IComponent;
+	}
+
 	// Instance an entity (actually put it in the game)
 	// TODO: Maybe make bool and return if it added it or not (already exists)
-	public static void Add(Entity entity)
+	public static void Spawn(Entity entity)
 	{
 		// Add to the list of entities IN the game
 		InstancedEntities.Add(entity);
@@ -54,9 +69,9 @@ public class EntityManager
 	}
 
 	// Avoids calling the thingy twice (for if its simple as)
-	public static void CreateFromPrefabAndAdd(string prefabGuid, string prefabName = null)
+	public static void CreateAndSpawnPrefab(string prefabGuid, string prefabName = null)
 	{
-		Add(CreateFromPrefab(prefabGuid, prefabName));
+		Spawn(CreateFromPrefab(prefabGuid, prefabName));
 	}
 
 

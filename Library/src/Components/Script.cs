@@ -31,8 +31,11 @@ public class Script
 
 	// Just saves you calling on EntityManger (qol)
 	// TODO: Maybe make protected
+	// TODO: Make 
 	public T GetComponent<T>() where T : IComponent
 	{
 		return EntityManager.GetComponent<T>(Entity);
 	}
+
+	public override string ToString() => Entity.ToString();
 }

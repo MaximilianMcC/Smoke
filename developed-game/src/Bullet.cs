@@ -5,7 +5,12 @@ using Raylib_cs;
 
 class Bullet : Script
 {
-	private const float speed = 500f;
+	private const float speed = 10f;
+
+	public override void Start()
+	{
+		Console.WriteLine("kia ora");
+	}
 
 	public override void Update()
 	{
@@ -16,5 +21,6 @@ class Bullet : Script
 	public override void Render()
 	{
 		DrawSquare(Transform, Color.White);
+		DrawText(ToString(), Transform, 15f, Color.Red);
 	}
 }

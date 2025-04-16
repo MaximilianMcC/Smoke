@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿using static Smoke.Graphics;
 using Raylib_cs;
 
 class Program
@@ -38,9 +38,9 @@ class Program
 		{
 
 			// Update everything
-			foreach (Entity entity in EntityManager.InstancedEntities)
+			for (int i = 0; i < EntityManager.InstancedEntities.Count; i++)
 			{
-				foreach (ScriptComponent script in EntityManager.GetComponents<ScriptComponent>(entity))
+				foreach (ScriptComponent script in EntityManager.GetComponents<ScriptComponent>(EntityManager.InstancedEntities[i]))
 				{
 					script.Script.Update();
 				}
@@ -57,14 +57,16 @@ class Program
 
 			// Basic render for everything
 			// TODO: Split up into 2d/3d/debug
-			foreach (Entity entity in EntityManager.InstancedEntities)
+			for (int i = 0; i < EntityManager.InstancedEntities.Count; i++)
 			{
-				foreach (ScriptComponent script in EntityManager.GetComponents<ScriptComponent>(entity))
+				foreach (ScriptComponent script in EntityManager.GetComponents<ScriptComponent>(EntityManager.InstancedEntities[i]))
 				{
 					script.Script.Render();
 				}
 			}
 
+
+			DrawText($"entities: {EntityManager.Entities.Count}\nInstanced entities: {EntityManager.InstancedEntities.Count}", 10, WindowHeight / 2, 30f, Color.White);
 			Raylib.EndDrawing();
 		}
 		// Game.TidyUp();
@@ -76,6 +78,6 @@ class Program
 	private static void LoadInitialMap()
 	{
 		// Load everything in the map
-		Project.Info.CurrentMap.InstancedPrefabs.ForEach(prefab => EntityManager.CreateFromPrefabAndAdd(prefab.Guid));
+		Project.Info.CurrentMap.InstancedPrefabs.ForEach(prefab => EntityManager.CreateAndSpawnPrefab(prefab.Guid));
 	}
 }

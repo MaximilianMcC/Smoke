@@ -25,7 +25,7 @@
 			"Components": [
 				{
 					"Type": "Transform",
-					"Position": { "X": 0, "Y": 0 },
+					"Position": { "X": 100, "Y": 500 },
 					"Scale": { "X": 10, "Y": 25 }
 				},
 				{
