@@ -19,9 +19,6 @@ public class Script
 	{
 		// Just get a heap of components ig
 		Transform = GetComponent<Transform>();
-
-		// Run the start method automatically
-		Start();
 	}
 
 	public virtual void Start() {  }
@@ -47,6 +44,8 @@ public class Script
 	// fully get rid of the thing (never coming back)
 	public void Eradicate()
 	{
+		TidyUp();
+		
 		EntityManager.InstancedEntities.Remove(Entity);
 		EntityManager.Entities.Remove(Entity);
 	}
