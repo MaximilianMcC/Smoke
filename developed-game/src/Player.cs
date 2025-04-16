@@ -31,7 +31,7 @@ class Player : Script
 	{
 		// Spawn a bullet
 		Entity bullet = EntityManager.CreateFromPrefab("76da99fb-4fc8-44d6-a72e-0e257c43cbaa");
-		EntityManager.GetComponent<Transform>(bullet).Position.Y = Transform.Position.Y;
+		EntityManager.GetComponent<Transform>(bullet).Position = Transform.Position + new Vector2(Transform.Scale.X / 2, 0);
 		EntityManager.Spawn(bullet);
 	}
 

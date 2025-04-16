@@ -37,5 +37,19 @@ public class Script
 		return EntityManager.GetComponent<T>(Entity);
 	}
 
+	// Remove the thing from the game but not entities list
+	//? ngl might be fully useless
+	public void Deinstance()
+	{
+		EntityManager.InstancedEntities.Remove(Entity);
+	}
+
+	// fully get rid of the thing (never coming back)
+	public void Eradicate()
+	{
+		EntityManager.InstancedEntities.Remove(Entity);
+		EntityManager.Entities.Remove(Entity);
+	}
+
 	public override string ToString() => Entity.ToString();
 }

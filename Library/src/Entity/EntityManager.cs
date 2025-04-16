@@ -46,16 +46,6 @@ public class EntityManager
 		return entity;
 	}
 
-	// // TODO: Put somewhere else
-	// private static IComponent CloneComponent(IComponent component)
-	// {
-	// 	// Serialize the component into JSON (getting rid of any personal identity)
-	// 	string json = JsonSerializer.Serialize(component, component.GetType());
-		
-	// 	// Create a brand new component by parsing it
-	// 	return JsonSerializer.Deserialize(json, component.GetType()) as IComponent;
-	// }
-
 	// Instance an entity (actually put it in the game)
 	// TODO: Maybe make bool and return if it added it or not (already exists)
 	public static void Spawn(Entity entity)

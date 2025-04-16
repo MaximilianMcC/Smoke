@@ -5,7 +5,7 @@ using Raylib_cs;
 
 class Bullet : Script
 {
-	private const float speed = 10f;
+	private const float speed = 1500f;
 
 	public override void Start()
 	{
@@ -16,11 +16,14 @@ class Bullet : Script
 	{
 		// Move the bullet up
 		Transform.Position.Y -= speed * DeltaTime;
+
+		// If the bullet goes off screen then destroy it
+		if (Transform.Position.Y + Transform.Scale.Y < 0) Eradicate();
 	}
 
 	public override void Render()
 	{
 		DrawSquare(Transform, Color.White);
-		DrawText(ToString(), Transform, 15f, Color.Red);
+		// DrawText(ToString(), Transform, 15f, Color.Red);
 	}
 }
