@@ -21,7 +21,8 @@ class Player : Script
 
 		// Load the player sprite
 		// TODO: Make this happen automatically yk
-		Textures.Add("player", LoadTexture("player"));
+		// Textures.Add("player", LoadTexture("player"));
+		Textures.Add("player", LoadTexture("player.png"));
 	}
 
 	public override void Update()
@@ -45,6 +46,8 @@ class Player : Script
 	public override void Render()
 	{
 		DrawSquare(Transform, Color.White);
+		Raylib.DrawTexture(Textures["player"], 0, 0, Color.White);
+		Raylib.DrawTexture(Textures["player 2 idk"], 200, 200, Color.White);
 		// DrawCircle(Transform, 100f, Color.Orange);
 	}
 
@@ -52,7 +55,7 @@ class Player : Script
 	{
 		// Unload the player texture
 		// TODO: Make this automatic also
-		// Raylib.UnloadTexture(Textures["player"]);
-		// Textures.Remove("player");
+		Raylib.UnloadTexture(Textures["player"]);
+		Textures.Remove("player");
 	}
 }

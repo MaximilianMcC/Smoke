@@ -7,10 +7,11 @@ public static class AssetManager
 {
 	// Store all of the games resources in a dictionary
 	// so we can easily get stuff via a string as a key
-	public static AssetDictionary<Texture2D> Textures = new(LoadTexture("./assets/debug.png|internal"));
+	public static AssetDictionary<Texture2D> Textures = new("./assets/debug.png|internal");
 	//? etc...
 
-	private static byte[] GetAssetBytes(string assetPath, out string extension)
+	// TODO: Make private
+	public static byte[] GetAssetBytes(string assetPath, out string extension)
 	{
 		// If a path ends with "|internal" then it is gotten from the libraries assets. Otherwise the calling assembly
 		const string internalSuffix = "|internal";
@@ -33,6 +34,8 @@ public static class AssetManager
 		string path = $"{assemblyNamespace}.{assetPath}";
 		extension = Path.GetExtension(assetPath);
 
+		Console.WriteLine("Loading asset " + path);
+
 		// Get the stream containing the assets data
 		using (Stream stream = assembly.GetManifestResourceStream(path))
 		{
@@ -41,7 +44,10 @@ public static class AssetManager
 			{
 				// Complain
 				Console.Error.WriteLine("😬 Could not find embedded asset at " + path);
-				return null;
+
+				// Give back nothing. This will later be swapped
+				// out for any placeholder assets that have been set
+				return new byte[0];
 			}
 
 			// Get the stream as a byte array
@@ -62,7 +68,7 @@ public static class AssetManager
 	{
 		// Get the asset byte array and extension
 		byte[] bytes = GetAssetBytes(path, out string extension);
-		if (bytes == null) return Textures.DebugAsset;
+		if (bytes.Length == 0) bytes = Textures.PlaceholderAssetBytes;
 
 		// Load the image from the byte array
 		Image image = Raylib.LoadImageFromMemory(extension, bytes);
