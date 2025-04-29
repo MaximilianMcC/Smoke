@@ -1,6 +1,7 @@
 using static Smoke.Runtime;
 using static Smoke.Graphics;
 using static Smoke.Input;
+using static Smoke.AssetManager;
 using Raylib_cs;
 using System.Numerics;
 
@@ -15,6 +16,12 @@ class Player : Script
 			(WindowWidth - Transform.Scale.X) / 2,
 			WindowHeight - Transform.Scale.Y
 		);
+
+		PrintEmbeddedAssets();
+
+		// Load the player sprite
+		// TODO: Make this happen automatically yk
+		Textures.Add("player", LoadTexture("player"));
 	}
 
 	public override void Update()
@@ -39,5 +46,13 @@ class Player : Script
 	{
 		DrawSquare(Transform, Color.White);
 		// DrawCircle(Transform, 100f, Color.Orange);
+	}
+
+	public override void TidyUp()
+	{
+		// Unload the player texture
+		// TODO: Make this automatic also
+		// Raylib.UnloadTexture(Textures["player"]);
+		// Textures.Remove("player");
 	}
 }

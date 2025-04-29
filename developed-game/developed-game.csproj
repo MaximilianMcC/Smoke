@@ -11,4 +11,9 @@
 	<ProjectReference Include="../Library/Smoke.csproj"/>
 	</ItemGroup>
 
+  <!-- Make this get added automatically somehow idk. or just don't forget -->
+	<ItemGroup>
+	<EmbeddedResource Include="./assets/**/*"></EmbeddedResource>
+	</ItemGroup>
+
 </Project>
