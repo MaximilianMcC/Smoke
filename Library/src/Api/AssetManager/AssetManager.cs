@@ -7,7 +7,8 @@ public static class AssetManager
 {
 	// Store all of the games resources in a dictionary
 	// so we can easily get stuff via a string as a key
-	public static AssetDictionary<Texture2D> Textures = new("./assets/debug.png|internal");
+	public static AssetDictionary<Image> Images = new(LoadImage("./assets/debug.png|internal"));
+	public static AssetDictionary<Texture2D> Textures = new(LoadTexture("./assets/debug.png|internal"));
 	//? etc...
 
 	// TODO: Make private
@@ -66,9 +67,10 @@ public static class AssetManager
 
 	public static Image LoadImage(string path)
 	{
-		// Get the asset byte array and extension
+		// Get the asset byte array and extension. If it doesn't
+		// exist then use whatever placeholder asset is loaded
 		byte[] bytes = GetAssetBytes(path, out string extension);
-		if (bytes.Length == 0) bytes = Textures.PlaceholderAssetBytes;
+		if (bytes.Length == 0) return Images.PlaceholderAsset;
 
 		// Load the image from the byte array
 		Image image = Raylib.LoadImageFromMemory(extension, bytes);

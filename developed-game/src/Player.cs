@@ -46,9 +46,13 @@ class Player : Script
 	public override void Render()
 	{
 		DrawSquare(Transform, Color.White);
+
+
+		// this "works" (draws the placeholder thing)
 		Raylib.DrawTexture(Textures["player"], 0, 0, Color.White);
+
+		// this does not work. donest draw anything
 		Raylib.DrawTexture(Textures["player 2 idk"], 200, 200, Color.White);
-		// DrawCircle(Transform, 100f, Color.Orange);
 	}
 
 	public override void TidyUp()

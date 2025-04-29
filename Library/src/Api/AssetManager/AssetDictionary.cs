@@ -4,12 +4,11 @@ public class AssetDictionary<TValue> : Dictionary<string, TValue>
 {
 	// Debug/placeholder asset for if a requested asset doesn't exist
 	// TODO: Also have a file extension one
-	public byte[] PlaceholderAssetBytes { get; set; }
+	public TValue PlaceholderAsset;
 
-	public AssetDictionary(string placeholderAssetPath)
+	public AssetDictionary(TValue placeholder = default)
 	{
-		// Grab all of the bytes from the placeholder asset
-		PlaceholderAssetBytes = AssetManager.GetAssetBytes(placeholderAssetPath, out _);
+		PlaceholderAsset = placeholder;
 	}
 
 	// Indexer override (when we try access via key in square brackets)
@@ -22,13 +21,11 @@ public class AssetDictionary<TValue> : Dictionary<string, TValue>
 			// actually exists (mislick prevention)
 			if (TryGetValue(key, out TValue value) == false)
 			{
-				// Use the debug asset
-				Console.WriteLine("Cannot find an asset labelled '" + key + "' (using default)");
-				// value = DebugAsset;
-				return value;
+				// Use the placeholder asset
+				return PlaceholderAsset;
 			}
 
-			// Give back their asset
+			// Use the actual asset
 			return value;
 		}
 
