@@ -6,6 +6,9 @@ namespace Smoke;
 
 public class Input
 {
+	public static InputPreset WASD = new InputPreset(KeyboardKey.A, KeyboardKey.D, KeyboardKey.W, KeyboardKey.S);
+	public static InputPreset ArrowKeys = new InputPreset(KeyboardKey.Left, KeyboardKey.Right, KeyboardKey.Up, KeyboardKey.Down);
+
 	// TODO: Don't use raylib keyboard key
 	public static bool KeyHeldDown(KeyboardKey key)
 	{
@@ -17,32 +20,39 @@ public class Input
 		return Raylib.IsKeyPressed(key);
 	}
 
-	// return either -1, 0, or 1 depending on how the arrow keys/wasd are pressed
-	public static float GetXInput(bool alsoUseArrowKeys = false)
+	public static float GetInput(KeyboardKey negativeOutput, KeyboardKey positiveOutput)
 	{
 		float input = 0;
-		if ((alsoUseArrowKeys && KeyHeldDown(KeyboardKey.Left)) || KeyHeldDown(KeyboardKey.A)) input--;
-		if ((alsoUseArrowKeys && KeyHeldDown(KeyboardKey.Right)) || KeyHeldDown(KeyboardKey.D)) input++;
+		if (KeyHeldDown(negativeOutput)) input--;
+		if (KeyHeldDown(positiveOutput)) input++;
 
 		return input;
 	}
 
-	// return either -1, 0, or 1 depending on how the arrow keys/wasd are pressed
-	public static float GetYInput(bool alsoUseArrowKeys = false)
-	{
-		float input = 0;
-		if ((alsoUseArrowKeys && KeyHeldDown(KeyboardKey.Up)) || KeyHeldDown(KeyboardKey.W)) input--;
-		if ((alsoUseArrowKeys && KeyHeldDown(KeyboardKey.Down)) || KeyHeldDown(KeyboardKey.S)) input++;
-
-		return input;
-	}
-
-	public static Vector2 GetInput(bool alsoUseArrowKeys = false)
+	public static Vector2 GetInput(InputPreset inputPreset) => GetInput(inputPreset.NegativeX, inputPreset.PositiveX, inputPreset.NegativeY, inputPreset.PositiveY);
+	public static Vector2 GetInput(KeyboardKey negativeXOutput, KeyboardKey positiveXOutput, KeyboardKey negativeYOutput, KeyboardKey positiveYOutput)
 	{
 		return new Vector2(
-			GetXInput(alsoUseArrowKeys),
-			GetYInput(alsoUseArrowKeys)
+			GetInput(negativeXOutput, positiveXOutput),
+			GetInput(negativeYOutput, positiveYOutput)
 		);
 	}
+}
 
+public struct InputPreset
+{
+	public KeyboardKey NegativeX;
+	public KeyboardKey PositiveX;
+
+	public KeyboardKey NegativeY;
+	public KeyboardKey PositiveY;
+
+	public InputPreset(KeyboardKey negativeXKey, KeyboardKey positiveXKey, KeyboardKey negativeYKey, KeyboardKey positiveYKey)
+	{
+		NegativeX = negativeXKey;
+		PositiveX = positiveXKey;
+
+		NegativeY = negativeYKey;
+		PositiveY = positiveYKey;
+	}
 }
