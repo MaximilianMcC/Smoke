@@ -19,7 +19,9 @@ class Player : Script
 
 		// Load the player sprite
 		// TODO: Make this happen automatically yk
+		// TODO: Make a method that only runs once for each type of prefab (lets you load stuff and whatnot)
 		Textures.Add("player", LoadTexture("./assets/player.png"));
+		Textures.Add("bullet", LoadTexture("./assets/bullet.png"));
 	}
 
 	public override void Update()
@@ -34,9 +36,14 @@ class Player : Script
 
 	private void Shoot()
 	{
-		// Spawn a bullet
-		Entity bullet = EntityManager.CreateFromPrefab(EntityManager.GetPrefabFromName("Bullet"));
-		EntityManager.GetComponent<Transform>(bullet).Position = Transform.Position + new Vector2(Transform.Scale.X / 2, 0);
+		// Make a bullet
+		Entity bullet = EntityManager.CreateFromPrefab("Bullet");
+
+		// Make it spawn in the centre of the player
+		Vector2 bulletPosition = new Vector2(Transform.Scale.X / 2, 0);
+		bullet.GetComponent<Transform>().Position = bulletPosition;
+
+		// Spawn it
 		EntityManager.Spawn(bullet);
 	}
 
@@ -53,5 +60,8 @@ class Player : Script
 		// TODO: Make this automatic also
 		Raylib.UnloadTexture(Textures["player"]);
 		Textures.Remove("player");
+
+		Raylib.UnloadTexture(Textures["bullet"]);
+		Textures.Remove("bullet");
 	}
 }

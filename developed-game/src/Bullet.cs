@@ -1,16 +1,17 @@
 using static Smoke.Runtime;
 using static Smoke.Graphics;
 using static Smoke.Input;
+using static Smoke.AssetManager;
 using Raylib_cs;
 
 class Bullet : Script
 {
-	private const float speed = 1500f;
+	private const float speed = 500f;
 
-	public override void Start()
-	{
-		Console.WriteLine("kia ora");
-	}
+    public override void Start()
+    {
+        Transform.Scale *= 5;
+    }
 
 	public override void Update()
 	{
@@ -23,7 +24,6 @@ class Bullet : Script
 
 	public override void Render()
 	{
-		DrawSquare(Transform, Color.White);
-		// DrawText(ToString(), Transform, 15f, Color.Red);
+		DrawTexture(Textures["bullet"], Transform);
 	}
 }

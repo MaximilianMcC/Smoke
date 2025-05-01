@@ -6,6 +6,12 @@ public class EntityManager
 	public static Dictionary<Entity, List<IComponent>> Entities = [];
 	public static List<Entity> InstancedEntities = [];
 
+	// Another shortcut thing
+	public static Entity CreateFromPrefab(string prefabName, string displayName = null)
+	{
+		return CreateFromPrefab(GetPrefabFromName(prefabName), displayName);
+	}
+
 	public static Entity CreateFromPrefab(Prefab prefab, string displayName = null)
 	{
 		// Check for if we actually have a prefab
@@ -97,14 +103,4 @@ public class EntityManager
 		// Get any prefabs with the name we want (returns null if not a thing)
 		return Project.Info.Prefabs.Concat(Project.Info.CurrentMap.InstancedPrefabs).Where(prefab => prefab.DisplayName == displayName).First();
 	}
-}
-
-
-
-public class Entity
-{
-	public Guid guid;
-	public string name;
-
-	public override string ToString() => $"{name} ({guid})";
 }

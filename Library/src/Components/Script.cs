@@ -28,10 +28,9 @@ public class Script
 
 	// Just saves you calling on EntityManger (qol)
 	// TODO: Maybe make protected
-	// TODO: Make 
 	public T GetComponent<T>() where T : IComponent
 	{
-		return EntityManager.GetComponent<T>(Entity);
+		return Entity.GetComponent<T>();
 	}
 
 	// Remove the thing from the game but not entities list
