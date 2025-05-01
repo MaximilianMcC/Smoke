@@ -11,8 +11,7 @@ public static class AssetManager
 	public static AssetDictionary<Texture2D> Textures = new(LoadTexture("./assets/debug.png|internal"));
 	//? etc...
 
-	// TODO: Make private
-	public static byte[] GetAssetBytes(string assetPath, out string extension)
+	private static byte[] GetAssetBytes(string assetPath, out string extension)
 	{
 		// If a path ends with "|internal" then it is gotten from the libraries assets. Otherwise the calling assembly
 		const string internalSuffix = "|internal";
@@ -21,48 +20,42 @@ public static class AssetManager
 		{
 			builtIn = true;
 
-			// Remove the internal bit so raylib can
+			// Remove the internal bit so we can
 			// use the path for loading and stuff
 			assetPath = assetPath.Replace(internalSuffix, "");
 		}
 
-		// Get the assembly and namespace
-		Assembly assembly = builtIn ? typeof(AssetManager).Assembly : Assembly.GetEntryAssembly();
-		string assemblyNamespace = assembly.GetName().Name.ToLower();
-
 		// Clean and format the asset path for embedded resources
 		assetPath = assetPath.TrimStart('.', '/', '\\').Replace("/", ".").Replace("\\", ".");
-		string path = $"{assemblyNamespace}.{assetPath}";
 		extension = Path.GetExtension(assetPath);
 
-		Console.WriteLine("Loading asset " + path);
+		// Get the assembly we need
+		Assembly assembly;
+		if (builtIn) assembly = typeof(AssetManager).Assembly;
+		else assembly = Assembly.Load(Project.Info.Name);
 
-		// Get the stream containing the assets data
-		using (Stream stream = assembly.GetManifestResourceStream(path))
+		// Get the assets from the assembly
+		string[] resources = assembly.GetManifestResourceNames();
+		string asset = resources.FirstOrDefault(asset => asset.EndsWith(assetPath, StringComparison.OrdinalIgnoreCase));
+
+		if (asset == null)
 		{
-			// Check for if there is a stream or not
-			if (stream == null)
-			{
-				// Complain
-				Console.Error.WriteLine("😬 Could not find embedded asset at " + path);
+			// Complain
+			Console.Error.WriteLine("😬 Could not find embedded asset at " + assetPath);
 
-				// Give back nothing. This will later be swapped
-				// out for any placeholder assets that have been set
-				return new byte[0];
-			}
-
-			// Get the stream as a byte array
-			byte[] bytes;
-			using (MemoryStream memoryStream = new MemoryStream())
-			{
-				// Extract the bytes
-				stream.CopyTo(memoryStream);
-
-				// Give them back
-				bytes = memoryStream.ToArray();
-				return bytes;
-			}
+			// Give back nothing. This will later be swapped
+			// out for any placeholder assets that have been set
+			//? this array.empty thing is static (quicker (more performant)) 
+			return Array.Empty<byte>();
 		}
+
+		// Get the bytes of the asset
+		using Stream stream = assembly.GetManifestResourceStream(asset);
+		using MemoryStream bytesStream = new MemoryStream();
+		stream.CopyTo(bytesStream);
+
+		// Give back the asset as a byte array
+		return bytesStream.ToArray();
 	}
 
 	public static Image LoadImage(string path)
@@ -96,8 +89,8 @@ public static class AssetManager
 	//! Debug
 	public static void PrintEmbeddedAssets()
 	{
-		// Get all of the assets that are embedded rn
-		Assembly assembly = Assembly.GetExecutingAssembly();
+		var assembly = Assembly.GetCallingAssembly();
+		Console.WriteLine(assembly.FullName);
 		string[] assets = assembly.GetManifestResourceNames();
 		
 		// Print them all

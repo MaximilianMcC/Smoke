@@ -22,7 +22,7 @@ class Player : Script
 		// Load the player sprite
 		// TODO: Make this happen automatically yk
 		// Textures.Add("player", LoadTexture("player"));
-		Textures.Add("player", LoadTexture("player.png"));
+		Textures.Add("player", LoadTexture("./assets/player.png"));
 	}
 
 	public override void Update()
@@ -47,11 +47,7 @@ class Player : Script
 	{
 		DrawSquare(Transform, Color.White);
 
-
-		// this "works" (draws the placeholder thing)
 		Raylib.DrawTexture(Textures["player"], 0, 0, Color.White);
-
-		// this does not work. donest draw anything
 		Raylib.DrawTexture(Textures["player 2 idk"], 200, 200, Color.White);
 	}
 
