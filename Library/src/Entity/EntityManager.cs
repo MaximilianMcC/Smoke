@@ -6,17 +6,16 @@ public class EntityManager
 	public static Dictionary<Entity, List<IComponent>> Entities = [];
 	public static List<Entity> InstancedEntities = [];
 
-	public static Entity CreateFromPrefab(string prefabGuid, string prefabName = null)
+	public static Entity CreateFromPrefab(Prefab prefab, string displayName = null)
 	{
-		// Get/find the prefab we're copying from
-		Prefab prefab = Project.Info.Prefabs.Concat(Project.Info.CurrentMap.InstancedPrefabs).FirstOrDefault(prefab => prefab.Guid == prefabGuid);
+		// Check for if we actually have a prefab
 		if (prefab == null) return null;
 
 		// Make a new entity for the prefab
 		Entity entity = new Entity()
 		{
 			guid = Guid.NewGuid(),
-			name = prefabName ?? prefab.DisplayName
+			name = displayName ?? prefab.DisplayName
 		};
 
 		// Add to the list of ALL entities
@@ -60,9 +59,9 @@ public class EntityManager
 	}
 
 	// Avoids calling the thingy twice (for if its simple as)
-	public static void CreateAndSpawnPrefab(string prefabGuid, string prefabName = null)
+	public static void CreateAndSpawnPrefab(Prefab prefab, string prefabName = null)
 	{
-		Spawn(CreateFromPrefab(prefabGuid, prefabName));
+		Spawn(CreateFromPrefab(prefab, prefabName));
 	}
 
 
@@ -91,6 +90,12 @@ public class EntityManager
 		// Give each back
 		// TODO: Maybe don't use todo idk
 		foreach (T component in components) yield return component;
+	}
+
+	public static Prefab GetPrefabFromName(string displayName)
+	{
+		// Get any prefabs with the name we want (returns null if not a thing)
+		return Project.Info.Prefabs.Concat(Project.Info.CurrentMap.InstancedPrefabs).Where(prefab => prefab.DisplayName == displayName).First();
 	}
 }
 

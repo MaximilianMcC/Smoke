@@ -1,5 +1,6 @@
 using System.Numerics;
 using Raylib_cs;
+using static Smoke.AssetManager;
 
 namespace Smoke;
 
@@ -30,4 +31,22 @@ public class Graphics
 	{
 		Raylib.DrawTextPro(Raylib.GetFontDefault(), text, position, Vector2.Zero, 0f, fontSize, (fontSize / 10), color);
 	}
+
+	// Textures
+	public static void DrawTexture(Texture2D texture, Transform transform) => DrawTexture(texture, transform.Position, transform.Scale, 0f, Color.White);
+	public static void DrawTexture(Texture2D texture, Transform transform, float rotation, Color color) => DrawTexture(texture, transform.Position, transform.Scale, rotation, color);
+	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, float rotation, Color color)
+	{
+		Raylib.DrawTexturePro(
+			texture,
+			new Rectangle(0, 0, texture.Width, texture.Height),
+			new Rectangle(position, size),
+			Vector2.Zero,
+			rotation,
+			color
+		);
+	}
+
+	//? maybe don't do this
+	public static void DrawTexture(string textureKey, Transform transform) => DrawTexture(Textures[textureKey], transform.Position, transform.Scale, 0f, Color.White);
 }

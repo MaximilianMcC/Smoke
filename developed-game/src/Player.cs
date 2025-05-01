@@ -17,11 +17,8 @@ class Player : Script
 			WindowHeight - Transform.Scale.Y
 		);
 
-		PrintEmbeddedAssets();
-
 		// Load the player sprite
 		// TODO: Make this happen automatically yk
-		// Textures.Add("player", LoadTexture("player"));
 		Textures.Add("player", LoadTexture("./assets/player.png"));
 	}
 
@@ -38,7 +35,7 @@ class Player : Script
 	private void Shoot()
 	{
 		// Spawn a bullet
-		Entity bullet = EntityManager.CreateFromPrefab("76da99fb-4fc8-44d6-a72e-0e257c43cbaa");
+		Entity bullet = EntityManager.CreateFromPrefab(EntityManager.GetPrefabFromName("Bullet"));
 		EntityManager.GetComponent<Transform>(bullet).Position = Transform.Position + new Vector2(Transform.Scale.X / 2, 0);
 		EntityManager.Spawn(bullet);
 	}
@@ -47,8 +44,7 @@ class Player : Script
 	{
 		DrawSquare(Transform, Color.White);
 
-		Raylib.DrawTexture(Textures["player"], 0, 0, Color.White);
-		Raylib.DrawTexture(Textures["player 2 idk"], 200, 200, Color.White);
+		DrawTexture(Textures["player"], Transform);
 	}
 
 	public override void TidyUp()

@@ -78,6 +78,6 @@ class Program
 	private static void LoadInitialMap()
 	{
 		// Load everything in the map
-		Project.Info.CurrentMap.InstancedPrefabs.ForEach(prefab => EntityManager.CreateAndSpawnPrefab(prefab.Guid));
+		Project.Info.CurrentMap.InstancedPrefabs.ForEach(prefab => EntityManager.CreateAndSpawnPrefab(prefab));
 	}
 }
