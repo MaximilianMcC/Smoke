@@ -1,5 +1,6 @@
 ﻿using static Smoke.Graphics;
 using Raylib_cs;
+using Smoke;
 
 class Program
 {
@@ -36,37 +37,23 @@ class Program
 		// Main program loop
 		while (Raylib.WindowShouldClose() == false)
 		{
-
 			// Update everything
-			for (int i = 0; i < EntityManager.InstancedEntities.Count; i++)
-			{
-				foreach (ScriptComponent script in EntityManager.GetComponents<ScriptComponent>(EntityManager.InstancedEntities[i]))
-				{
-					script.Script.Update();
-				}
-			}
+			RunOnAllInstancedEntities(entity => entity.Update());
 
+			// Toggle debug mode
+			if (Input.KeyPressed(Input.ToggleDebugKey)) Runtime.Debug = !Runtime.Debug;
+
+			// Draw everything
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
 			// TODO: Do camera stuff
-			// Game.Render3D();
-			// Game.RenderDebug3D();
 
-			// Game.Render2D();
-			// Game.RenderDebug2D();
+			RunOnAllInstancedEntities(entity => entity.Render3D());
+			if (Runtime.Debug) RunOnAllInstancedEntities(entity => entity.RenderDebug3D());
 
-			// Basic render for everything
-			// TODO: Split up into 2d/3d/debug
-			for (int i = 0; i < EntityManager.InstancedEntities.Count; i++)
-			{
-				foreach (ScriptComponent script in EntityManager.GetComponents<ScriptComponent>(EntityManager.InstancedEntities[i]))
-				{
-					script.Script.Render();
-				}
-			}
+			RunOnAllInstancedEntities(entity => entity.Render2D());
+			if (Runtime.Debug) RunOnAllInstancedEntities(entity => entity.RenderDebug2D());
 
-
-			DrawText($"entities: {EntityManager.Entities.Count}\nInstanced entities: {EntityManager.InstancedEntities.Count}", 10, WindowHeight / 2, 30f, Color.White);
 			Raylib.EndDrawing();
 		}
 		// Game.TidyUp();
@@ -79,5 +66,21 @@ class Program
 	{
 		// Load everything in the map
 		Project.Info.CurrentMap.InstancedPrefabs.ForEach(prefab => EntityManager.CreateAndSpawnPrefab(prefab));
+	}
+
+
+
+	private static void RunOnAllInstancedEntities(Action<Script> action)
+	{
+		// Loop through each entity
+		for (int i = 0; i < EntityManager.InstancedEntities.Count; i++)
+		{
+			// Loop through each script on the entity
+			foreach (ScriptComponent script in EntityManager.GetComponents<ScriptComponent>(EntityManager.InstancedEntities[i]))
+			{
+				// Do what we wanted to do with it
+				action(script.Script);
+			}
+		}
 	}
 }

@@ -23,7 +23,10 @@ public class Script
 
 	public virtual void Start() {  }
 	public virtual void Update() {  }
-	public virtual void Render() {  }
+	public virtual void Render2D() {  }
+	public virtual void Render3D() {  }
+	public virtual void RenderDebug2D() {  }
+	public virtual void RenderDebug3D() {  }
 	public virtual void TidyUp() {  }
 
 	// Just saves you calling on EntityManger (qol)

@@ -6,6 +6,7 @@ namespace Smoke;
 
 public class Input
 {
+	public static KeyboardKey ToggleDebugKey = KeyboardKey.Grave;
 	public static InputPreset WASD = new InputPreset(KeyboardKey.A, KeyboardKey.D, KeyboardKey.W, KeyboardKey.S);
 	public static InputPreset ArrowKeys = new InputPreset(KeyboardKey.Left, KeyboardKey.Right, KeyboardKey.Up, KeyboardKey.Down);
 
