@@ -72,6 +72,13 @@ public static class AssetManager
 		return image;
 	}
 
+	public static void UnloadImage(string imageKey)
+	{
+		// Unload the image, and remove it from the dictionary
+		Raylib.UnloadImage(Images[imageKey]);
+		Images.Remove(imageKey);
+	}
+
 	public static Texture2D LoadTexture(string path)
 	{
 		// Load the texture as an image
@@ -84,6 +91,13 @@ public static class AssetManager
 
 		// Give back the loaded texture
 		return texture;
+	}
+
+	public static void UnloadTexture(string textureKey)
+	{
+		// Unload the image, and remove it from the dictionary
+		Raylib.UnloadTexture(Textures[textureKey]);
+		Textures.Remove(textureKey);
 	}
 
 	//! Debug
