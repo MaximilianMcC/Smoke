@@ -3,10 +3,11 @@ using Raylib_cs;
 
 namespace Smoke;
 
-public static class AssetManager
+public static partial class AssetManager
 {
 	// Store all of the games resources in a dictionary
 	// so we can easily get stuff via a string as a key
+	// TODO: Asset dictionary has the code in AssetLoaders.cs so its all in one place then its different classes for each asset (allow more fine tuning)
 	public static AssetDictionary<Image> Images = new(LoadImage("./assets/debug.png|internal"));
 	public static AssetDictionary<Texture2D> Textures = new(LoadTexture("./assets/debug.png|internal"));
 	//? etc...
@@ -58,58 +59,15 @@ public static class AssetManager
 		return bytesStream.ToArray();
 	}
 
-	public static Image LoadImage(string path)
+	public static void UnloadAllAssets()
 	{
-		// Get the asset byte array and extension. If it doesn't
-		// exist then use whatever placeholder asset is loaded
-		byte[] bytes = GetAssetBytes(path, out string extension);
-		if (bytes.Length == 0) return Images.PlaceholderAsset;
+		// Unload the debug assets
+		Raylib.UnloadImage(Images.PlaceholderAsset);
+		Raylib.UnloadTexture(Textures.PlaceholderAsset);
 
-		// Load the image from the byte array
-		Image image = Raylib.LoadImageFromMemory(extension, bytes);
-
-		// Give back the loaded image
-		return image;
-	}
-
-	public static void UnloadImage(string imageKey)
-	{
-		// Unload the image, and remove it from the dictionary
-		Raylib.UnloadImage(Images[imageKey]);
-		Images.Remove(imageKey);
-	}
-
-	public static Texture2D LoadTexture(string path)
-	{
-		// Load the texture as an image
-		// then convert it to a texture
-		Image image = LoadImage(path);
-		Texture2D texture = Raylib.LoadTextureFromImage(image);
-
-		// Unload the image since we no longer need it
-		Raylib.UnloadImage(image);
-
-		// Give back the loaded texture
-		return texture;
-	}
-
-	public static void UnloadTexture(string textureKey)
-	{
-		// Unload the image, and remove it from the dictionary
-		Raylib.UnloadTexture(Textures[textureKey]);
-		Textures.Remove(textureKey);
-	}
-
-	//! Debug
-	public static void PrintEmbeddedAssets()
-	{
-		var assembly = Assembly.GetCallingAssembly();
-		Console.WriteLine(assembly.FullName);
-		string[] assets = assembly.GetManifestResourceNames();
-		
-		// Print them all
-		Console.WriteLine("All embedded assets:");
-		foreach (string asset in assets) Console.WriteLine("- " + asset);
-		Console.WriteLine();
+		// Unload everything that has
+		// been Dynamically loaded
+		foreach (string key in Images.Keys) UnloadImage(key);
+		foreach (string key in Textures.Keys) UnloadTexture(key);
 	}
 }

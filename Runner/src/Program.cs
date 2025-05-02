@@ -48,15 +48,25 @@ class Program
 			Raylib.ClearBackground(Color.Magenta);
 			// TODO: Do camera stuff
 
-			RunOnAllInstancedEntities(entity => entity.Render3D());
-			if (Runtime.Debug) RunOnAllInstancedEntities(entity => entity.RenderDebug3D());
+			// Draw 3d stuff
+			RunOnAllInstancedEntities(entity => {
+				entity.Render3D();
+				entity.RenderDebug3D();
+			});
 
-			RunOnAllInstancedEntities(entity => entity.Render2D());
-			if (Runtime.Debug) RunOnAllInstancedEntities(entity => entity.RenderDebug2D());
+			// Draw 2d stuff
+			RunOnAllInstancedEntities(entity => {
+				entity.Render2D();
+				entity.RenderDebug2D();
+			});
 
 			Raylib.EndDrawing();
 		}
-		// Game.TidyUp();
+
+		// Unload anything that we forgot to
+		AssetManager.UnloadAllAssets();
+
+		// Close raylib
 		Raylib.CloseWindow();
 	}
 
