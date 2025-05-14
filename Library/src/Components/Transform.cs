@@ -1,13 +1,15 @@
 using System.Numerics;
-using System.Text.Json.Serialization;
+
+namespace Smoke;
 
 public class Transform : IComponent
 {
-	[JsonInclude] public Vector2 Position;
-	[JsonInclude] public Vector2 Scale;
+	// TODO: Make a 3D version
+	public Vector2 Position;
+	public Vector2 Scale;
+	public Vector2 Rotation;
 
-	public override string ToString()
-	{
-		return $"Position:\t{Position}\nScale:\t{Scale}";
-	}
+	public void Run() { }
+
+	public override string ToString() => $"{Position}\n{Scale}\n{Rotation}";
 }
