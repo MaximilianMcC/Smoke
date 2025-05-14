@@ -11,5 +11,6 @@ public class Renderer : IComponent
 	public void RenderDebug3D() { }
 
 	// TODO: Maybe call them? Also like only do the debug ones if debug mode is on
+	// TODO: Do camera stuff maybe
 	public void Run() { }
 }

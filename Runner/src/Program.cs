@@ -28,7 +28,6 @@ class Program
 
 		// Load the project and scripts
 		Project.Load(args[0]);
-		AdvancedComponentLoader.Init();
 		LoadInitialMap();
 
 		// Set the game title
@@ -37,34 +36,60 @@ class Program
 		// Main program loop
 		while (Raylib.WindowShouldClose() == false)
 		{
-			// Update everything
-			RunOnAllInstancedEntities(entity => entity.Update());
-
 			// Toggle debug mode
 			if (Input.KeyPressed(Input.ToggleDebugKey)) Runtime.Debug = !Runtime.Debug;
 
+			// Update all game object components
+			foreach (GameObject gameObject in GameObjectManager.GameObjects)
+			{
+				// Loop over every component and 'run' it
+				foreach (IComponent component in gameObject.Components)
+				{
+					component.Run();
+				}
+			}
+
+			// Update all game objects
+			foreach (GameObject gameObject in GameObjectManager.GameObjects)
+			{
+				gameObject.OnUpdate();
+			}
+
 			// Draw everything
+			// TODO: Do camera stuff
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
 
-			// Draw 3d stuff
-			// TODO: Do camera stuff
-			RunOnAllInstancedEntities(entity => {
-				entity.Render3D();
-				if (Runtime.Debug) entity.RenderDebug3D();
-			});
+			// Draw 3D stuff
+			// TODO: Don't loop over this again
+			foreach (GameObject gameObject in GameObjectManager.GameObjects)
+			{
+				// Loop over every render component
+				foreach (Renderer renderer in gameObject.Components.OfType<Renderer>())
+				{
+					if (Runtime.Debug) renderer.RenderDebug3D();
 
-			// Draw 2d stuff
-			// TODO: Do camera stuff
-			RunOnAllInstancedEntities(entity => {
-				entity.Render2D();
-				if (Runtime.Debug) entity.RenderDebug2D();
-			});
+					renderer.Render3D();
+				}
+			}
+
+			// Draw 2D stuff
+			// TODO: Don't loop over this again again
+			foreach (GameObject gameObject in GameObjectManager.GameObjects)
+			{
+				// Loop over every render component
+				foreach (Renderer renderer in gameObject.Components.OfType<Renderer>())
+				{
+					if (Runtime.Debug) renderer.RenderDebug2D();
+					
+					renderer.Render2D();
+				}
+			}
 
 			Raylib.EndDrawing();
 		}
 
-		// Unload anything that we forgot to
+		// Unload anything that we forgot to (slacker)
 		AssetManager.UnloadAllAssets();
 
 		// Close raylib
@@ -76,22 +101,5 @@ class Program
 	private static void LoadInitialMap()
 	{
 		// Load everything in the map
-		Project.Info.CurrentMap.InstancedPrefabs.ForEach(prefab => EntityManager.CreateAndSpawnPrefab(prefab));
-	}
-
-
-
-	private static void RunOnAllInstancedEntities(Action<Script> action)
-	{
-		// Loop through each entity
-		for (int i = 0; i < EntityManager.InstancedEntities.Count; i++)
-		{
-			// Loop through each script on the entity
-			foreach (ScriptComponent script in EntityManager.GetComponents<ScriptComponent>(EntityManager.InstancedEntities[i]))
-			{
-				// Do what we wanted to do with it
-				action(script.Script);
-			}
-		}
 	}
 }
