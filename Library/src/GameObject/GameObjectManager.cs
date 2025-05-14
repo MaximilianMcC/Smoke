@@ -15,19 +15,22 @@ public class GameObjectManager
 		// Get all fixed components
 		gameObject.FixedComponents = properties
 			.Select(property => property.GetValue(gameObject))
-			.OfType<IFixedComponent>()
+			.Where(component => component is IFixedComponent)
+			.Cast<IFixedComponent>()
 			.ToArray();
 
 		// Get all rendering components
 		gameObject.RenderableComponents = properties
 			.Select(property => property.GetValue(gameObject))
-			.OfType<IRenderableComponent>()
+			.Where(component => component is IRenderableComponent)
+			.Cast<IRenderableComponent>()
 			.ToArray();
 
 		// Get all updatable components
 		gameObject.UpdatableComponents = properties
 			.Select(property => property.GetValue(gameObject))
-			.OfType<IUpdatableComponent>()
-			.ToArray();
+			.Where(component => component is IUpdatableComponent)
+			.Cast<IUpdatableComponent>()
+			.ToArray();		
 	}
 }

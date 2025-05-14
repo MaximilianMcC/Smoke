@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace Smoke;
 
@@ -14,3 +15,12 @@ public class GameObject
 	public virtual void OnUpdate() { }
 	public virtual void TidyUp() { }
 }
+
+
+/*
+	TODO: Make partial then in component just do
+	public partial class GameObject
+	{
+		public virtual void onCOllide;
+	}
+*/

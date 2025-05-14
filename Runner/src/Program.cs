@@ -26,6 +26,13 @@ class Program
 			);
 		}
 
+
+		//! debug
+		Temp temp = new Temp();
+		GameObjectManager.CacheComponents(temp);
+		GameObjectManager.GameObjects.Add(temp);
+		//! debug
+
 		// Load the project and scripts
 		Project.Load(args[0]);
 		LoadInitialMap();
