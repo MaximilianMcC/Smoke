@@ -12,10 +12,22 @@ public class GameObjectManager
 		// through and find all components
 		PropertyInfo[] properties = gameObject.GetType().GetProperties();
 
-		// Get all components
-		gameObject.Components = properties
+		// Get all fixed components
+		gameObject.FixedComponents = properties
 			.Select(property => property.GetValue(gameObject))
-			.OfType<IComponent>()
+			.OfType<IFixedComponent>()
+			.ToArray();
+
+		// Get all rendering components
+		gameObject.RenderableComponents = properties
+			.Select(property => property.GetValue(gameObject))
+			.OfType<IRenderableComponent>()
+			.ToArray();
+
+		// Get all updatable components
+		gameObject.UpdatableComponents = properties
+			.Select(property => property.GetValue(gameObject))
+			.OfType<IUpdatableComponent>()
 			.ToArray();
 	}
 }

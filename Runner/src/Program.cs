@@ -43,9 +43,9 @@ class Program
 			foreach (GameObject gameObject in GameObjectManager.GameObjects)
 			{
 				// Loop over every component and 'run' it
-				foreach (IComponent component in gameObject.Components)
+				foreach (IUpdatableComponent component in gameObject.UpdatableComponents)
 				{
-					component.Run();
+					component.Update();
 				}
 			}
 
@@ -60,28 +60,17 @@ class Program
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
 
-			// Draw 3D stuff
-			// TODO: Don't loop over this again
 			foreach (GameObject gameObject in GameObjectManager.GameObjects)
 			{
 				// Loop over every render component
-				foreach (Renderer renderer in gameObject.Components.OfType<Renderer>())
+				foreach (Renderer renderer in gameObject.RenderableComponents)
 				{
+					// Draw 3D stuff
 					if (Runtime.Debug) renderer.RenderDebug3D();
-
 					renderer.Render3D();
-				}
-			}
 
-			// Draw 2D stuff
-			// TODO: Don't loop over this again again
-			foreach (GameObject gameObject in GameObjectManager.GameObjects)
-			{
-				// Loop over every render component
-				foreach (Renderer renderer in gameObject.Components.OfType<Renderer>())
-				{
-					if (Runtime.Debug) renderer.RenderDebug2D();
-					
+					// Draw 2D stuff
+					if (Runtime.Debug) renderer.RenderDebug2D();					
 					renderer.Render2D();
 				}
 			}

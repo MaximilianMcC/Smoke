@@ -5,8 +5,9 @@ namespace Smoke;
 public class GameObject
 {
 	// TODO: Make this readonly somehow
-	public IComponent[] Components;
-	public ISpecialComponent[] SpecialComponents;
+	public IFixedComponent[] FixedComponents;
+	public IRenderableComponent[] RenderableComponents;
+	public IUpdatableComponent[] UpdatableComponents;
 
 	// TODO: Get rid of the 'when' & 'on' rubbish maybe
 	public virtual void WhenSpawned() { }
