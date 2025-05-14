@@ -46,18 +46,19 @@ class Program
 			// Draw everything
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
-			// TODO: Do camera stuff
 
 			// Draw 3d stuff
+			// TODO: Do camera stuff
 			RunOnAllInstancedEntities(entity => {
 				entity.Render3D();
-				entity.RenderDebug3D();
+				if (Runtime.Debug) entity.RenderDebug3D();
 			});
 
 			// Draw 2d stuff
+			// TODO: Do camera stuff
 			RunOnAllInstancedEntities(entity => {
 				entity.Render2D();
-				entity.RenderDebug2D();
+				if (Runtime.Debug) entity.RenderDebug2D();
 			});
 
 			Raylib.EndDrawing();

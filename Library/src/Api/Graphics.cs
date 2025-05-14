@@ -25,11 +25,18 @@ public class Graphics
 	}
 
 	// Text
+	// TODO: Maybe make it so transforms scale acts on font size
 	public static void DrawText(string text, Transform transform, float fontSize, Color color) => DrawText(text, transform.Position, fontSize, color);
 	public static void DrawText(string text, float x, float y, float fontSize, Color color) => DrawText(text, new Vector2(x, y), fontSize, color);
 	public static void DrawText(string text, Vector2 position, float fontSize, Color color)
 	{
 		Raylib.DrawTextPro(Raylib.GetFontDefault(), text, position, Vector2.Zero, 0f, fontSize, (fontSize / 10), color);
+	}
+
+	// Measuring text
+	public static Vector2 MeasureText(string text, float fontSize)
+	{
+		return Raylib.MeasureTextEx(Raylib.GetFontDefault(), text, fontSize, (fontSize / 10));
 	}
 
 	// Textures

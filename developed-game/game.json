@@ -5,7 +5,7 @@
 	
 	"Prefabs": [
 		{
-			"DisplayName": "Player",
+			"DisplayName": "Thing1",
 			"Guid": "8d4d6010-c9a9-4dfa-a9ce-1e60d41afe79",
 			"Components": [
 				{
@@ -15,7 +15,7 @@
 				},
 				{
 					"Type": "Script",
-					"ClassPath": "Player"
+					"ClassPath": "Thing1"
 				}
 			]
 		},
@@ -41,7 +41,7 @@
 			"Name": "main",
 			"InstancedPrefabs": [
 				{
-					"DisplayName": "Player",
+					"DisplayName": "Thing 1",
 					"Guid": "4ceb8956-62d3-4179-815b-1d2cf955c6d2",
 					"Components": [
 						{
@@ -51,7 +51,22 @@
 						},
 						{
 							"Type": "Script",
-							"ClassPath": "Player"
+							"ClassPath": "Thing1"
+						}
+					]
+				},
+				{
+					"DisplayName": "Thing 2",
+					"Guid": "08dd223b-d6e6-4e1e-b663-5b3a61397782",
+					"Components": [
+						{
+							"Type": "Transform",
+							"Position": { "X": 150, "Y": 150 },
+							"Scale": { "X": 100, "Y": 100 }
+						},
+						{
+							"Type": "Script",
+							"ClassPath": "Thing2"
 						}
 					]
 				}

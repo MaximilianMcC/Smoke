@@ -14,12 +14,22 @@ public class Script
 	public Transform Transform;
 
 	// Set up shorthands and stuff yk
-	//! do NOT run this more than once
+	//! do NOT run this more than once ()
 	public virtual void InitialSetup()
 	{
 		// Just get a heap of components ig
 		Transform = GetComponent<Transform>();
+
+		// Run the initialization method. This is where
+		// assets can be loaded and whatnot. Only happens
+		// a single time for the whole script
+		ScriptInitialization();
+		firstTimeRunningScript = true;
 	}
+
+	// Will only be called once
+	private static bool firstTimeRunningScript = false;
+	public virtual void ScriptInitialization() {  }
 
 	public virtual void Start() {  }
 	public virtual void Update() {  }
