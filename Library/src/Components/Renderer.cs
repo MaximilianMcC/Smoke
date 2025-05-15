@@ -1,5 +1,8 @@
+using Newtonsoft.Json;
+
 namespace Smoke;
 
+[JsonObject(MemberSerialization.Fields)]
 public class Renderer : IRenderableComponent
 {
 	// 2D Rendering stuff

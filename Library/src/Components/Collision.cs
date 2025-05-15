@@ -1,4 +1,5 @@
 using Raylib_cs;
+using Newtonsoft.Json;
 
 namespace Smoke;
 
@@ -7,12 +8,13 @@ public interface ICollision
 	public void OnCollision(GameObject collidedWith) { }
 }
 
+[JsonObject(MemberSerialization.Fields)]
 public class Collision : IUpdatableComponent
 {
 	private readonly ICollision handler;
 
 	public bool CurrentlyColliding;
-	public bool WasJustColliding;	
+	public bool WasJustColliding;
 
 	// The collision handler is the one that is extended yk
 	public Collision(ICollision collisionHandler)
@@ -28,7 +30,7 @@ public class Collision : IUpdatableComponent
 		// TODO: Check for collision
 		// for collider in allCollidersInTheGame if collider.collids return true idk
 		//! temp debug
-		if (Raylib.IsKeyPressed(KeyboardKey.G)) CurrentlyColliding = !CurrentlyColliding; 
+		if (Raylib.IsKeyPressed(KeyboardKey.G)) CurrentlyColliding = !CurrentlyColliding;
 
 		// Call the collision method once and only once
 		// for the specific collision (like a 'enter')

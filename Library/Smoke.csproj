@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="DeepCloner" Version="0.10.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Raylib-cs" Version="7.0.1" />
   </ItemGroup>
 

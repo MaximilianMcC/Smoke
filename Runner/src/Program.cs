@@ -26,12 +26,12 @@ class Program
 			);
 		}
 
+		Console.WriteLine(typeof(Smoke.Transform).AssemblyQualifiedName);
+		Console.WriteLine(typeof(Temp).AssemblyQualifiedName);
 
-		//! debug
-		Temp temp = new Temp();
-		GameObjectManager.CacheComponents(temp);
-		GameObjectManager.GameObjects.Add(temp);
-		//! debug
+
+		GameObjectManager.DeserializeGameObject("{\r\n  \"$type\": \"Temp, Runner, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\",\r\n  \"fixedComponents\": [\r\n    {\r\n      \"$type\": \"Smoke.Transform, Smoke\",\r\n      \"Position\": { \"X\": 0, \"Y\": 0 },\r\n      \"Scale\": { \"X\": 0, \"Y\": 0 },\r\n      \"Rotation\": { \"X\": 0, \"Y\": 0 }\r\n    }\r\n  ],\r\n  \"updatableComponents\": [],\r\n  \"renderableComponents\": []\r\n}\r\n");
+		Console.WriteLine(GameObjectManager.GameObjects.Count);
 
 		// Load the project and scripts
 		Project.Load(args[0]);

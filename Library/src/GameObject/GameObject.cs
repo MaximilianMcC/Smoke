@@ -1,8 +1,10 @@
 using System.Reflection;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Smoke;
 
+[JsonObject(MemberSerialization.Fields)]
 public class GameObject
 {
 	// TODO: Make this readonly somehow
