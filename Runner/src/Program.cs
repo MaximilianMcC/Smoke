@@ -1,6 +1,8 @@
 ﻿using static Smoke.Graphics;
 using Raylib_cs;
 using Smoke;
+using System.Numerics;
+using Newtonsoft.Json;
 
 class Program
 {
@@ -26,16 +28,12 @@ class Program
 			);
 		}
 
-		Console.WriteLine(typeof(Smoke.Transform).AssemblyQualifiedName);
-		Console.WriteLine(typeof(Temp).AssemblyQualifiedName);
-
-
-		GameObjectManager.DeserializeGameObject("{\r\n  \"$type\": \"Temp, Runner, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\",\r\n  \"fixedComponents\": [\r\n    {\r\n      \"$type\": \"Smoke.Transform, Smoke\",\r\n      \"Position\": { \"X\": 0, \"Y\": 0 },\r\n      \"Scale\": { \"X\": 0, \"Y\": 0 },\r\n      \"Rotation\": { \"X\": 0, \"Y\": 0 }\r\n    }\r\n  ],\r\n  \"updatableComponents\": [],\r\n  \"renderableComponents\": []\r\n}\r\n");
-		Console.WriteLine(GameObjectManager.GameObjects.Count);
-
 		// Load the project and scripts
 		Project.Load(args[0]);
 		LoadInitialMap();
+
+		GameObject player = new GameObject();
+		player.AddComponent(new Temp());
 
 		// Set the game title
 		Raylib.SetWindowTitle(Project.Info.DisplayName);
@@ -49,18 +47,12 @@ class Program
 			// Update all game object components
 			foreach (GameObject gameObject in GameObjectManager.GameObjects)
 			{
-				// Loop over every component and 'run' it
-				foreach (IUpdatableComponent component in gameObject.UpdatableComponents)
-				{
-					component.Update();
-				}
+				gameObject.Update();
 			}
 
-			// Update all game objects
-			foreach (GameObject gameObject in GameObjectManager.GameObjects)
-			{
-				gameObject.OnUpdate();
-			}
+
+
+
 
 			// Draw everything
 			// TODO: Do camera stuff
@@ -69,16 +61,9 @@ class Program
 
 			foreach (GameObject gameObject in GameObjectManager.GameObjects)
 			{
-				// Loop over every render component
-				foreach (Renderer renderer in gameObject.RenderableComponents)
+				foreach (Component component in gameObject.Components)
 				{
-					// Draw 3D stuff
-					if (Runtime.Debug) renderer.RenderDebug3D();
-					renderer.Render3D();
-
-					// Draw 2D stuff
-					if (Runtime.Debug) renderer.RenderDebug2D();					
-					renderer.Render2D();
+					component.Render2D();
 				}
 			}
 

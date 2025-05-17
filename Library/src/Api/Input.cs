@@ -33,6 +33,7 @@ public class Input
 	public static Vector2 GetInput(InputPreset inputPreset) => GetInput(inputPreset.NegativeX, inputPreset.PositiveX, inputPreset.NegativeY, inputPreset.PositiveY);
 	public static Vector2 GetInput(KeyboardKey negativeXOutput, KeyboardKey positiveXOutput, KeyboardKey negativeYOutput, KeyboardKey positiveYOutput)
 	{
+		// TODO: Maybe normalize
 		return new Vector2(
 			GetInput(negativeXOutput, positiveXOutput),
 			GetInput(negativeYOutput, positiveYOutput)

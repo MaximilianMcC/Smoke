@@ -1,28 +1,53 @@
-using System.Reflection;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
-
 namespace Smoke;
 
-[JsonObject(MemberSerialization.Fields)]
 public class GameObject
 {
-	// TODO: Make this readonly somehow
-	public IFixedComponent[] FixedComponents;
-	public IRenderableComponent[] RenderableComponents;
-	public IUpdatableComponent[] UpdatableComponents;
+	public string DisplayName;
+	public Guid Guid;
+	public List<Component> Components = [];
 
-	// TODO: Get rid of the 'when' & 'on' rubbish maybe
-	public virtual void WhenSpawned() { }
-	public virtual void OnUpdate() { }
-	public virtual void TidyUp() { }
-}
-
-
-/*
-	TODO: Make partial then in component just do
-	public partial class GameObject
+	public GameObject(string displayName = null)
 	{
-		public virtual void onCOllide;
+		// Add a display name (if given) and a guid
+		Guid = new Guid();
+		DisplayName = displayName ?? "john";
+
+		// Add ourself to the game objects list
+		GameObjectManager.GameObjects.Add(this);
+
+		// All game objects come with a mandatory transform
+		AddComponent(new Transform());
 	}
-*/
+
+	public void AddComponent(Component componentToAdd)
+	{
+		// Set ourself to be the components
+		// parent and add it to ourself also
+		componentToAdd.ParentGameObject = this;
+		Components.Add(componentToAdd);
+
+		// Inject the components variables
+		// and run its start method
+		componentToAdd.InjectComponents();
+		componentToAdd.Start();
+	}
+
+	// Two ways of getting components
+	public T GetComponent<T>() where T : Component => Components.Find(component => component is T) as T;
+	public Component GetComponent(Type type) => Components.Find(component => type.IsInstanceOfType(component));
+
+	public void Update()
+	{
+		// Loop through all components and update them
+		foreach (Component component in Components)
+		{
+			component.Update();
+		}
+	}
+
+	public void TidyUp()
+	{
+		// Leave the game object list
+		GameObjectManager.GameObjects.Remove(this);
+	}
+}
