@@ -1,5 +1,7 @@
 using System.Numerics;
 
+namespace Smoke;
+
 public class Transform : Component
 {
 	public Vector2 Position;

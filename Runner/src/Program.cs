@@ -32,8 +32,9 @@ class Program
 		Project.Load(args[0]);
 		LoadInitialMap();
 
-		GameObject player = new GameObject();
-		player.AddComponent(new Temp());
+		GameObject player = new GameObject("player");
+		player.Add(new Smoke.Transform());
+		player.Add(new Temp());
 
 		// Set the game title
 		Raylib.SetWindowTitle(Project.Info.DisplayName);
@@ -47,11 +48,27 @@ class Program
 			// Update all game object components
 			foreach (GameObject gameObject in GameObjectManager.GameObjects)
 			{
-				gameObject.Update();
+				// Loop over all updatable components
+				foreach (UpdatableComponent component in gameObject.Components.OfType<UpdatableComponent>())
+				{
+					component.Update();
+				}
 			}
 
+			//! debug
+			if (Input.KeyPressed(KeyboardKey.G))
+			{
+				JsonSerializerSettings settings = new JsonSerializerSettings()
+				{
+					TypeNameHandling = TypeNameHandling.Auto,
+					Formatting = Formatting.Indented
+				};
 
-
+				Console.WriteLine("Exporting game idk (debug)");
+				string json = JsonConvert.SerializeObject(GameObjectManager.GameObjects, settings);
+				Console.WriteLine(json);
+				Console.WriteLine("done (temp debug)");
+			}
 
 
 			// Draw everything
@@ -59,11 +76,22 @@ class Program
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
 
+			// Render stuff
 			foreach (GameObject gameObject in GameObjectManager.GameObjects)
 			{
-				foreach (Component component in gameObject.Components)
+				// Loop over all renderable components
+				foreach (RenderableComponent component in gameObject.Components.OfType<RenderableComponent>())
 				{
+					// 'Standard' render
+					component.Render3D();
 					component.Render2D();
+
+					// Debug render
+					if (Runtime.Debug)
+					{
+						component.RenderDebug3D();
+						component.RenderDebug2D();
+					}
 				}
 			}
 

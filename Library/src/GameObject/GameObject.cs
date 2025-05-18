@@ -1,3 +1,6 @@
+using System.Net.Http.Headers;
+using System.Reflection;
+
 namespace Smoke;
 
 public class GameObject
@@ -9,40 +12,44 @@ public class GameObject
 	public GameObject(string displayName = null)
 	{
 		// Add a display name (if given) and a guid
-		Guid = new Guid();
+		Guid = Guid.NewGuid();
 		DisplayName = displayName ?? "john";
 
 		// Add ourself to the game objects list
 		GameObjectManager.GameObjects.Add(this);
-
-		// All game objects come with a mandatory transform
-		AddComponent(new Transform());
 	}
 
-	public void AddComponent(Component componentToAdd)
+	public void Add(Component component)
 	{
 		// Set ourself to be the components
 		// parent and add it to ourself also
-		componentToAdd.ParentGameObject = this;
-		Components.Add(componentToAdd);
+		component.GameObject = this;
+		Components.Add(component);
 
-		// Inject the components variables
-		// and run its start method
-		componentToAdd.InjectComponents();
-		componentToAdd.Start();
+		// 'Inject' the components' variables
+		//? field is a variable defined not in a method btw (ones where you chuck the access modifier on it yk)
+		//! FieldInfo[] variables = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
+		FieldInfo[] variables = GetType().GetFields(BindingFlags.Public);
+		foreach (FieldInfo field in variables)
+		{
+			// If we're looking at a component then
+			// steal all the variables from it and put
+			// them into this new component
+			if (field.FieldType.IsAssignableFrom(component.GetType()))
+			{
+				// Inject the variable
+				field.SetValue(this, component);
+			}
+		}
+
+		// Call the start method if applicable
+		if (component is UpdatableComponent updatable) updatable.Start();
 	}
 
-	// Two ways of getting components
-	public T GetComponent<T>() where T : Component => Components.Find(component => component is T) as T;
-	public Component GetComponent(Type type) => Components.Find(component => type.IsInstanceOfType(component));
-
-	public void Update()
+	// TODO: Make it so components have a name so you can get them based on that (not just first (ts))
+	public T Get<T>() where T : Component
 	{
-		// Loop through all components and update them
-		foreach (Component component in Components)
-		{
-			component.Update();
-		}
+		return Components.OfType<T>().FirstOrDefault();
 	}
 
 	public void TidyUp()
