@@ -1,7 +1,7 @@
 {
-	"Namespace": "developed-game",
+	"Namespace": "DevelopedGame",
 	"DisplayName": "Developed game test 123 idk bru",
-	"RootPath": "C:/Users/max/Documents/code/cs/MarlEngine/developed-game",
+	"RootPath": "D:/code/c#/raylib/Smoke/DevelopedGame",
 	"Version": "1.0.0",
 	"Restart": 0,
 	"GameObjects": [
@@ -25,7 +25,7 @@
 					}
 				},
 				{
-					"$type": "Temp, Runner"
+					"$type": "PlayerMovement, DevelopedGame"
 				}
 			]
 		}
