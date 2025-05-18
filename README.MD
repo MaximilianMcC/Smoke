@@ -1,4 +1,4 @@
-# MarlEngine
+# Smoke
 A simple game engine to create 3D games with C# and the power of raylib.
 
 # How everything works
