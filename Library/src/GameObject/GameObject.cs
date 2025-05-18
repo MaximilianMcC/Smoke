@@ -1,4 +1,3 @@
-using System.Net.Http.Headers;
 using System.Reflection;
 
 namespace Smoke;
@@ -11,7 +10,7 @@ public class GameObject
 
 	public GameObject(string displayName = null)
 	{
-		// Add a display name (if given) and a guid
+		// Add a guid & display name (if given)
 		Guid = Guid.NewGuid();
 		DisplayName = displayName ?? "john";
 
@@ -21,8 +20,7 @@ public class GameObject
 
 	public void Add(Component component)
 	{
-		// Set ourself to be the components
-		// parent and add it to ourself also
+		// Set ourself to be a parent
 		component.GameObject = this;
 		Components.Add(component);
 
@@ -57,4 +55,6 @@ public class GameObject
 		// Leave the game object list
 		GameObjectManager.GameObjects.Remove(this);
 	}
+
+	public override string ToString() => $"{DisplayName} ({Guid})";
 }

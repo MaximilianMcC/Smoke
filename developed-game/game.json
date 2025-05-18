@@ -2,17 +2,18 @@
 	"Namespace": "developed-game",
 	"DisplayName": "Developed game test 123 idk bru",
 	"RootPath": "C:/Users/max/Documents/code/cs/MarlEngine/developed-game",
-	
-	"gameObjects": [
+	"Version": "1.0.0",
+	"Restart": 0,
+	"GameObjects": [
 		{
-			"DisplayName": "john",
-			"Guid": "eb0fbdec-c170-4bcb-bfb2-c44812fd99c6",
+			"DisplayName": "player",
+			"Guid": "1c7fef44-8bc5-4490-b35f-6677211d59af",
 			"Components": [
 				{
-					"$type": "Transform, Smoke",
+					"$type": "Smoke.Transform, Smoke",
 					"Position": {
-						"X": 0.0,
-						"Y": 0.0
+						"X": 10.0,
+						"Y": 150.0
 					},
 					"Scale": {
 						"X": 1.0,
@@ -24,21 +25,7 @@
 					}
 				},
 				{
-					"$type": "Smoke.Temp, Smoke",
-					"transform": {
-						"Position": {
-							"X": 0.0,
-							"Y": 0.0
-						},
-						"Scale": {
-							"X": 1.0,
-							"Y": 1.0
-						},
-						"Rotation": {
-							"X": 0.0,
-							"Y": 0.0
-						}
-					}
+					"$type": "Temp, Runner"
 				}
 			]
 		}

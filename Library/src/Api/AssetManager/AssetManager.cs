@@ -33,7 +33,7 @@ public static partial class AssetManager
 		// Get the assembly we need
 		Assembly assembly;
 		if (builtIn) assembly = typeof(AssetManager).Assembly;
-		else assembly = Assembly.Load(Project.Info.Name);
+		else assembly = Assembly.Load(Project.Namespace);
 
 		// Get the assets from the assembly
 		string[] resources = assembly.GetManifestResourceNames();

@@ -30,14 +30,20 @@ class Program
 
 		// Load the project and scripts
 		Project.Load(args[0]);
-		LoadInitialMap();
 
-		GameObject player = new GameObject("player");
-		player.Add(new Smoke.Transform());
-		player.Add(new Temp());
+		// GameObject player = new GameObject("player");
+		// player.Add(new Smoke.Transform());
+		// player.Add(new Temp());
+
+
+		// Load from serialized state
+		// TODO: Put in runner
+		// List<GameObject> gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(args[0]);
+
+
 
 		// Set the game title
-		Raylib.SetWindowTitle(Project.Info.DisplayName);
+		Raylib.SetWindowTitle(Project.DisplayName);
 
 		// Main program loop
 		while (Raylib.WindowShouldClose() == false)
@@ -64,10 +70,9 @@ class Program
 					Formatting = Formatting.Indented
 				};
 
-				Console.WriteLine("Exporting game idk (debug)");
+				//! you'll need to remove public variables since they show up twice (just keep components)
 				string json = JsonConvert.SerializeObject(GameObjectManager.GameObjects, settings);
 				Console.WriteLine(json);
-				Console.WriteLine("done (temp debug)");
 			}
 
 
@@ -103,12 +108,5 @@ class Program
 
 		// Close raylib
 		Raylib.CloseWindow();
-	}
-
-
-
-	private static void LoadInitialMap()
-	{
-		// Load everything in the map
 	}
 }
