@@ -8,6 +8,12 @@ public abstract class Component
 	// TODO: Put GUID as a string here idk
 	[JsonIgnore]
 	public GameObject GameObject;
+
+	// Runs ONCE for the entire game when the VERY FIRST
+	// instance of this type has been created. Use for
+	// loading assets and whatnot yk
+	// TODO: Add an upload type
+	public virtual void LoadType() { }
 }
 
 public abstract class UpdatableComponent : Component

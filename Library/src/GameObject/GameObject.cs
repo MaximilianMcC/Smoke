@@ -15,7 +15,7 @@ public class GameObject
 		DisplayName = displayName ?? "john";
 
 		// Add ourself to the game objects list
-		GameObjectManager.GameObjects.Add(this);
+		ObjectManager.Prefabs.Add(this);
 	}
 
 	public void Add(Component component)
@@ -40,6 +40,13 @@ public class GameObject
 			}
 		}
 
+		// Call the load method (only happens once per TYPE)
+		if (ObjectManager.LoadedTypes.Contains(component.GetType()) == false)
+		{
+			component.LoadType();
+			ObjectManager.LoadedTypes.Add(component.GetType());
+		}
+
 		// Call the start method if applicable
 		if (component is UpdatableComponent updatable) updatable.Start();
 	}
@@ -53,7 +60,7 @@ public class GameObject
 	public void TidyUp()
 	{
 		// Leave the game object list
-		GameObjectManager.GameObjects.Remove(this);
+		ObjectManager.Prefabs.Remove(this);
 	}
 
 	public override string ToString() => $"{DisplayName} ({Guid})";

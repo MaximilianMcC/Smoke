@@ -28,18 +28,16 @@ class Program
 			);
 		}
 
-		// Load the project and scripts
+
+		// Load the game
+		Console.WriteLine("Loading game...");
 		Project.Load(args[0]);
-
-		// GameObject player = new GameObject("player");
-		// player.Add(new Smoke.Transform());
-		// player.Add(new Temp());
+		Console.WriteLine("Ka pai!");
 
 
-		// Load from serialized state
-		// TODO: Put in runner
-		// List<GameObject> gameObjects = JsonConvert.DeserializeObject<List<GameObject>>(args[0]);
-
+		//! temp debug
+		//! remove NOW
+		ObjectManager.Instanced = ObjectManager.Prefabs;
 
 
 		// Set the game title
@@ -52,7 +50,7 @@ class Program
 			if (Input.KeyPressed(Input.ToggleDebugKey)) Runtime.Debug = !Runtime.Debug;
 
 			// Update all game object components
-			foreach (GameObject gameObject in GameObjectManager.GameObjects)
+			foreach (GameObject gameObject in ObjectManager.Instanced)
 			{
 				// Loop over all updatable components
 				foreach (UpdatableComponent component in gameObject.Components.OfType<UpdatableComponent>())
@@ -71,7 +69,7 @@ class Program
 				};
 
 				//! you'll need to remove public variables since they show up twice (just keep components)
-				string json = JsonConvert.SerializeObject(GameObjectManager.GameObjects, settings);
+				string json = JsonConvert.SerializeObject(ObjectManager.Prefabs, settings);
 				Console.WriteLine(json);
 			}
 
@@ -82,7 +80,7 @@ class Program
 			Raylib.ClearBackground(Color.Magenta);
 
 			// Render stuff
-			foreach (GameObject gameObject in GameObjectManager.GameObjects)
+			foreach (GameObject gameObject in ObjectManager.Instanced)
 			{
 				// Loop over all renderable components
 				foreach (RenderableComponent component in gameObject.Components.OfType<RenderableComponent>())

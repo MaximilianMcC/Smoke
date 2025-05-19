@@ -33,47 +33,11 @@ public class Project
 		// (all the actual code written for the engine)
 		// TODO: Support loading of multiple DLLs
 		string assemblyPath = Path.Join(RootPath, "bin", "assemblies", $"{Namespace}.dll");
-		Assembly assembly = Assembly.LoadFrom(assemblyPath);
-
-		// Loop through all Types in the imported 
-		// assembly and create an instance of them 
-		// so the game objects can be deserialized
-		// TODO: Don't do this (seems dodge)
-		foreach (Type type in assembly.GetTypes())
-		{
-			assembly.CreateInstance(type.Name);
-		}
-
-		// Get the fancy json settings so we can properly
-		// pass the objects to the correct type/namespace
-		JsonSerializerSettings settings = new JsonSerializerSettings()
-		{
-			// Stuff for assemblies
-			TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-			SerializationBinder = new DefaultSerializationBinder(),
-
-			// Defines the datatype in a "$type" property
-			TypeNameHandling = TypeNameHandling.Auto,
-
-			// Tabs
-			Formatting = Formatting.Indented
-		};
-		JsonSerializer deserializer = JsonSerializer.Create(settings);
+		Assembly.LoadFrom(assemblyPath);
 
 		// Parse &→ load all the game objects
-		JArray rawGameObjects = (JArray)projectJson["GameObjects"];
-		GameObjectManager.GameObjects = rawGameObjects.ToObject<List<GameObject>>(deserializer);
-
-		// Loop through all components and reassign
-		// their parent game objects because they
-		// are lost during serialization to json
-		foreach (GameObject gameObject in GameObjectManager.GameObjects)
-		{
-			foreach (Component component in gameObject.Components)
-			{
-				component.GameObject = gameObject;
-			}
-		}
+		JArray rawGameObjects = (JArray)projectJson["Prefabs"];
+		ObjectManager.DeserializeObjects(rawGameObjects);
 
 		// Cheeky debug message
 		Console.WriteLine($"Loaded '{DisplayName}' (v{Version}, r{Restart})\n{Namespace} → {RootPath}");
