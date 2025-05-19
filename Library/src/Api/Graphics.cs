@@ -24,6 +24,13 @@ public class Graphics
 		Raylib.DrawRectanglePro(new Rectangle(position, size), Vector2.Zero, 0f, color);
 	}
 
+	// Outlines of squares
+	public static void DrawSquareOutline(Transform transform, float thickness, Color color) => DrawSquareOutline(transform.Position, transform.Scale, thickness, color);
+	public static void DrawSquareOutline(Vector2 position, Vector2 size, float thickness, Color color)
+	{
+		Raylib.DrawRectangleLinesEx(new Rectangle(position, size), thickness, color);
+	}
+
 	// Text
 	// TODO: Maybe make it so transforms scale acts on font size
 	public static void DrawText(string text, Transform transform, float fontSize, Color color) => DrawText(text, transform.Position, fontSize, color);
@@ -42,6 +49,7 @@ public class Graphics
 	// Textures
 	public static void DrawTexture(Texture2D texture, Transform transform) => DrawTexture(texture, transform.Position, transform.Scale, 0f, Color.White);
 	public static void DrawTexture(Texture2D texture, Transform transform, float rotation, Color color) => DrawTexture(texture, transform.Position, transform.Scale, rotation, color);
+	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, Color color) => DrawTexture(texture, position, size, 0f, color);
 	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, float rotation, Color color)
 	{
 		Raylib.DrawTexturePro(
