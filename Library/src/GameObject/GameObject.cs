@@ -4,6 +4,8 @@ namespace Smoke;
 
 public class GameObject
 {
+	// TODO: Maybe make a prefab bool idk
+
 	public string DisplayName;
 	public Guid Guid;
 	public List<Component> Components = [];
@@ -49,8 +51,6 @@ public class GameObject
 
 	public void Start()
 	{
-		
-
 		// Loop over all eligible components
 		// and run their start method
 		// TODO: Make sure the load method of a component is ran

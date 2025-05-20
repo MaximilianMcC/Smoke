@@ -1,7 +1,7 @@
 {
 	"Namespace": "DevelopedGame",
 	"DisplayName": "Developed game test 123 idk bru",
-	"RootPath": "C:\\Users\\max\\Documents\\code\\cs\\smoke\\DevelopedGame",
+	"RootPath": "D:/code/c#/raylib/Smoke/DevelopedGame",
 	"Version": "1.0.0",
 	"Restart": 0,
 	
@@ -26,6 +26,29 @@
 				},
 				{
 					"$type": "PlayerMovement, DevelopedGame"
+				}
+			]
+		},
+		{
+			"DisplayName": "bullet",
+			"Components": [
+				{
+					"$type": "Smoke.Transform, Smoke",
+					"Position": {
+						"X": 0.0,
+						"Y": 0.0
+					},
+					"Scale": {
+						"X": 1.0,
+						"Y": 1.0
+					},
+					"Rotation": {
+						"X": 0.0,
+						"Y": 0.0
+					}
+				},
+				{
+					"$type": "Bullet, DevelopedGame"
 				}
 			]
 		}
@@ -56,6 +79,12 @@
 						},
 						{
 							"$type": "PlayerMovement, DevelopedGame"
+						},
+						{
+							"$type":"Smoke.Timer, Smoke",
+							"Duration": 2,
+							"Repeating": true,
+							"Done": false
 						}
 					]
 				}

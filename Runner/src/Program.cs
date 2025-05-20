@@ -1,4 +1,5 @@
 ﻿using static Smoke.Graphics;
+using static Smoke.SceneManager;
 using Raylib_cs;
 using Smoke;
 using System.Numerics;
@@ -43,10 +44,10 @@ class Program
 			if (Input.KeyPressed(Input.ToggleDebugKey)) Runtime.Debug = !Runtime.Debug;
 
 			// Update all game object components
-			foreach (GameObject gameObject in SceneManager.CurrentScene.Things)
+			for (int i = 0; i < CurrentScene.Things.Count; i++)
 			{
 				// Loop over all updatable components
-				foreach (UpdatableComponent component in gameObject.Components.OfType<UpdatableComponent>())
+				foreach (UpdatableComponent component in CurrentScene.Things[i].Components.OfType<UpdatableComponent>())
 				{
 					component.Update();
 				}
@@ -74,10 +75,10 @@ class Program
 			Raylib.ClearBackground(Color.Magenta);
 
 			// Render stuff
-			foreach (GameObject gameObject in SceneManager.CurrentScene.Things)
+			for (int i = 0; i < CurrentScene.Things.Count; i++)
 			{
 				// Loop over all renderable components
-				foreach (RenderableComponent component in gameObject.Components.OfType<RenderableComponent>())
+				foreach (RenderableComponent component in CurrentScene.Things[i].Components.OfType<RenderableComponent>())
 				{
 					// 'Standard' render
 					component.Render3D();

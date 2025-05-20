@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>DevelopedGame</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
+	<!-- default for implicit using is true -->
+    <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
   
