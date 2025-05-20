@@ -1,13 +1,13 @@
 {
 	"Namespace": "DevelopedGame",
 	"DisplayName": "Developed game test 123 idk bru",
-	"RootPath": "D:/code/c#/raylib/Smoke/DevelopedGame",
+	"RootPath": "C:\\Users\\max\\Documents\\code\\cs\\smoke\\DevelopedGame",
 	"Version": "1.0.0",
 	"Restart": 0,
-	"GameObjects": [
+	
+	"Prefabs": [
 		{
 			"DisplayName": "player",
-			"Guid": "1c7fef44-8bc5-4490-b35f-6677211d59af",
 			"Components": [
 				{
 					"$type": "Smoke.Transform, Smoke",
@@ -26,6 +26,38 @@
 				},
 				{
 					"$type": "PlayerMovement, DevelopedGame"
+				}
+			]
+		}
+	],
+
+	"CurrentSceneDisplayName": "main",
+	"Scenes": [
+		{
+			"DisplayName": "main",
+			"Things": [
+				{
+					"DisplayName": "player",
+					"Components": [
+						{
+							"$type": "Smoke.Transform, Smoke",
+							"Position": {
+								"X": 10.0,
+								"Y": 150.0
+							},
+							"Scale": {
+								"X": 1.0,
+								"Y": 1.0
+							},
+							"Rotation": {
+								"X": 0.0,
+								"Y": 0.0
+							}
+						},
+						{
+							"$type": "PlayerMovement, DevelopedGame"
+						}
+					]
 				}
 			]
 		}

@@ -35,9 +35,17 @@ public class Project
 		string assemblyPath = Path.Join(RootPath, "bin", "assemblies", $"{Namespace}.dll");
 		Assembly.LoadFrom(assemblyPath);
 
-		// Parse &→ load all the game objects
+		// Parse and load all the prefab game objects
 		JArray rawGameObjects = (JArray)projectJson["Prefabs"];
-		ObjectManager.DeserializeObjects(rawGameObjects);
+		ObjectManager.Prefabs = ObjectManager.DeserializeGameObjects(rawGameObjects);
+
+		// Parse and load all the scenes
+		JArray rawScenes = (JArray)projectJson["Scenes"];
+		SceneManager.DeserializeScenes(rawScenes);
+
+		// Load the current/first scene
+		string firstScene = (string)projectJson["CurrentSceneDisplayName"];
+		SceneManager.SetScene(firstScene);
 
 		// Cheeky debug message
 		Console.WriteLine($"Loaded '{DisplayName}' (v{Version}, r{Restart})\n{Namespace} → {RootPath}");

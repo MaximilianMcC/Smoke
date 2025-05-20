@@ -30,14 +30,7 @@ class Program
 
 
 		// Load the game
-		Console.WriteLine("Loading game...");
 		Project.Load(args[0]);
-		Console.WriteLine("Ka pai!");
-
-
-		//! temp debug
-		//! remove NOW
-		ObjectManager.Instanced = ObjectManager.Prefabs;
 
 
 		// Set the game title
@@ -50,7 +43,7 @@ class Program
 			if (Input.KeyPressed(Input.ToggleDebugKey)) Runtime.Debug = !Runtime.Debug;
 
 			// Update all game object components
-			foreach (GameObject gameObject in ObjectManager.Instanced)
+			foreach (GameObject gameObject in SceneManager.CurrentScene.Things)
 			{
 				// Loop over all updatable components
 				foreach (UpdatableComponent component in gameObject.Components.OfType<UpdatableComponent>())
@@ -74,13 +67,14 @@ class Program
 			}
 
 
+
 			// Draw everything
 			// TODO: Do camera stuff
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
 
 			// Render stuff
-			foreach (GameObject gameObject in ObjectManager.Instanced)
+			foreach (GameObject gameObject in SceneManager.CurrentScene.Things)
 			{
 				// Loop over all renderable components
 				foreach (RenderableComponent component in gameObject.Components.OfType<RenderableComponent>())

@@ -8,16 +8,6 @@ public class GameObject
 	public Guid Guid;
 	public List<Component> Components = [];
 
-	public GameObject(string displayName = null)
-	{
-		// Add a guid & display name (if given)
-		Guid = Guid.NewGuid();
-		DisplayName = displayName ?? "john";
-
-		// Add ourself to the game objects list
-		ObjectManager.Prefabs.Add(this);
-	}
-
 	public void Add(Component component)
 	{
 		// Set ourself to be a parent
@@ -57,10 +47,27 @@ public class GameObject
 		return Components.OfType<T>().FirstOrDefault();
 	}
 
+	public void Start()
+	{
+		
+
+		// Loop over all eligible components
+		// and run their start method
+		// TODO: Make sure the load method of a component is ran
+		foreach (UpdatableComponent component in Components.OfType<UpdatableComponent>())
+		{
+			component.Start();
+		}
+	}
+
 	public void TidyUp()
 	{
-		// Leave the game object list
-		ObjectManager.Prefabs.Remove(this);
+		// Loop over all eligible components
+		// and run their tidy up method
+		foreach (UpdatableComponent component in Components.OfType<UpdatableComponent>())
+		{
+			component.TidyUp();
+		}
 	}
 
 	public override string ToString() => $"{DisplayName} ({Guid})";

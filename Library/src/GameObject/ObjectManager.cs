@@ -4,14 +4,12 @@ using Newtonsoft.Json.Serialization;
 
 namespace Smoke;
 
-public class ObjectManager
+public static class ObjectManager
 {
 	public static List<GameObject> Prefabs = [];
-	public static List<GameObject> Instanced = [];
 	public static HashSet<Type> LoadedTypes = [];
-	
 
-	public static void DeserializeObjects(JArray rawGameObjects)
+	public static List<GameObject> DeserializeGameObjects(JArray rawGameObjects)
 	{
 		// Get the fancy json settings so we can properly
 		// pass the objects to the correct type/namespace
@@ -29,6 +27,8 @@ public class ObjectManager
 		};
 		JsonSerializer deserializer = JsonSerializer.Create(settings);
 
+		// We're gonna return all the deserialized things
+		List<GameObject> deserialized = new List<GameObject>();
 
 		// Loop over all game objects for parsing/loading
 		foreach (JObject rawGameObject in rawGameObjects)
@@ -36,10 +36,13 @@ public class ObjectManager
 			// Get the game object, and remove the components
 			// on it. When they're deserialized then we cannot
 			// call start methods and whatnot so we gotta add
-			// add them to the game object manually
+			// add them to the game object manually.
+			// Also give the game object a new guild since guilds
+			// aren't serialized inside the json
 			// TODO: Make it so its cleared by default/we don't need to clear it
 			//! might not need to do this idk
 			GameObject currentGameObject = rawGameObject.ToObject<GameObject>(deserializer);
+			currentGameObject.Guid = Guid.NewGuid();
 			currentGameObject.Components.Clear();
 
 			// Get the components
@@ -52,27 +55,24 @@ public class ObjectManager
 				currentGameObject.Add(currentComponent);
 			}
 
-			// Add the finished game object to the list of prefabs
-			Prefabs.Add(currentGameObject);
+			// Add the finished game object to the
+			// list of deserialized game objects
+			deserialized.Add(currentGameObject);
 		}
-		
 
-
-		// // Loop through all components and reassign
-		// // their parent game objects because they
-		// // are lost during serialization to json
-		// foreach (GameObject gameObject in Prefabs)
-		// {
-		// 	foreach (Component component in gameObject.Components)
-		// 	{
-		// 		component.GameObject = gameObject;
-		// 	}
-		// }
+		return deserialized;
 	}
 
 
 
-	public static GameObject FromGuid(Guid guid)
+
+
+	public static GameObject PrefabFromDisplayName(string name)
+	{
+		return Prefabs.Where(gameObject => gameObject.DisplayName == name).FirstOrDefault();
+	}
+
+	public static GameObject PrefabFromGuid(Guid guid)
 	{
 		return Prefabs.Where(gameObject => gameObject.Guid == guid).FirstOrDefault();
 	}
