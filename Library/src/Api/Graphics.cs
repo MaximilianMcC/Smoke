@@ -6,6 +6,8 @@ namespace Smoke;
 
 public class Graphics
 {
+	public static string FontKey;
+
 	public static float WindowWidth => Raylib.GetScreenWidth();
 	public static float WindowHeight => Raylib.GetScreenHeight();
 	public static Vector2 WindowSize => new Vector2(WindowWidth, WindowHeight);
@@ -37,13 +39,13 @@ public class Graphics
 	public static void DrawText(string text, float x, float y, float fontSize, Color color) => DrawText(text, new Vector2(x, y), fontSize, color);
 	public static void DrawText(string text, Vector2 position, float fontSize, Color color)
 	{
-		Raylib.DrawTextPro(Raylib.GetFontDefault(), text, position, Vector2.Zero, 0f, fontSize, (fontSize / 10), color);
+		Raylib.DrawTextPro(Fonts[FontKey], text, position, Vector2.Zero, 0f, fontSize, (10 / fontSize), color);
 	}
 
 	// Measuring text
 	public static Vector2 MeasureText(string text, float fontSize)
 	{
-		return Raylib.MeasureTextEx(Raylib.GetFontDefault(), text, fontSize, (fontSize / 10));
+		return Raylib.MeasureTextEx(Fonts[FontKey], text, fontSize, (10 / fontSize));
 	}
 
 	// Textures

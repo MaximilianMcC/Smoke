@@ -46,4 +46,23 @@ public static partial class AssetManager
 		Raylib.UnloadTexture(Textures[textureKey]);
 		Textures.Remove(textureKey);
 	}
+
+	public static Font LoadFont(string fontPath)
+	{
+		// Actually load the font
+		const int maxSize = 512;
+		Font font = Raylib.LoadFontEx(fontPath, maxSize, null, 255);
+
+		// Make it look half decent
+		Raylib.GenTextureMipmaps(ref font.Texture);
+		Raylib.SetTextureFilter(font.Texture, TextureFilter.Trilinear);
+
+		// Give back the loaded font
+		return font;
+	}
+
+	public static void UnloadFont(string fontKey)
+	{
+		Raylib.UnloadFont(Fonts[fontKey]);
+	}
 }

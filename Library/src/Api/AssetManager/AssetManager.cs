@@ -10,6 +10,7 @@ public static partial class AssetManager
 	// TODO: Asset dictionary has the code in AssetLoaders.cs so its all in one place then its different classes for each asset (allow more fine tuning)
 	public static AssetDictionary<Image> Images = new(LoadImage("./assets/debug.png|internal"));
 	public static AssetDictionary<Texture2D> Textures = new(LoadTexture("./assets/debug.png|internal"));
+	public static AssetDictionary<Font> Fonts = new(Raylib.GetFontDefault());
 	//? etc...
 
 	private static byte[] GetAssetBytes(string assetPath, out string extension)
@@ -69,5 +70,6 @@ public static partial class AssetManager
 		// been Dynamically loaded
 		foreach (string key in Images.Keys) UnloadImage(key);
 		foreach (string key in Textures.Keys) UnloadTexture(key);
+		foreach (string key in Fonts.Keys) UnloadTexture(key);
 	}
 }
