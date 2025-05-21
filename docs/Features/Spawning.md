@@ -13,7 +13,15 @@ bullet.Get<Transform>().Position = new Vector2(10, 10);
 
 
 # Removing
-Stuff can be removed via 
+Stuff can be removed via the `RemoveFromScene()` method on the game object to remove:
+```cs
+// Suicide
+GameObject.RemoveFromScene();
+
+// Killing something else
+bullet.RemoveFromScene();
+```
+When something is removed, the `TidyUp()` method is called.
 
 ---
 [Back to home](../Docs.md)
