@@ -42,4 +42,13 @@ public class Timer : UpdatableComponent
 		Done = false;
 		elapsedTime = 0;
 	}
+
+	// TODO: Maybe use this?
+	// public bool HasBeenSeconds(float seconds)
+	// {
+	// 	if (Enabled == false) return false;
+	// 	if (elapsedTime < seconds) return false;
+	// 	Enabled = false;
+	// 	return true;
+	// }
 }
