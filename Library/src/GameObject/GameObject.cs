@@ -70,5 +70,14 @@ public class GameObject
 		}
 	}
 
+	public void RemoveFromScene()
+	{
+		// Call the tidy up method
+		TidyUp();
+
+		// Remove ourself
+		SceneManager.CurrentScene.Things.Remove(this);
+	}
+
 	public override string ToString() => $"{DisplayName} ({Guid})";
 }
