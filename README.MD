@@ -1,7 +1,7 @@
 # Smoke
 A simple game engine to create 3D games with C# and the power of raylib.
 
-# [Documentation is here](./docs/GettingStarted.md)
+# [Documentation is here](./docs/Docs.md)
 
 # How everything works
 basic overview thing idk. Might make a youtube video or something explaining when its all done.

@@ -20,12 +20,11 @@ class EnemySpawner : UpdatableComponent
 	public override void Update()
 	{
 		// Spawn an enemy
-		if (Timer.Done)
-		{
-			// ngl I've not added the spawning functionality to
-			// the engine rn so just pretend its doing it ok ty
-		}
+		if (Timer.Done) CurrentScene.CreatePrefab("enemy", "myNewEnemy");
 	}
 }
 ```
 This will spawn an enemy every 5 seconds.
+
+---
+[Back to home](../Docs.md)

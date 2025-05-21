@@ -31,3 +31,6 @@ This code uses `position` to move the player around and to render them. `GetInpu
 The value of `500` for speed might look high, but `DeltaTime` is a tiny as number so when they're timesed together the speed is brought down to a more sensible value.
 
 Generally, if something moves every frame, you need to times it by `DeltaTime` to make it frame independent. If you don't, the speed of the object will be faster on fast computers, and slower on slow computers. Using `DeltaTime` will make it consistent on all computers. You can access `DeltaTime` from `Smoke.Runtime`.
+
+---
+[Back to home](../Docs.md)
