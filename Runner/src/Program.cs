@@ -47,7 +47,7 @@ class Program
 			for (int i = 0; i < CurrentScene.Things.Count; i++)
 			{
 				// Loop over all updatable components
-				foreach (UpdatableComponent component in CurrentScene.Things[i].Components.OfType<UpdatableComponent>())
+				foreach (UpdatableComponent component in CurrentScene.Things[i].Components.OfType<UpdatableComponent>().Where(component => component.Enabled))
 				{
 					component.Update();
 				}
@@ -78,7 +78,7 @@ class Program
 			for (int i = 0; i < CurrentScene.Things.Count; i++)
 			{
 				// Loop over all renderable components
-				foreach (RenderableComponent component in CurrentScene.Things[i].Components.OfType<RenderableComponent>())
+				foreach (RenderableComponent component in CurrentScene.Things[i].Components.OfType<RenderableComponent>().Where(component => component.Enabled))
 				{
 					// 'Standard' render
 					component.Render3D();
