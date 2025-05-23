@@ -4,7 +4,6 @@ namespace Smoke;
 public class Timer : UpdatableComponent
 {
 	public bool Repeating = true;
-	public bool Enabled = true;
 
 	public float Duration;
 	private float elapsedTime;
@@ -12,9 +11,6 @@ public class Timer : UpdatableComponent
 
 	public override void Update()
 	{
-		// Check for if we're allowed to slack
-		if (Enabled == false) return;
-
 		// Check for if we must repeat the timer
 		if (Done && Repeating) Reset();
 

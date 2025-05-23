@@ -18,6 +18,8 @@ public abstract class Component
 
 public abstract class UpdatableComponent : Component
 {
+	public bool Enabled = true;
+
 	public virtual void Start() { }
 	public virtual void Update() { }
 	public virtual void TidyUp() { }
