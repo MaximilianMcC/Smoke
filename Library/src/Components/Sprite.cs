@@ -8,13 +8,20 @@ public class Sprite : UpdatableComponent
 	public Texture2D Texture { get; private set; }
 	public List<string> Frames = [];
 
-	public int FrameIndex;
+	//? Starts at -1 because MoveToNextFrame increases it
+	public int FrameIndex = -1;
 	public bool LoopAnimation = true;
 	public bool JustSwitchedToNextFrame { get; private set; }
 	public bool JustDidAFullLoop { get; private set; }
 
 	public float Fps;
 	private float elapsedTime;
+
+	public override void Start()
+	{
+		// If we've got some frames then start to play the animation
+		if (Frames.Count > 0) MoveToNextFrame();
+	}
 
 	public void SetFrames(params string[] textureKeys)
 	{
@@ -24,9 +31,8 @@ public class Sprite : UpdatableComponent
 
 		// Add the frames to the frames list
 		// then start at the first frame
-		//? -1 since the index is increased in the method (0)
 		Frames.AddRange(textureKeys);
-		MoveToNextFrame(-1);
+		MoveToNextFrame();
 	}
 
 	public override void Update()
