@@ -12,6 +12,13 @@ public class Graphics
 	public static float WindowHeight => Raylib.GetScreenHeight();
 	public static Vector2 WindowSize => new Vector2(WindowWidth, WindowHeight);
 
+	// Window size stuff
+	public static void SetWindowSize(Vector2 size) => SetWindowSize((int)size.X, (int)size.Y);
+	public static void SetWindowSize(int width, int height)
+	{
+		Raylib.SetWindowSize(width, height);
+	}
+
 	// Circles
 	public static void DrawCircle(Transform transform, float radius, Color color) => DrawCircle(transform.Position, radius, color);
 	public static void DrawCircle(Vector2 position, float radius, Color color)

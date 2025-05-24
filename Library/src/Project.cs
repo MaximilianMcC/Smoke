@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -28,6 +29,9 @@ public class Project
 		RootPath = (string)projectJson["RootPath"];
 		Version = Version.Parse((string)projectJson["Version"]);
 		Restart = (int)projectJson["Restart"];
+
+		// Set the window size
+		Graphics.SetWindowSize(projectJson["WindowSize"].ToObject<Vector2>());
 
 		// Dynamically inject the assembly from the game
 		// (all the actual code written for the engine)
