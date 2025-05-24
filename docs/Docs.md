@@ -2,6 +2,7 @@
 
 ## Components
 - [Transform](./Components/Transform.md)
+- [Sprites]("./Components/Sprite.md)
 - [Timer](./Components/Timer.md)
 
 ## Features
