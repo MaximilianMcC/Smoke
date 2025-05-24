@@ -38,9 +38,6 @@ public class GameObject
 			component.LoadType();
 			ObjectManager.LoadedTypes.Add(component.GetType());
 		}
-
-		// Call the start method if applicable
-		if (component is UpdatableComponent updatable) updatable.Start();
 	}
 
 	// TODO: Make it so components have a name so you can get them based on that (not just first (ts))
