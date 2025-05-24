@@ -32,7 +32,8 @@ public class Sprite : UpdatableComponent
 	public override void Update()
 	{
 		// Check for if we have anything to render
-		if (Frames.Count == 0) return;
+		// or if its not an animation (one frame)
+		if (Frames.Count <= 1) return;
 
 		// Check for if we need to reset the state status'
 		if (JustSwitchedToNextFrame) JustSwitchedToNextFrame = false;
