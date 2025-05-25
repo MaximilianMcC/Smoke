@@ -57,15 +57,16 @@ public class Graphics
 
 	// Textures
 	public static void DrawTexture(Texture2D texture, Transform transform) => DrawTexture(texture, transform.Position, transform.Scale, 0f, Color.White);
-	public static void DrawTexture(Texture2D texture, Transform transform, float rotation, Color color) => DrawTexture(texture, transform.Position, transform.Scale, rotation, color);
-	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, Color color) => DrawTexture(texture, position, size, 0f, color);
-	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, float rotation, Color color)
+	public static void DrawTexture(Texture2D texture, Transform transform, float rotation, Vector2 origin, Color color) => DrawTexture(texture, transform.Position, transform.Scale, origin, rotation, color);
+	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, Vector2 origin, Color color) => DrawTexture(texture, position, size, origin, 0f, color);
+	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, float rotation, Color color) => DrawTexture(texture, position, size, Origin.TopLeft, rotation, color);
+	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, Vector2 origin, float rotation, Color color)
 	{
 		Raylib.DrawTexturePro(
 			texture,
 			new Rectangle(0, 0, texture.Width, texture.Height),
 			new Rectangle(position, size),
-			Vector2.Zero,
+			size * origin,
 			rotation,
 			color
 		);
@@ -73,4 +74,20 @@ public class Graphics
 
 	//? maybe don't do this
 	public static void DrawTexture(string textureKey, Transform transform) => DrawTexture(Textures[textureKey], transform.Position, transform.Scale, 0f, Color.White);
+}
+
+// TODO: Maybe don't do the weird tab thing
+public static class Origin
+{
+	public static Vector2 TopLeft = new Vector2(0f);
+	public static Vector2 TopCentre = new Vector2(0.5f, 0f);
+	public static Vector2 TopRight = new Vector2(1f, 0f);
+
+	public static Vector2 MiddleLeft = new Vector2(0, 0.5f);
+	public static Vector2 Centre = new Vector2(0.5f);
+	public static Vector2 MiddleRight = new Vector2(1, 0.5f);
+
+	public static Vector2 BottomLeft = new Vector2(0, 1f);
+	public static Vector2 BottomCentre = new Vector2(0.5f, 1f);
+	public static Vector2 BottomRight = new Vector2(1f);
 }
