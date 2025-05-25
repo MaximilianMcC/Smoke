@@ -33,11 +33,14 @@ public class Input
 	public static Vector2 GetInput(InputPreset inputPreset) => GetInput(inputPreset.NegativeX, inputPreset.PositiveX, inputPreset.NegativeY, inputPreset.PositiveY);
 	public static Vector2 GetInput(KeyboardKey negativeXOutput, KeyboardKey positiveXOutput, KeyboardKey negativeYOutput, KeyboardKey positiveYOutput)
 	{
-		// TODO: Maybe normalize
-		return new Vector2(
+		// Create the input vector
+		Vector2 input = new Vector2(
 			GetInput(negativeXOutput, positiveXOutput),
 			GetInput(negativeYOutput, positiveYOutput)
 		);
+
+		// Return the normalised input
+		return input == Vector2.Zero ? Vector2.Zero : Vector2.Normalize(input);
 	}
 
 	public static Vector2 MousePosition() => Raylib.GetMousePosition();
