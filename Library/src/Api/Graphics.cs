@@ -20,21 +20,21 @@ public class Graphics
 	}
 
 	// Circles
-	public static void DrawCircle(Transform transform, float radius, Color color) => DrawCircle(transform.Position, radius, color);
+	public static void DrawCircle(Transform2D transform, float radius, Color color) => DrawCircle(transform.Position, radius, color);
 	public static void DrawCircle(Vector2 position, float radius, Color color)
 	{
 		Raylib.DrawCircleV(position, radius, color);
 	}
 
 	// Squares
-	public static void DrawSquare(Transform transform, Color color) => DrawSquare(transform.Position, transform.Scale, color);
+	public static void DrawSquare(Transform2D transform, Color color) => DrawSquare(transform.Position, transform.Scale, color);
 	public static void DrawSquare(Vector2 position, Vector2 size, Color color)
 	{
 		Raylib.DrawRectanglePro(new Rectangle(position, size), Vector2.Zero, 0f, color);
 	}
 
 	// Outlines of squares
-	public static void DrawSquareOutline(Transform transform, float thickness, Color color) => DrawSquareOutline(transform.Position, transform.Scale, thickness, color);
+	public static void DrawSquareOutline(Transform2D transform, float thickness, Color color) => DrawSquareOutline(transform.Position, transform.Scale, thickness, color);
 	public static void DrawSquareOutline(Vector2 position, Vector2 size, float thickness, Color color)
 	{
 		Raylib.DrawRectangleLinesEx(new Rectangle(position, size), thickness, color);
@@ -42,7 +42,7 @@ public class Graphics
 
 	// Text
 	// TODO: Maybe make it so transforms scale acts on font size
-	public static void DrawText(string text, Transform transform, float fontSize, Color color) => DrawText(text, transform.Position, fontSize, color);
+	public static void DrawText(string text, Transform2D transform, float fontSize, Color color) => DrawText(text, transform.Position, fontSize, color);
 	public static void DrawText(string text, float x, float y, float fontSize, Color color) => DrawText(text, new Vector2(x, y), fontSize, color);
 	public static void DrawText(string text, Vector2 position, float fontSize, Color color)
 	{
@@ -56,10 +56,8 @@ public class Graphics
 	}
 
 	// Textures
-	public static void DrawTexture(Texture2D texture, Transform transform) => DrawTexture(texture, transform.Position, transform.Scale, 0f, Color.White);
-	public static void DrawTexture(Texture2D texture, Transform transform, float rotation, Vector2 origin, Color color) => DrawTexture(texture, transform.Position, transform.Scale, origin, rotation, color);
-	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, Vector2 origin, Color color) => DrawTexture(texture, position, size, origin, 0f, color);
-	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, float rotation, Color color) => DrawTexture(texture, position, size, Origin.TopLeft, rotation, color);
+	public static void DrawTexture(Texture2D texture, Transform2D transform, Color color) => DrawTexture(texture, transform.Position, transform.Scale, Origin.TopLeft, transform.Rotation, color);
+	public static void DrawTexture(Texture2D texture, Transform2D transform, Vector2 origin, Color color) => DrawTexture(texture, transform.Position, transform.Scale, origin, transform.Rotation, color);
 	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, Vector2 origin, float rotation, Color color)
 	{
 		Raylib.DrawTexturePro(
@@ -71,9 +69,6 @@ public class Graphics
 			color
 		);
 	}
-
-	//? maybe don't do this
-	public static void DrawTexture(string textureKey, Transform transform) => DrawTexture(Textures[textureKey], transform.Position, transform.Scale, 0f, Color.White);
 }
 
 // TODO: Maybe don't do the weird tab thing
