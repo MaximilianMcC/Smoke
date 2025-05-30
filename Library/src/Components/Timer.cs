@@ -25,7 +25,7 @@ public class Timer : UpdatableComponent
 
 			// If we aren't repeating then
 			// disable the timer
-			Enabled = false;
+			if (Repeating == false) Enabled = false;
 		}
 	}
 
@@ -37,6 +37,7 @@ public class Timer : UpdatableComponent
 		// Start counting again
 		Done = false;
 		elapsedTime = 0;
+
 	}
 
 	// TODO: Maybe use this?
