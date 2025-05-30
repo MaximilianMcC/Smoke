@@ -58,6 +58,7 @@ public class Graphics
 	// Textures
 	public static void DrawTexture(Texture2D texture, Transform2D transform, Color color) => DrawTexture(texture, transform.Position, transform.Scale, Origin.TopLeft, transform.Rotation, color);
 	public static void DrawTexture(Texture2D texture, Transform2D transform, Vector2 origin, Color color) => DrawTexture(texture, transform.Position, transform.Scale, origin, transform.Rotation, color);
+	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size) => DrawTexture(texture, position, size, Origin.TopLeft, 0f, Color.White);
 	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, Vector2 origin, float rotation, Color color)
 	{
 		Raylib.DrawTexturePro(
