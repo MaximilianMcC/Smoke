@@ -55,6 +55,23 @@ public class Graphics
 		return Raylib.MeasureTextEx(Fonts[FontKey], text, fontSize, (10 / fontSize));
 	}
 
+	// Draw text in the centre of a region
+	// TODO: Ensure the vector is either 1 or 0
+	//? (1, 0) = horizontally centered
+	//? (0, 1) = vertically centered
+	//? (1, 1) = middle centered
+	public static void DrawTextCentered(string text, Vector2 spaceToCentreTextIn, Vector2 centreAxis, float fontSize, Color color)
+	{
+		// First measure the text
+		Vector2 size = MeasureText(text, fontSize);
+
+		// Calculate position according to the axis
+		Vector2 position = (spaceToCentreTextIn - (size * centreAxis)) / 2;
+
+		// Draw the text
+		DrawText(text, position, fontSize, color);
+	}
+
 	// Textures
 	public static void DrawTexture(Texture2D texture, Transform2D transform, Color color) => DrawTexture(texture, transform.Position, transform.Scale, Origin.TopLeft, transform.Rotation, color);
 	public static void DrawTexture(Texture2D texture, Transform2D transform, Vector2 origin, Color color) => DrawTexture(texture, transform.Position, transform.Scale, origin, transform.Rotation, color);
