@@ -12,6 +12,10 @@ public class Graphics
 	public static float WindowHeight => Raylib.GetScreenHeight();
 	public static Vector2 WindowSize => new Vector2(WindowWidth, WindowHeight);
 
+	public static float WindowWidthHalf => WindowWidth / 2;
+	public static float WindowHeightHalf => WindowHeight / 2;
+	public static Vector2 WindowSizeHalf => WindowSize / 2;
+
 	// Window size stuff
 	public static void SetWindowSize(Vector2 size) => SetWindowSize((int)size.X, (int)size.Y);
 	public static void SetWindowSize(int width, int height)
