@@ -4,10 +4,16 @@ namespace Smoke;
 public class Timer : UpdatableComponent
 {
 	public bool Repeating = true;
+	public bool DoneOnStart = false;
 
 	public float Duration;
 	private float elapsedTime;
 	public bool Done { get; private set; }
+
+	public override void Start()
+	{
+		if (DoneOnStart) Done = true;
+	}
 
 	public override void Update()
 	{
