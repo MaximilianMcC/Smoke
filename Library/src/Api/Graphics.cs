@@ -4,6 +4,7 @@ using static Smoke.AssetManager;
 
 namespace Smoke;
 
+// TODO: Make one single Draw method that just has a grillion overloads for everything
 public class Graphics
 {
 	public static string FontKey;
@@ -31,14 +32,14 @@ public class Graphics
 	}
 
 	// Squares
-	public static void DrawSquare(Transform2D transform, Color color) => DrawSquare(transform.Position, transform.Scale, color);
+	public static void DrawSquare(Transform2D transform, Color color) => DrawSquare(transform.Position, transform.Size, color);
 	public static void DrawSquare(Vector2 position, Vector2 size, Color color)
 	{
 		Raylib.DrawRectanglePro(new Rectangle(position, size), Vector2.Zero, 0f, color);
 	}
 
 	// Outlines of squares
-	public static void DrawSquareOutline(Transform2D transform, float thickness, Color color) => DrawSquareOutline(transform.Position, transform.Scale, thickness, color);
+	public static void DrawSquareOutline(Transform2D transform, float thickness, Color color) => DrawSquareOutline(transform.Position, transform.Size, thickness, color);
 	public static void DrawSquareOutline(Vector2 position, Vector2 size, float thickness, Color color)
 	{
 		Raylib.DrawRectangleLinesEx(new Rectangle(position, size), thickness, color);
@@ -77,8 +78,7 @@ public class Graphics
 	}
 
 	// Textures
-	public static void DrawTexture(Texture2D texture, Transform2D transform, Color color) => DrawTexture(texture, transform.Position, transform.Scale, Origin.TopLeft, transform.Rotation, color);
-	public static void DrawTexture(Texture2D texture, Transform2D transform, Vector2 origin, Color color) => DrawTexture(texture, transform.Position, transform.Scale, origin, transform.Rotation, color);
+	public static void DrawTexture(Texture2D texture, Transform2D transform, Color color) => DrawTexture(texture, transform.Position, transform.Size, transform.Origin, transform.Rotation, color);
 	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size) => DrawTexture(texture, position, size, Origin.TopLeft, 0f, Color.White);
 	public static void DrawTexture(Texture2D texture, Vector2 position, Vector2 size, Vector2 origin, float rotation, Color color)
 	{
@@ -91,20 +91,27 @@ public class Graphics
 			color
 		);
 	}
+
+	// Sprites
+	public static void DrawSprite(Sprite sprite, Transform2D transform, Color color) => DrawSprite(sprite, transform.Position, transform.Size, transform.Origin, transform.Rotation, color);
+	public static void DrawSprite(Sprite sprite, Vector2 position, Vector2 size, Vector2 origin, float rotation, Color color)
+	{
+		DrawTexture(sprite.Texture, position, size, origin, rotation, color);
+	}
 }
 
 // TODO: Maybe don't do the weird tab thing
 public static class Origin
 {
-	public static Vector2 TopLeft = new Vector2(0f);
-	public static Vector2 TopCentre = new Vector2(0.5f, 0f);
-	public static Vector2 TopRight = new Vector2(1f, 0f);
+	public static readonly Vector2 TopLeft = new Vector2(0f);
+	public static readonly Vector2 TopCentre = new Vector2(0.5f, 0f);
+	public static readonly Vector2 TopRight = new Vector2(1f, 0f);
 
-	public static Vector2 MiddleLeft = new Vector2(0, 0.5f);
-	public static Vector2 Centre = new Vector2(0.5f);
-	public static Vector2 MiddleRight = new Vector2(1, 0.5f);
+	public static readonly Vector2 MiddleLeft = new Vector2(0, 0.5f);
+	public static readonly Vector2 Centre = new Vector2(0.5f);
+	public static readonly Vector2 MiddleRight = new Vector2(1, 0.5f);
 
-	public static Vector2 BottomLeft = new Vector2(0, 1f);
-	public static Vector2 BottomCentre = new Vector2(0.5f, 1f);
-	public static Vector2 BottomRight = new Vector2(1f);
+	public static readonly Vector2 BottomLeft = new Vector2(0, 1f);
+	public static readonly Vector2 BottomCentre = new Vector2(0.5f, 1f);
+	public static readonly Vector2 BottomRight = new Vector2(1f);
 }
