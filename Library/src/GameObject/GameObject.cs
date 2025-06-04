@@ -46,6 +46,15 @@ public class GameObject
 		return Components.OfType<T>().FirstOrDefault();
 	}
 
+	// TODO: Make it so components have a name so you can get them based on that (not just first (ts))
+	// TODO: Don't use indexes
+	public T Get<T>(int index) where T : Component
+	{
+		// TODO: Return null or default or whatever yk
+		T[] components = Components.OfType<T>().ToArray();
+		return components[index];
+	}
+
 	public void Start()
 	{
 		// Loop over all eligible components
