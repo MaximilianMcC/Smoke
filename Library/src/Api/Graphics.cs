@@ -17,6 +17,11 @@ public class Graphics
 	public static float WindowHeightHalf => WindowHeight / 2;
 	public static Vector2 WindowSizeHalf => WindowSize / 2;
 
+	private static Vector2 ApplyOrigin(Vector2 position, Vector2 size, Vector2 origin)
+	{
+		return position - (size * origin);
+	}
+
 	// Window size stuff
 	public static void SetWindowSize(Vector2 size) => SetWindowSize((int)size.X, (int)size.Y);
 	public static void SetWindowSize(int width, int height)
@@ -47,12 +52,18 @@ public class Graphics
 
 	// Text
 	// TODO: Maybe make it so transforms scale acts on font size
-	public static void DrawText(string text, Transform2D transform, float fontSize, Color color) => DrawText(text, transform.Position, fontSize, color);
-	public static void DrawText(string text, float x, float y, float fontSize, Color color) => DrawText(text, new Vector2(x, y), fontSize, color);
-	public static void DrawText(string text, Vector2 position, float fontSize, Color color)
+	public static void DrawText(string text, Transform2D transform, float fontSize, Color color) => DrawText(text, transform.Position, transform.Origin, transform.Rotation, fontSize, color);
+	public static void DrawText(string text, float y, Color color) => DrawText(text, new Vector2(10, y), Origin.TopLeft, 0f, 30f, color);
+	public static void DrawText(string text, Vector2 position, Vector2 origin, float rotation, float fontSize, Color color)
 	{
-		Raylib.DrawTextPro(Fonts[FontKey], text, position, Vector2.Zero, 0f, fontSize, (10 / fontSize), color);
+		// Apply the origin
+		position = ApplyOrigin(position, MeasureText(text, fontSize), origin);
+
+		// Draw the text
+		Raylib.DrawTextPro(Fonts[FontKey], text, position, Vector2.Zero, rotation, fontSize, (10 / fontSize), color);
 	}
+
+
 
 	// Measuring text
 	public static Vector2 MeasureText(string text, float fontSize)
@@ -65,7 +76,9 @@ public class Graphics
 	//? (1, 0) = horizontally centered
 	//? (0, 1) = vertically centered
 	//? (1, 1) = middle centered
-	public static void DrawTextCentered(string text, Vector2 spaceToCentreTextIn, Vector2 centreAxis, float fontSize, Color color)
+	// TODO: Just use origin.centre or whatever
+	public static void DrawTextCentered(string text, Vector2 spaceToCentreTextIn, Vector2 centreAxis, float fontSize, Color color) => DrawTextCentered(text, spaceToCentreTextIn, centreAxis, 0f, fontSize, color);
+	public static void DrawTextCentered(string text, Vector2 spaceToCentreTextIn, Vector2 centreAxis, float rotation, float fontSize, Color color)
 	{
 		// First measure the text
 		Vector2 size = MeasureText(text, fontSize);
@@ -74,7 +87,7 @@ public class Graphics
 		Vector2 position = (spaceToCentreTextIn - (size * centreAxis)) / 2;
 
 		// Draw the text
-		DrawText(text, position, fontSize, color);
+		DrawText(text, position, Origin.TopLeft, rotation, fontSize, color);
 	}
 
 	// Textures
