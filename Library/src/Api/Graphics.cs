@@ -17,6 +17,18 @@ public class Graphics
 	public static float WindowHeightHalf => WindowHeight / 2;
 	public static Vector2 WindowSizeHalf => WindowSize / 2;
 
+	// TODO: Have the icon in the json then make it load automatically
+	public static void SetIcon(string iconPath)
+	{
+		// Get a random as name for the icons image
+		// then load the icon to the image
+		string iconKey = "ICON" + Guid.NewGuid().ToString();
+		Images[iconKey] = LoadImage(iconPath);
+
+		// Set the icon
+		Raylib.SetWindowIcon(Images[iconKey]);
+	}
+
 	private static Vector2 ApplyOrigin(Vector2 position, Vector2 size, Vector2 origin)
 	{
 		return position - (size * origin);
