@@ -1,10 +1,26 @@
 using System.Numerics;
+using Raylib_cs;
 
 namespace Smoke;
 
 public class Transform2D : Component
 {
+	public Transform2D Parent;
+
 	public Vector2 Position;
+	public Vector2 FullPosition
+	{
+		get
+		{
+			// If there is a parent, then add it to
+			// the current position to get it 'all'
+			if (Parent == null) return Position;
+			return Parent.Position + Position;
+		}
+	}
+
+
+
 	public Vector2 Size;
 	public float Rotation;
 
@@ -31,6 +47,24 @@ public class Transform2D : Component
 			aMin.X < bMax.X && aMax.X > bMin.X &&
 			aMin.Y < bMax.Y && aMax.Y > bMin.Y
 		);
+	}
+
+	// TODO: Don't use raylib
+	// public Transform2D GetOverlap(Transform2D thing)
+	public Rectangle GetOverlap(Transform2D thing)
+	{
+		// TODO: Flip min and max
+		Rectangle self = new Rectangle(PositionMin, PositionMax);
+		Rectangle other = new Rectangle(thing.PositionMin, thing.PositionMax);
+		return Raylib.GetCollisionRec(self, other);
+	}
+
+
+	public void DrawOverlap(Transform2D thing, Color color)
+	{
+		// Transform2D overlap = GetOverlap(thing);
+		// Graphics.DrawSquare(overlap, color);
+		Raylib.DrawRectangleLinesEx(GetOverlap(thing), 2f, color);
 	}
 }
 
