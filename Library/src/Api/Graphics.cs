@@ -49,10 +49,16 @@ public class Graphics
 	}
 
 	// Squares
-	public static void DrawSquare(Transform2D transform, Color color) => DrawSquare(transform.FullPosition, transform.Size, color);
-	public static void DrawSquare(Vector2 position, Vector2 size, Color color)
+	public static void DrawSquare(Transform2D transform, Color color) => DrawSquare(transform.FullPosition, transform.Size, transform.Origin, transform.Rotation, color);
+	public static void DrawSquare(Vector2 position, Vector2 size, Color color) => DrawSquare(position, size, Origin.TopLeft, 0f, color);
+	public static void DrawSquare(Vector2 position, Vector2 size, Vector2 origin, float rotation, Color color)
 	{
-		Raylib.DrawRectanglePro(new Rectangle(position, size), Vector2.Zero, 0f, color);
+		Raylib.DrawRectanglePro(
+			new Rectangle(position, size),
+			size * origin,
+			rotation,
+			color
+		);
 	}
 
 	// Outlines of squares
