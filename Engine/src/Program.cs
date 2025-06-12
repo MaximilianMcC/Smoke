@@ -26,7 +26,6 @@ class Program
 			);
 
 			// Check for what command was ran
-			// TODO: Don't use var
 			Dictionary<string, string> ranCommand;
 			if (ArgumentParser.CommandRan(publishCommand, args, out ranCommand))
 			{

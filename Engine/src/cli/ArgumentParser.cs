@@ -33,6 +33,15 @@ static class ArgumentParser
 			return false;
 		}
 
+		// Check for if they want the docs
+		if (args.Length >= 2 && args[1].Trim().ToLower() == "help")
+		{
+			command.PrintFullUsage();
+
+			output = null;
+			return false;
+		}
+
 		// Check for if the correct amount of arguments are present
 		if ((args.Length < command.MinLength) || (args.Length > command.MaxLength))
 		{
@@ -118,18 +127,19 @@ class Command
 		PrintUsage();
 		Console.WriteLine();
 
+		// TODO: Use that cli table library I made ages ago
+		Console.WriteLine("Full argument breakdown:");
 		foreach (Argument arg in Arguments)
 		{
+			Console.WriteLine("---------------");
 			Console.WriteLine(arg.Name);
 			Console.WriteLine(arg.Description);
 
 			Console.WriteLine();
 			Console.WriteLine($"Example: {arg.ExampleValue}");
-			Console.WriteLine();
 
 			if (arg.Optional) Console.WriteLine("This is an optional argument.");
 			if (arg.CaseSensitive) Console.WriteLine("This is a case-sensitive optional argument.");
-			Console.WriteLine();
 		}
 	}
 }
