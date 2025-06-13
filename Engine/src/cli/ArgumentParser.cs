@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 static class ArgumentParser
 {
 	public static List<Command> AllCommands = [];
@@ -43,18 +45,36 @@ static class ArgumentParser
 		}
 
 		// Check for if the correct amount of arguments are present
-		if ((args.Length < command.MinLength) || (args.Length > command.MaxLength))
+		if (((args.Length - 1) < command.MinLength) || ((args.Length) > command.MaxLength))
 		{
 			// TODO: Add colors and icons and stuff
 			Console.Error.WriteLine("Invalid argument count!");
 			Console.Error.WriteLine($"Type 'smoke {command.Name} help' for advanced help");
 			Console.WriteLine();
 			command.PrintUsage();
+
+			output = null;
+			return false;
 		}
 
-		// return true;
-		output = null;
-		return false;
+		// Get all the arguments
+		output = new Dictionary<string, string>();
+		for (int i = 0; i < command.Arguments.Length; i++)
+		{
+			// Clean up the argument
+			//? 1 to skip the actual command (start at args)
+			string argument = null;
+			if (args.Length > i + 1)
+			{
+				//? 1 to skip the actual command (start at args)
+				argument = args[i + 1].Trim();
+				if (command.Arguments[i].CaseSensitive == false) argument = argument.ToLower();
+			}
+
+			// Add it to the output dictionary
+			output.Add(command.Arguments[i].Key, argument);
+		}
+		return true;
 	}
 
 	public static void PrintHelp()
@@ -146,6 +166,7 @@ class Command
 
 struct Argument
 {
+	public string Key;
 	public string Name;
 	public string Description;
 	public string ExampleValue;
@@ -153,15 +174,17 @@ struct Argument
 	public bool Optional;
 	public bool CaseSensitive;
 
-	public Argument(string name, string description, string exampleValue)
+	public Argument(string key, string name, string description, string exampleValue)
 	{
+		Key = key;
 		Name = name;
 		Description = description;
 		ExampleValue = exampleValue;
 	}
 
-	public Argument(string name, string description, string exampleValue, bool optional, bool caseSensitive = false)
+	public Argument(string key, string name, string description, string exampleValue, bool optional, bool caseSensitive = false)
 	{
+		Key = key;
 		Name = name;
 		Description = description;
 		ExampleValue = exampleValue;
