@@ -28,6 +28,7 @@ class Program
 				Builder.Package(
 					arguments["csproj"],
 					arguments["json"],
+					true,
 					arguments["output"]
 				);
 			}

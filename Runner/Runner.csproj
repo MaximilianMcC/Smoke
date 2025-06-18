@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="GameAssets\game.json" />
-    <EmbeddedResource Include="GameAssets\game.dll" />
+    <EmbeddedResource Include="GameAssets\Game.json" />
+    <EmbeddedResource Include="GameAssets\Game.dll" />
   </ItemGroup>
 
   <ItemGroup>

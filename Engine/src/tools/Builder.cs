@@ -3,9 +3,10 @@ using System.Diagnostics;
 class Builder
 {
 	// TODO: Don't hardcode
-	public static string RunnerRootPath = @"D:\code\c#\raylib\Smoke\Runner\";
-	public static string RunnerExePath = @"D:\code\c#\raylib\Smoke\Runner\bin\Release\net8.0\win-x64\publish\Runner.exe";
-	public static string RunnerAssetsPath = Path.Combine(RunnerRootPath, "GameAssets");
+	public static readonly string RunnerRootPath = @"D:\code\c#\raylib\Smoke\Runner\";
+	public static readonly string RunnerCsprojPath = @"D:\code\c#\raylib\Smoke\Runner\Runner.csproj";
+	public static readonly string RunnerExePath = @"D:\code\c#\raylib\Smoke\Runner\bin\Release\net8.0\win-x64\publish\Runner.exe";
+	public static readonly string RunnerAssetsPath = Path.Combine(RunnerRootPath, "GameAssets");
 
 	public static string Build(string csprojLocation, string outputPath) => Compile(csprojLocation, outputPath, false);
 	public static string Publish(string csprojLocation, string outputPath) => Compile(csprojLocation, outputPath, true);
@@ -47,7 +48,7 @@ class Builder
 		return dllPath;
 	}
 
-	public static void Package(string csprojLocation, string jsonPath, string outputPath)
+	public static void Package(string csprojLocation, string jsonPath, bool publish, string outputPath)
 	{
 		// Delete everything from the previous build
 		if (Directory.Exists(RunnerAssetsPath)) Directory.Delete(RunnerAssetsPath, true);
@@ -60,10 +61,37 @@ class Builder
 		File.Copy(jsonPath, newJsonPath);
 
 		// Compile runner now that it has the required assets
+		CompileRunner(publish, outputPath);
 
 		// Rename runner to whatever the game is called
 		// and also move it to the requested output path
+	}
 
+	public static void CompileRunner(bool shouldPublish, string outputPath)
+	{
+		// Build settings idk
+		string publish = shouldPublish ? "publish" : "build";
+		string channel = shouldPublish ? "Release" : "Debug";
 
+		string specialPublishSettings = "";
+		if (shouldPublish) specialPublishSettings = "/p:IncludeNativeLibrariesForSelfExtract=true";
+
+		// Make the actual build command
+		// TODO: Maybe add RID (win-x64 etc)
+		ProcessStartInfo command = new ProcessStartInfo()
+		{
+			FileName = "dotnet",
+			Arguments = $"{publish} \"{RunnerCsprojPath}\" -c {channel} --self-contained true /p:PublishSingleFile=true --no-dependencies {specialPublishSettings} -o \"{outputPath}\"",
+
+			RedirectStandardOutput = true,
+			RedirectStandardError = true,
+			UseShellExecute = false
+		};
+
+		// Actually build it
+		Process process = Process.Start(command);
+		Console.WriteLine(process.StandardOutput.ReadToEnd());
+		Console.WriteLine(process.StandardError.ReadToEnd());
+		process.WaitForExit();
 	}
 }
