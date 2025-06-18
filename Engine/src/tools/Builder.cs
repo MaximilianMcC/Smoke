@@ -53,7 +53,7 @@ class Builder
 		string dllPath = Build(csprojLocation, RunnerAssetsPath);
 
 		// Copy the games json file into the runners assets
-
-		// Make a 
+		string newJsonPath = Path.Combine(RunnerAssetsPath, "Game.Json");
+		File.Copy(jsonPath, newJsonPath);
 	}
 }
