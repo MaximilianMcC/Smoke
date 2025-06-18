@@ -43,9 +43,47 @@ public class Input
 		return input == Vector2.Zero ? Vector2.Zero : Vector2.Normalize(input);
 	}
 
+	// TODO: Use properties with getters/setters
+	//? public static Vector2 MousePosition { get => Raylib.GetMousePosition(); }
 	public static Vector2 MousePosition() => Raylib.GetMousePosition();
 	public static bool MouseClicked(MouseButton mouseButton) => Raylib.IsMouseButtonPressed(mouseButton);
 	public static bool MouseHeldDown(MouseButton mouseButton) => Raylib.IsMouseButtonDown(mouseButton);
+
+
+	private static bool alreadyCollectedCharactersThisFrame;
+	private static List<char> charactersPressed;
+	public static char GetCharacterPressed() => GetCharactersPressed()[0];
+	public static List<char> GetCharactersPressed()
+	{
+		// If we've already collected the
+		// characters then just give them back
+		if (alreadyCollectedCharactersThisFrame) return charactersPressed;
+
+		// Clear the character list because we're gonna
+		// repopulate it with the updated data rn
+		charactersPressed.Clear();
+
+		// Get the first 'mandatory' character input
+		int input = Raylib.GetCharPressed();
+		while (input > 0)
+		{
+			// Check for if its a key on the keyboard (alphabet)
+			const int lowestKeyboardCharacter = ' ';
+			const int highestKeyboardCharacter = '}';
+			if (!Maths.InRange(input, lowestKeyboardCharacter, highestKeyboardCharacter)) continue;
+
+			// Add the character to the list
+			charactersPressed.Add((char)input);
+
+			// Get the next key in the queue if
+			// it exists (> 0) we'll keep reading
+			input = Raylib.GetCharPressed();
+		}
+
+		// We have now collected all the characters
+		alreadyCollectedCharactersThisFrame = true;
+		return charactersPressed;
+	}
 }
 
 public struct InputPreset
