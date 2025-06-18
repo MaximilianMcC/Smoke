@@ -49,9 +49,14 @@ public static partial class AssetManager
 
 	public static Font LoadFont(string fontPath)
 	{
-		// Actually load the font
+		// Get the font byte array and extension. If it doesn't
+		// exist then use whatever placeholder font is loaded
+		byte[] bytes = GetAssetBytes(fontPath, out string extension);
+		if (bytes.Length == 0) return Fonts.PlaceholderAsset;
+
+		// Load the font
 		const int maxSize = 512;
-		Font font = Raylib.LoadFontEx(fontPath, maxSize, null, 255);
+		Font font = Raylib.LoadFontFromMemory(extension, bytes, maxSize, null, 255);
 
 		// Make it look half decent
 		Raylib.GenTextureMipmaps(ref font.Texture);
