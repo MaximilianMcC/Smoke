@@ -3,43 +3,57 @@ using System.Diagnostics;
 class Builder
 {
 	// TODO: Don't hardcode
+	public static string RunnerRootPath = @"D:\code\c#\raylib\Smoke\Runner\";
 	public static string RunnerExePath = @"D:\code\c#\raylib\Smoke\Runner\bin\Release\net8.0\win-x64\publish\Runner.exe";
+	public static string RunnerAssetsPath = Path.Combine(RunnerRootPath, "GameAssets");
 
-	public static string Build(string csprojLocation)
+	public static string Build(string csprojLocation, string outputPath) => Compile(csprojLocation, outputPath, false);
+	public static string Publish(string csprojLocation, string outputPath) => Compile(csprojLocation, outputPath, true);
+
+	public static string Compile(string csprojLocation, string outputPath, bool shouldPublish = false)
 	{
-		// Build the actual game DLL
-		ProcessStartInfo buildDllCommand = new ProcessStartInfo()
+		// Build settings idk
+		string publish = shouldPublish ? "publish" : "build";
+		string channel = shouldPublish ? "release" : "debug";
+
+		// Make the actual build command
+		ProcessStartInfo command = new ProcessStartInfo()
 		{
 			FileName = "dotnet",
-			Arguments = $"build {csprojLocation} -c Release --no-dependencies",
+			Arguments = $"{publish} \"{csprojLocation}\" -c {channel} -o \"{outputPath}\" --no-dependencies",
 
-			CreateNoWindow = true,
 			RedirectStandardOutput = true,
-			RedirectStandardError = true
+			RedirectStandardError = true,
+			UseShellExecute = false
 		};
 
-		// Run the command idk
-		Process command = new Process();
-		command.StartInfo = buildDllCommand;
-		command.Start();
+		// Actually build it
+		Process process = Process.Start(command);
+		Console.WriteLine(process.StandardOutput.ReadToEnd());
+		Console.WriteLine(process.StandardError.ReadToEnd());
+		process.WaitForExit();
 
-		// Rename the DLL to game.dll
-		string outputPath = Path.Combine(csprojLocation, "bin", "Release");
-		File.Move(outputPath, Path.Join(Path.GetDirectoryName(outputPath), "game.dll"));
+		// Delete the pdb and deps.json files
+		foreach (string file in Directory.GetFiles(outputPath))
+		{
+			if (!(file.EndsWith(".pdb") || file.EndsWith(".deps.json"))) continue;
+			File.Delete(file);
+		}
 
-		// Return the path of the DLL
-		return Path.Combine(outputPath, $"game.dll");
+		// Rename the output file
+		// TODO: Make sure in the csproj <TargetName><TargetName> is Game
+		const string TargetName = "Game.dll";
+		string dllPath = Path.Combine(outputPath, TargetName);
+		return dllPath;
 	}
 
-	public static void Publish(string csprojLocation, string jsonPath, string outputPath)
+	public static void Package(string csprojLocation, string jsonPath, string outputPath)
 	{
 		// Build the games DLL
-		string dllPath = Build(csprojLocation);
+		string dllPath = Build(csprojLocation, RunnerAssetsPath);
 
-		// Copy the JSON and DLL into the runner
-		// project so they can become embedded
-		string runnerEmbeddedAssetsPath = Path.Join(Path.GetDirectoryName(RunnerExePath), "GameAssets");
-		File.Copy(dllPath, runnerEmbeddedAssetsPath);
-		File.Copy(jsonPath, runnerEmbeddedAssetsPath);
+		// Copy the games json file into the runners assets
+
+		// Make a 
 	}
 }
