@@ -49,11 +49,21 @@ class Builder
 
 	public static void Package(string csprojLocation, string jsonPath, string outputPath)
 	{
+		// Delete everything from the previous build
+		if (Directory.Exists(RunnerAssetsPath)) Directory.Delete(RunnerAssetsPath, true);
+
 		// Build the games DLL
-		string dllPath = Build(csprojLocation, RunnerAssetsPath);
+		Build(csprojLocation, RunnerAssetsPath);
 
 		// Copy the games json file into the runners assets
 		string newJsonPath = Path.Combine(RunnerAssetsPath, "Game.Json");
 		File.Copy(jsonPath, newJsonPath);
+
+		// Compile runner now that it has the required assets
+
+		// Rename runner to whatever the game is called
+		// and also move it to the requested output path
+
+
 	}
 }

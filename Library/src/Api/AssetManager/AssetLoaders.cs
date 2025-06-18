@@ -1,4 +1,6 @@
 
+using System.Reflection;
+using System.Text;
 using Raylib_cs;
 
 namespace Smoke;
@@ -69,5 +71,21 @@ public static partial class AssetManager
 	public static void UnloadFont(string fontKey)
 	{
 		Raylib.UnloadFont(Fonts[fontKey]);
+	}
+
+	// TODO: Don't do this assembly thing
+	public static string LoadTextFile(string filePath, Assembly assembly = null)
+	{
+		Console.WriteLine(Assembly.GetCallingAssembly());
+
+		// Get the files byte array and if it doesn't exist
+		// then just use some random as debug text
+		byte[] bytes = GetAssetBytes(filePath, out _, assembly);
+		if (bytes.Length == 0) return "erhm (this is the default (issue loading the file))";
+
+		// Deserialize the bytes to text
+		// TODO: Maybe like add a way to use Encoding.Unicode and whatnot
+		string contents = Encoding.UTF8.GetString(bytes);
+		return contents;
 	}
 }

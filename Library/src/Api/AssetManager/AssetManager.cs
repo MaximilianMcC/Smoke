@@ -13,7 +13,7 @@ public static partial class AssetManager
 	public static AssetDictionary<Font> Fonts = new(Raylib.GetFontDefault());
 	//? etc...
 
-	private static byte[] GetAssetBytes(string assetPath, out string extension)
+	private static byte[] GetAssetBytes(string assetPath, out string extension, Assembly assetAssembly = null)
 	{
 		// If a path ends with "|internal" then it is gotten from the libraries assets. Otherwise the calling assembly
 		const string internalSuffix = "|internal";
@@ -30,10 +30,11 @@ public static partial class AssetManager
 		// Clean and format the asset path for embedded resources
 		assetPath = assetPath.TrimStart('.', '/', '\\').Replace("/", ".").Replace("\\", ".");
 		extension = Path.GetExtension(assetPath);
-
+		
 		// Get the assembly we need
 		Assembly assembly;
-		if (builtIn) assembly = typeof(AssetManager).Assembly;
+		if (assetAssembly != null) assembly = assetAssembly;
+		else if (builtIn) assembly = typeof(AssetManager).Assembly;
 		else assembly = Assembly.Load(Project.Namespace);
 
 		// Get the assets from the assembly

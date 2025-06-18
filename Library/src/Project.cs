@@ -10,17 +10,11 @@ public class Project
 	public static string Namespace;
 	public static string DisplayName;
 	public static string RootPath;
-	public static string JsonPath;
 	public static Version Version;
 	public static int Restart;
 
-	public static void Load(string projectJsonFilePath)
+	public static void Load(string json)
 	{
-		// Nick the json path quickly
-		JsonPath = projectJsonFilePath;
-
-		// Load the JSON
-		string json = File.ReadAllText(JsonPath);
 		JObject projectJson = JObject.Parse(json);
 
 		// Pick out keys individually
@@ -49,7 +43,7 @@ public class Project
 
 		// Load the current/first scene
 		string firstScene = (string)projectJson["CurrentSceneDisplayName"];
-		SceneManager.SetScene(firstScene);
+		SceneManager.LoadScene(firstScene);
 
 		// Cheeky debug message
 		Console.WriteLine($"Loaded '{DisplayName}' (v{Version}, r{Restart})\n{Namespace} → {RootPath}");

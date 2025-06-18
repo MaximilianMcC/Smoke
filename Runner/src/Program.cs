@@ -4,6 +4,7 @@ using Raylib_cs;
 using Smoke;
 using System.Numerics;
 using Newtonsoft.Json;
+using System.Reflection;
 
 class Program
 {
@@ -12,27 +13,12 @@ class Program
 		// Make raylib window for the actual game
 		Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
 		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow | ConfigFlags.AlwaysRunWindow);
-		Raylib.InitWindow(500, 400, "Loading title name or something idk");
+		Raylib.InitWindow(512, 512, "Loading title name or something idk");
 		Raylib.SetExitKey(KeyboardKey.Null);
 
-		// Set the window to be half the size of the monitor rn
-		// And also put it in the centre of the screen
-		// TODO: Maybe don't scope stuff like this
-		{
-			Raylib.SetWindowSize(
-				Raylib.GetMonitorWidth(Raylib.GetCurrentMonitor()) / 2,
-				Raylib.GetMonitorHeight(Raylib.GetCurrentMonitor()) / 2
-			);
-			Raylib.SetWindowPosition(
-				(Raylib.GetMonitorWidth(Raylib.GetCurrentMonitor()) / 2) / 2,
-				(Raylib.GetMonitorHeight(Raylib.GetCurrentMonitor()) / 2) / 2
-			);
-		}
-
-
-		// Load the game
-		Project.Load(args[0]);
-
+		// Extract/load the games project json
+		string projectJson = AssetManager.LoadTextFile("./GameAssets/Game.json", Assembly.GetExecutingAssembly());
+		Project.Load(projectJson);
 
 		// Set the game title
 		Raylib.SetWindowTitle(Project.DisplayName);
