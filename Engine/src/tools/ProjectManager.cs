@@ -1,6 +1,8 @@
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using Smoke;
 
 class ProjectManager
 {
@@ -10,17 +12,21 @@ class ProjectManager
 
 	public static void CreateNewProject(string name)
 	{
+
 		// Clean up the name
 		string ogName = name;
 		name = ToPascalCase(name);
 
 		// Make the C# project
 		string projectDirectory = MakeCSharpProject(name);
+		Console.WriteLine(projectDirectory);
 
 		// Remove the default class file it gives us
-		// and make a new ./src directory
 		File.Delete(Path.Join(projectDirectory, "Class1.cs"));
+
+		// Make a src and assets directory
 		Directory.CreateDirectory(Path.Join(projectDirectory, "src"));
+		Directory.CreateDirectory(Path.Join(projectDirectory, "assets"));
 
 		// Make the game.json file
 		// TODO: Put the default thingy somewhere idk
@@ -33,8 +39,10 @@ class ProjectManager
 
 	private static string GenerateCsproj(string name)
 	{
+		AssetManager.PrintAllAssets(Assembly.GetExecutingAssembly());
+
 		// Read the template file, and replace the needed bits
-		return File.ReadAllText(templateCsprojPath)
+		return AssetManager.ReadTextFile("./assets/templates/csproj.txt", Assembly.GetExecutingAssembly())
 			.Replace("{name}", name)
 			.Replace("{smokeImport}", smokeImport);
 	}
@@ -43,7 +51,7 @@ class ProjectManager
 	{
 		// TODO: Remove the RootPath thingy from the json
 		// Read the template file, and replace the needed bits
-		return File.ReadAllText(templateJsonPath)
+		return AssetManager.ReadTextFile("./assets/templates/json.txt", Assembly.GetExecutingAssembly())
 			.Replace("{namespace}", namespaceName)
 			.Replace("{name}", displayName);
 	}

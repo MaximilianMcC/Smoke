@@ -58,7 +58,7 @@ class Program
 			}
 			if (ArgumentParser.CommandRan(newProjectCommand, args, out arguments))
 			{
-				
+				ProjectManager.CreateNewProject(arguments["name"]);
 			}
 		}
 	}

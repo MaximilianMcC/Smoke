@@ -17,7 +17,7 @@ class Program
 		Raylib.SetExitKey(KeyboardKey.Null);
 
 		// Extract/load the games project json
-		string projectJson = AssetManager.LoadTextFile("./GameAssets/Game.json", Assembly.GetExecutingAssembly());
+		string projectJson = AssetManager.ReadTextFile("./GameAssets/Game.json", Assembly.GetExecutingAssembly());
 		Project.Load(projectJson);
 
 		// Set the game title

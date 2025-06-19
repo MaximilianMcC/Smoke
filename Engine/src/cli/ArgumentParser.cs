@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-
 static class ArgumentParser
 {
 	public static List<Command> AllCommands = [];

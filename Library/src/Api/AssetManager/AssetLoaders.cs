@@ -1,4 +1,3 @@
-
 using System.Reflection;
 using System.Text;
 using Raylib_cs;
@@ -74,10 +73,8 @@ public static partial class AssetManager
 	}
 
 	// TODO: Don't do this assembly thing
-	public static string LoadTextFile(string filePath, Assembly assembly = null)
+	public static string ReadTextFile(string filePath, Assembly assembly = null)
 	{
-		Console.WriteLine(Assembly.GetCallingAssembly());
-
 		// Get the files byte array and if it doesn't exist
 		// then just use some random as debug text
 		byte[] bytes = GetAssetBytes(filePath, out _, assembly);
