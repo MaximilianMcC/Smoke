@@ -30,7 +30,7 @@ public static partial class AssetManager
 		// Clean and format the asset path for embedded resources
 		assetPath = assetPath.TrimStart('.', '/', '\\').Replace("/", ".").Replace("\\", ".");
 		extension = Path.GetExtension(assetPath);
-		
+
 		// Get the assembly we need
 		Assembly assembly;
 		if (assetAssembly != null) assembly = assetAssembly;
@@ -72,5 +72,27 @@ public static partial class AssetManager
 		foreach (string key in Images.Keys) UnloadImage(key);
 		foreach (string key in Textures.Keys) UnloadTexture(key);
 		foreach (string key in Fonts.Keys) UnloadTexture(key);
+	}
+
+	public static void PrintAllAssets(Assembly assembly = null)
+	{
+		// Get the assets from the specified assembly
+		if (assembly == null) assembly = Assembly.GetCallingAssembly();
+		string[] assets = assembly.GetManifestResourceNames();
+
+		if (assets.Length == 0)
+		{
+			Console.WriteLine($"{assembly.GetName().Name} contains no assets.");
+			return;
+		}
+		else
+		{
+			Console.WriteLine($"All {assets.Length} asset(s) from {assembly.GetName().Name}:");
+			for (int i = 0; i < assets.Length; i++)
+			{
+				Console.WriteLine((i + 1) + ")\t" + assets[i]);
+			}
+			return;
+		}
 	}
 }
