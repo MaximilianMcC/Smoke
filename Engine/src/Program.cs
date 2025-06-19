@@ -29,6 +29,11 @@ class Program
 				new Argument("output", "output path", "Output directory", "D:/temp/games", true)
 			);
 
+			Command newProjectCommand = new Command(
+				"new", "Make a new project (game) with smoke",
+				new Argument("name", "name", "The name of the project", "Minecraft")
+			);
+
 			// Check for what command was ran
 			Dictionary<string, string> arguments;
 			if (ArgumentParser.CommandRan(publishCommand, args, out arguments))
@@ -50,6 +55,10 @@ class Program
 					false,
 					arguments["output"]
 				);
+			}
+			if (ArgumentParser.CommandRan(newProjectCommand, args, out arguments))
+			{
+				
 			}
 		}
 	}
