@@ -35,11 +35,7 @@ class Builder
 		process.WaitForExit();
 
 		// Delete the pdb and deps.json files
-		foreach (string file in Directory.GetFiles(outputPath))
-		{
-			if (!(file.EndsWith(".pdb") || file.EndsWith(".deps.json"))) continue;
-			File.Delete(file);
-		}
+		GetRidOfCrap(outputPath);
 
 		// Rename the output file
 		// TODO: Make sure in the csproj <TargetName><TargetName> is Game
@@ -48,7 +44,7 @@ class Builder
 		return dllPath;
 	}
 
-	public static void Package(string csprojLocation, string jsonPath, bool publish, string outputPath)
+	public static void Package(string gameName, string csprojLocation, string jsonPath, bool publish, string outputPath)
 	{
 		// Delete everything from the previous build
 		if (Directory.Exists(RunnerAssetsPath)) Directory.Delete(RunnerAssetsPath, true);
@@ -62,9 +58,13 @@ class Builder
 
 		// Compile runner now that it has the required assets
 		CompileRunner(publish, outputPath);
+		GetRidOfCrap(outputPath);
 
 		// Rename runner to whatever the game is called
 		// and also move it to the requested output path
+		string exePath = Path.Combine(outputPath, "Runner.exe");
+		string newExePath = Path.Combine(outputPath, gameName + ".exe");
+		File.Move(exePath, newExePath);
 	}
 
 	public static void CompileRunner(bool shouldPublish, string outputPath)
@@ -93,5 +93,15 @@ class Builder
 		Console.WriteLine(process.StandardOutput.ReadToEnd());
 		Console.WriteLine(process.StandardError.ReadToEnd());
 		process.WaitForExit();
+	}
+
+	// Get rid of pdb and deps.json files
+	private static void GetRidOfCrap(string directoryPath)
+	{
+		foreach (string file in Directory.GetFiles(directoryPath))
+		{
+			if (!(file.EndsWith(".pdb") || file.EndsWith(".deps.json"))) continue;
+			File.Delete(file);
+		}
 	}
 }
