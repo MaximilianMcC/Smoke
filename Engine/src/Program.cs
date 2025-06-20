@@ -34,6 +34,11 @@ class Program
 				new Argument("name", "name", "The name of the project", "Minecraft")
 			);
 
+			Command buildToolsCommand = new Command(
+				"buildTools", "Add build/debug support",
+				new Argument("type", "type", "The type/platform you want support for", "vscode|batch")
+			);
+
 			// Check for what command was ran
 			Dictionary<string, string> arguments;
 			if (ArgumentParser.CommandRan(publishCommand, args, out arguments))
@@ -59,6 +64,10 @@ class Program
 			if (ArgumentParser.CommandRan(newProjectCommand, args, out arguments))
 			{
 				ProjectManager.CreateNewProject(arguments["name"]);
+			}
+			if (ArgumentParser.CommandRan(buildToolsCommand, args, out arguments))
+			{
+				
 			}
 		}
 	}

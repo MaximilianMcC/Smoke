@@ -1,0 +1,16 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug Smoke Project",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "Build Game",
+			"program": "{runnerExe}",
+			"cwd": "${workspaceFolder}",
+			"console": "internalConsole",
+
+			"args": ["./Game.json"]
+		}
+	]
+}

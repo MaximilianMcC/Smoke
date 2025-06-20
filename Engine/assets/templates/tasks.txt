@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Smoke Project",
+			"command": "smoke",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/{namespace}.csproj",
+				"${workspaceFolder}/Game.json"
+			],
+			"problemMatcher": "$msCompile"
+		}
+	]
+}

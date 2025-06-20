@@ -6,13 +6,10 @@ using Smoke;
 
 class ProjectManager
 {
-	public static string templateCsprojPath = "";
-	public static string templateJsonPath = "";
 	public static string smokeImport = "<ProjectReference Include=\"../Smoke/Library/Smoke.csproj\"/>";
 
 	public static void CreateNewProject(string name)
 	{
-
 		// Clean up the name
 		string ogName = name;
 		name = ToPascalCase(name);
@@ -39,8 +36,6 @@ class ProjectManager
 
 	private static string GenerateCsproj(string name)
 	{
-		AssetManager.PrintAllAssets(Assembly.GetExecutingAssembly());
-
 		// Read the template file, and replace the needed bits
 		return AssetManager.ReadTextFile("./assets/templates/csproj.txt", Assembly.GetExecutingAssembly())
 			.Replace("{name}", name)
