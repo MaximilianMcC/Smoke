@@ -4,6 +4,8 @@ namespace Smoke;
 
 public abstract class Component
 {
+	// TODO: Assign a LoadPriority normalised float (0-1) that determines if it needs to be loaded before other stuff (for example PlayerMovement would be loaded last, with textures and timers and stuff loaded first because PlayerMovement depends on them)
+
 	//? This has to be ignored otherwise its an endless loop
 	// TODO: Put GUID as a string here idk
 	[JsonIgnore]

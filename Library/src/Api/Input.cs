@@ -11,15 +11,8 @@ public class Input
 	public static InputPreset ArrowKeys = new InputPreset(KeyboardKey.Left, KeyboardKey.Right, KeyboardKey.Up, KeyboardKey.Down);
 
 	// TODO: Don't use raylib keyboard key
-	public static bool KeyHeldDown(KeyboardKey key)
-	{
-		return Raylib.IsKeyDown(key);
-	}
-
-	public static bool KeyPressed(KeyboardKey key)
-	{
-		return Raylib.IsKeyPressed(key);
-	}
+	public static bool KeyHeldDown(KeyboardKey key) => Raylib.IsKeyDown(key);
+	public static bool KeyPressed(KeyboardKey key) => Raylib.IsKeyPressed(key);
 
 	public static float GetInput(KeyboardKey negativeOutput, KeyboardKey positiveOutput)
 	{
@@ -51,7 +44,8 @@ public class Input
 
 
 	private static bool alreadyCollectedCharactersThisFrame;
-	private static List<char> charactersPressed;
+	private static List<char> charactersPressed = [];
+
 	public static char GetCharacterPressed() => GetCharactersPressed()[0];
 	public static List<char> GetCharactersPressed()
 	{

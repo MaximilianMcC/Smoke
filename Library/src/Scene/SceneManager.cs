@@ -1,3 +1,4 @@
+using Force.DeepCloner;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -30,30 +31,48 @@ public static class SceneManager
 		}
 	}
 
-	public static void SetScene(Guid sceneGuid) => SetScene(Scenes.Find(scene => scene.Guid == sceneGuid));
-	public static void SetScene(string sceneDisplayName) => SetScene(Scenes.Find(scene => scene.DisplayName == sceneDisplayName));
-	public static void SetScene(Scene newScene)
+	public static void LoadScene(Guid sceneGuid) => LoadScene(Scenes.Find(scene => scene.Guid == sceneGuid));
+	public static void LoadScene(string sceneDisplayName) => LoadScene(Scenes.Find(scene => scene.DisplayName == sceneDisplayName));
+	public static void LoadScene(Scene newScene)
 	{
-		Console.WriteLine("Loading scene " +  newScene.DisplayName);
+		Console.WriteLine("Loading scene " + newScene.DisplayName);
 
-		// Check for if we had a previous scene
-		if (CurrentScene != null)
-		{
-			// Unload everything in the scene
-			// TODO: Make a new method that doesn't unload the previous scene? could be helpful fr
-			foreach (GameObject gameObject in CurrentScene.Things)
-			{
-				gameObject.TidyUp();
-			}
-		}
+		// Create a copy of the 'clean' scene
+		Scene sceneCopy = newScene.DeepClone();
 
-		// Set our seen to be the new scene
-		CurrentScene = newScene;
+		// Unload the previous scene then load the new scene
+		UnloadScene(CurrentScene);
+		CurrentScene = sceneCopy;
 
 		// Load everything in that scene
 		foreach (GameObject gameObject in CurrentScene.Things)
 		{
 			gameObject.Start();
 		}
+	}
+
+	private static void UnloadScene(Scene scene)
+	{
+		if (scene == null) return;
+
+		// Unload everything in the scene
+		// TODO: Make a new method that doesn't unload the previous scene? could be helpful fr
+		foreach (GameObject gameObject in CurrentScene.Things)
+		{
+			gameObject.TidyUp();
+		}
+	}
+
+	public static void RestartCurrentScene()
+	{
+		if (CurrentScene == null)
+		{
+			// TODO: Proper onscreen (and in terminal) logging system
+			Console.WriteLine("Can't restart the current scene if there is no scene");
+			return;
+		}
+
+		// TODO: Figure out what scene the current scene inherits off
+
 	}
 }

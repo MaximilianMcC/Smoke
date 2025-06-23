@@ -1,0 +1,166 @@
+{
+	"Namespace": "FlappyBird",
+	"DisplayName": "Microsoft Word",
+	"RootPath": "D:/code/c#/raylib/FlappyBird",
+	"Version": "1.1.0",
+	"Restart": 2,
+	"WindowSize": {
+		"X": 480,
+		"Y": 720
+	},
+	"Prefabs": [
+		{
+			"DisplayName": "pipe",
+			"Components": [
+				{
+					"$type": "Smoke.Sprite, Smoke"
+				},
+				{
+					"$type": "Smoke.Sprite, Smoke"
+				},
+				{
+					"$type": "Pipe, FlappyBird"
+				}
+			]
+		}
+	], 
+	"CurrentSceneDisplayName": "menu",
+	"Scenes": [
+		{
+			"DisplayName": "menu",
+			"Things": [
+				{
+					"DisplayName": "background",
+					"Components": [
+						{
+							"$type": "Background, FlappyBird",
+							"ScrollSpeed": -5,
+							"Dark": true
+						}
+					]
+				},
+				{
+					"DisplayName":"Menu Handler",
+					"Components": [
+						{
+							"$type": "Menu, FlappyBird"
+						},
+						{
+							"$type":"Smoke.Transform2D, Smoke"
+						},
+						{
+							"$type": "SplashText, FlappyBird",
+							"Texts": [
+								"hey repco",
+								"wow",
+								"shout out smoke",
+								"full release tomorrow",
+								"blud think hes minecraft",
+								"slacker",
+								"have you done the wordle",
+								"STREAK",
+								"cooperclan",
+								"lol",
+								"chicken jokey!",
+								"am I livestock",
+								"ctrl+g",
+								"tdnmtm"
+							],
+							"Position": {
+								"X": 100,
+								"Y": 100
+							},
+							"FontSize": 50
+						}
+					]
+				},
+				{
+					"DisplayName": "PlayButton",
+					"Components": [
+						{
+							"$type": "Button, FlappyBird",
+							"Text": "play",
+							"FontSize": 60
+						},
+						{
+							"$type":"Smoke.Transform2D, Smoke",
+							"Origin": {
+								"X": 0.5,
+								"Y": 0.5
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"DisplayName": "game",
+			"Things": [
+				{
+					"DisplayName": "background",
+					"Components": [
+						{
+							"$type": "Background, FlappyBird"
+						}
+					]
+				},
+				{
+					"DisplayName": "Ui Handler",
+					"Components": [
+						{
+							"$type":"UiHandler, FlappyBird"
+						}
+					]
+				},
+				{
+					"DisplayName": "pipe spawner",
+					"Components": [
+						{
+							"$type": "PipeSpawner, FlappyBird"
+						},
+						{
+							"$type": "Smoke.Timer, Smoke",
+							"Duration": 3,
+							"DoneOnStart": true
+						}
+					]
+				},
+				{
+					"DisplayName": "Player",
+					"Components": [
+						{
+							"$type": "Smoke.Transform2D, Smoke",
+							"Position": { "X": 100, "Y": 100 },
+							"Size": { "X": 85, "Y": 65 },
+							"Origin": { "X": 0.5, "Y": 0.5 }
+						},
+						{
+							"$type": "Smoke.Sprite, Smoke"
+						},
+						{
+							"$type": "Player, FlappyBird"
+						}
+					]
+				},
+				{
+					"DisplayName": "RestartButton",
+					"Components": [
+						{
+							"$type": "Button, FlappyBird",
+							"Text": "restart",
+							"FontSize": 60,
+							"Enabled": false
+						},
+						{
+							"$type":"Smoke.Transform2D, Smoke",
+							"Origin": {
+								"X": 0.5,
+								"Y": 0.5
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
