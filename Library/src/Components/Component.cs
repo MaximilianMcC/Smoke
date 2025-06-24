@@ -16,6 +16,8 @@ public abstract class Component
 	// loading assets and whatnot yk
 	// TODO: Add an upload type
 	public virtual void LoadType() { }
+
+	public T GetComponent<T>() where T : Component => GameObject.Get<T>();
 }
 
 public abstract class UpdatableComponent : Component
