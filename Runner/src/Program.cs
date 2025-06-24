@@ -16,6 +16,8 @@ class Program
 		Raylib.InitWindow(512, 512, "Loading title name or something idk");
 		Raylib.SetExitKey(KeyboardKey.Null);
 
+		// Check for if we're loading from 
+
 		// Extract/load the games project json
 		string projectJson = AssetManager.ReadTextFile("./GameAssets/Game.json", Assembly.GetExecutingAssembly());
 		Project.Load(projectJson);
@@ -58,7 +60,8 @@ class Program
 			// Draw everything
 			// TODO: Do camera stuff
 			Raylib.BeginDrawing();
-			Raylib.ClearBackground(Color.Magenta);
+			// Raylib.ClearBackground(Smoke.Color.Magenta.RaylibColor);
+			Raylib.ClearBackground(Presets.Colors.Magenta.AsRaylibColor);
 
 			// Render stuff
 			for (int i = 0; i < CurrentScene.Things.Count; i++)

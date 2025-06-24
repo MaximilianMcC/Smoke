@@ -51,7 +51,7 @@ public partial class Graphics
 	public static void DrawCircle(Transform2D transform, float radius, Color color) => DrawCircle(transform.FullPosition, radius, color);
 	public static void DrawCircle(Vector2 position, float radius, Color color)
 	{
-		Raylib.DrawCircleV(position, radius, color);
+		Raylib.DrawCircleV(position, radius, color.AsRaylibColor);
 	}
 
 	// Squares
@@ -63,7 +63,7 @@ public partial class Graphics
 			new Rectangle(position, size),
 			size * origin,
 			rotation,
-			color
+			color.AsRaylibColor
 		);
 	}
 
@@ -76,7 +76,7 @@ public partial class Graphics
 		Raylib.DrawRectangleLinesEx(
 			new Rectangle(position, size),
 			thickness,
-			color
+			color.AsRaylibColor
 		);
 	}
 
@@ -90,7 +90,7 @@ public partial class Graphics
 		position = ApplyOrigin(position, MeasureText(text, fontSize), origin);
 
 		// Draw the text
-		Raylib.DrawTextPro(Fonts[FontKey], text, position, Vector2.Zero, rotation, fontSize, (10 / fontSize), color);
+		Raylib.DrawTextPro(Fonts[FontKey], text, position, Vector2.Zero, rotation, fontSize, (10 / fontSize), color.AsRaylibColor);
 	}
 
 
@@ -131,7 +131,7 @@ public partial class Graphics
 			new Rectangle(position, size),
 			size * origin,
 			rotation,
-			color
+			color.AsRaylibColor
 		);
 	}
 
@@ -145,7 +145,7 @@ public partial class Graphics
 
 
 
-public static class Origin
+public struct Origin
 {
 	public static readonly Vector2 TopLeft = new Vector2(0f);
 	public static readonly Vector2 TopCentre = new Vector2(0.5f, 0f);
