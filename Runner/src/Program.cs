@@ -14,7 +14,7 @@ class Program
 		Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
 		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow | ConfigFlags.AlwaysRunWindow);
 		Raylib.InitWindow(512, 512, "Loading title name or something idk");
-		Raylib.SetExitKey(KeyboardKey.Null);
+		Raylib.SetExitKey(0);
 
 		// Check for if we're loading from 
 
@@ -40,22 +40,6 @@ class Program
 					component.Update();
 				}
 			}
-
-			//! debug
-			if (Input.KeyPressed(KeyboardKey.G))
-			{
-				JsonSerializerSettings settings = new JsonSerializerSettings()
-				{
-					TypeNameHandling = TypeNameHandling.Auto,
-					Formatting = Formatting.Indented
-				};
-
-				//! you'll need to remove public variables since they show up twice (just keep components)
-				string json = JsonConvert.SerializeObject(ObjectManager.Prefabs, settings);
-				Console.WriteLine(json);
-			}
-
-
 
 			// Draw everything
 			// TODO: Do camera stuff

@@ -2,9 +2,9 @@ using Smoke;
 
 namespace Smoke;
 
-public class Presets
+public static class Presets
 {
-	public struct Colors
+	public static class Colors
 	{
 		public static readonly Color Transparent = new Color(0, 0, 0, 0);
 		public static readonly Color White = new Color(255, 255, 255);
@@ -24,7 +24,7 @@ public class Presets
 		public static readonly Color Grey = new Color(128, 128, 128);
 	}
 	
-	public struct Inputs
+	public static class Inputs
 	{
 		// public static readonly InputPreset WASD = new InputPreset(KeyboardKey.A, KeyboardKey.D, KeyboardKey.W, KeyboardKey.S);
 		// public static readonly InputPreset ArrowKeys = new InputPreset(KeyboardKey.Left, KeyboardKey.Right, KeyboardKey.Up, KeyboardKey.Down);

@@ -7,12 +7,10 @@ namespace Smoke;
 public class Input
 {
 	public static KeyboardKey ToggleDebugKey = KeyboardKey.Grave;
-	public static InputPreset WASD = new InputPreset(KeyboardKey.A, KeyboardKey.D, KeyboardKey.W, KeyboardKey.S);
-	public static InputPreset ArrowKeys = new InputPreset(KeyboardKey.Left, KeyboardKey.Right, KeyboardKey.Up, KeyboardKey.Down);
 
 	// TODO: Don't use raylib keyboard key
-	public static bool KeyHeldDown(KeyboardKey key) => Raylib.IsKeyDown(key);
-	public static bool KeyPressed(KeyboardKey key) => Raylib.IsKeyPressed(key);
+	public static bool KeyHeldDown(KeyboardKey key) => Raylib.IsKeyDown((Raylib_cs.KeyboardKey)key);
+	public static bool KeyPressed(KeyboardKey key) => Raylib.IsKeyPressed((Raylib_cs.KeyboardKey)key);
 
 	public static float GetInput(KeyboardKey negativeOutput, KeyboardKey positiveOutput)
 	{
@@ -39,8 +37,8 @@ public class Input
 	// TODO: Use properties with getters/setters
 	//? public static Vector2 MousePosition { get => Raylib.GetMousePosition(); }
 	public static Vector2 MousePosition() => Raylib.GetMousePosition();
-	public static bool MouseClicked(MouseButton mouseButton) => Raylib.IsMouseButtonPressed(mouseButton);
-	public static bool MouseHeldDown(MouseButton mouseButton) => Raylib.IsMouseButtonDown(mouseButton);
+	public static bool MouseClicked(MouseButton mouseButton) => Raylib.IsMouseButtonPressed((Raylib_cs.MouseButton)mouseButton);
+	public static bool MouseHeldDown(MouseButton mouseButton) => Raylib.IsMouseButtonDown((Raylib_cs.MouseButton)mouseButton);
 
 
 	private static bool alreadyCollectedCharactersThisFrame;

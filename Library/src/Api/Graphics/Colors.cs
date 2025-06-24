@@ -2,7 +2,8 @@
 using Raylib_cs;
 
 namespace Smoke;
-public struct Color
+
+public class Color
 {
 	public byte Red;
 	public byte Green;
@@ -39,8 +40,6 @@ public struct Color
 	{
 		return $"{{R:{Red} G:{Green} B:{Blue} A:{Alpha}}}";
 	}
-	
-
 
 	// Kinda 'budget' set of colors. More can be found in Presets.Colors
 	public static readonly Color White = new Color(255, 255, 255);
