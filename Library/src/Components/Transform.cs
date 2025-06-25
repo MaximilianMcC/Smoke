@@ -108,7 +108,7 @@ public class Transform2D : Component
 	{
 		// Transform2D overlap = GetOverlap(thing);
 		// Graphics.DrawSquare(overlap, color);
-		Raylib.DrawRectangleLinesEx(GetOverlap(thing), 2f, color);
+		Raylib.DrawRectangleLinesEx(GetOverlap(thing), 2f, color.AsRaylibColor);
 	}
 }
 
