@@ -14,13 +14,20 @@ class Program
 		Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
 		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow | ConfigFlags.AlwaysRunWindow);
 		Raylib.InitWindow(512, 512, "Loading title name or something idk");
-		Raylib.SetExitKey(0);
+		Raylib.SetExitKey(Raylib_cs.KeyboardKey.Null);
 
-		// Check for if we're loading from 
-
-		// Extract/load the games project json
-		string projectJson = AssetManager.ReadTextFile("./GameAssets/Game.json", Assembly.GetExecutingAssembly());
-		Project.Load(projectJson);
+		// Check for if we're loading from embedded or file
+		if (args.Length >= 1)
+		{
+			// load via file
+			string projectJson = File.ReadAllText(args[0]);
+			Project.Load(projectJson);
+		}
+		else
+		{
+			string projectJson = AssetManager.ReadTextFile("./GameAssets/Game.json", Assembly.GetExecutingAssembly());
+			Project.Load(projectJson);
+		}
 
 		// Set the game title
 		Raylib.SetWindowTitle(Project.DisplayName);

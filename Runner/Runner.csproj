@@ -1,24 +1,39 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Raylib-cs" Version="7.0.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Raylib-cs" Version="7.0.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="GameAssets\Game.json" />
-    <EmbeddedResource Include="GameAssets\Game.dll" />
-  </ItemGroup>
+	<!-- <ItemGroup>
+		<EmbeddedResource Include="GameAssets\Game.json" />
+		<EmbeddedResource Include="GameAssets\Game.dll" />
+	</ItemGroup> -->
 
-  <ItemGroup>
-	<ProjectReference Include="../Library/Smoke.csproj" />
-  </ItemGroup>
+	<Choose>
+		<When Condition="Exists('GameAssets\Game.json')">
+			<ItemGroup>
+				<EmbeddedResource Include="GameAssets\Game.json" />
+			</ItemGroup>
+		</When>
+
+		<When Condition="Exists('GameAssets\Game.dll')">
+			<ItemGroup>
+				<EmbeddedResource Include="GameAssets\Game.dll" />
+			</ItemGroup>
+		</When>
+	</Choose>
+
+
+	<ItemGroup>
+		<ProjectReference Include="../Library/Smoke.csproj" />
+	</ItemGroup>
 
 </Project>
