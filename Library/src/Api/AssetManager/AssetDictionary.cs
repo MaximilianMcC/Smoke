@@ -19,7 +19,7 @@ public class AssetDictionary<TValue> : Dictionary<string, TValue>
 		{
 			// Check for if the asset they're asking for
 			// actually exists (mislick prevention)
-			if (TryGetValue(key, out TValue value) == false)
+			if (key == null || TryGetValue(key, out TValue value) == false)
 			{
 				// Use the placeholder asset
 				return PlaceholderAsset;
