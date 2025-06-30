@@ -9,8 +9,14 @@ public class Input
 	public static KeyboardKey ToggleDebugKey = KeyboardKey.Grave;
 
 	// TODO: Don't use raylib keyboard key
+	// Keyboard input
 	public static bool KeyHeldDown(KeyboardKey key) => Raylib.IsKeyDown((Raylib_cs.KeyboardKey)key);
 	public static bool KeyPressed(KeyboardKey key) => Raylib.IsKeyPressed((Raylib_cs.KeyboardKey)key);
+	public static bool KeyPressedAndHeld(KeyboardKey key) => KeyPressed(key) || Raylib.IsKeyPressedRepeat((Raylib_cs.KeyboardKey)key);
+	public static bool ShortcutDone(KeyboardKey modifier, KeyboardKey key) => KeyHeldDown(modifier) && KeyPressedAndHeld(key);
+
+	// Keyboard typing input
+	public static List<char> GetCharactersPressed() => InputManager.GetCharactersPressed();
 
 	public static float GetInput(KeyboardKey negativeOutput, KeyboardKey positiveOutput)
 	{
@@ -39,43 +45,6 @@ public class Input
 	public static Vector2 MousePosition() => Raylib.GetMousePosition();
 	public static bool MouseClicked(MouseButton mouseButton) => Raylib.IsMouseButtonPressed((Raylib_cs.MouseButton)mouseButton);
 	public static bool MouseHeldDown(MouseButton mouseButton) => Raylib.IsMouseButtonDown((Raylib_cs.MouseButton)mouseButton);
-
-
-	private static bool alreadyCollectedCharactersThisFrame;
-	private static List<char> charactersPressed = [];
-
-	public static char GetCharacterPressed() => GetCharactersPressed()[0];
-	public static List<char> GetCharactersPressed()
-	{
-		// If we've already collected the
-		// characters then just give them back
-		if (alreadyCollectedCharactersThisFrame) return charactersPressed;
-
-		// Clear the character list because we're gonna
-		// repopulate it with the updated data rn
-		charactersPressed.Clear();
-
-		// Get the first 'mandatory' character input
-		int input = Raylib.GetCharPressed();
-		while (input > 0)
-		{
-			// Check for if its a key on the keyboard (alphabet)
-			const int lowestKeyboardCharacter = ' ';
-			const int highestKeyboardCharacter = '}';
-			if (!Maths.InRange(input, lowestKeyboardCharacter, highestKeyboardCharacter)) continue;
-
-			// Add the character to the list
-			charactersPressed.Add((char)input);
-
-			// Get the next key in the queue if
-			// it exists (> 0) we'll keep reading
-			input = Raylib.GetCharPressed();
-		}
-
-		// We have now collected all the characters
-		alreadyCollectedCharactersThisFrame = true;
-		return charactersPressed;
-	}
 }
 
 public struct InputPreset

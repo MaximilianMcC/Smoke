@@ -74,6 +74,7 @@ class Program
 			}
 
 			Raylib.EndDrawing();
+			InputManager.EndFrame();
 		}
 
 		// Unload anything that we forgot to (slacker)
