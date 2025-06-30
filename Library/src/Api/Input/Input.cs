@@ -16,7 +16,11 @@ public class Input
 
 	// Keyboard typing input
 	public static List<char> GetCharactersPressed() => InputManager.GetCharactersPressed();
-	public static string ClipboardText => Raylib.GetClipboardText_();
+	public static string ClipboardText
+	{
+		get => Raylib.GetClipboardText_();
+		set => Raylib.SetClipboardText(value);
+	}
 
 	public static float GetInput(KeyboardKey negativeOutput, KeyboardKey positiveOutput)
 	{
