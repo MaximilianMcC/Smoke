@@ -8,7 +8,6 @@ public class Input
 {
 	public static KeyboardKey ToggleDebugKey = KeyboardKey.Grave;
 
-	// TODO: Don't use raylib keyboard key
 	// Keyboard input
 	public static bool KeyHeldDown(KeyboardKey key) => Raylib.IsKeyDown((Raylib_cs.KeyboardKey)key);
 	public static bool KeyPressed(KeyboardKey key) => Raylib.IsKeyPressed((Raylib_cs.KeyboardKey)key);
@@ -17,6 +16,7 @@ public class Input
 
 	// Keyboard typing input
 	public static List<char> GetCharactersPressed() => InputManager.GetCharactersPressed();
+	public static string ClipboardText => Raylib.GetClipboardText_();
 
 	public static float GetInput(KeyboardKey negativeOutput, KeyboardKey positiveOutput)
 	{
