@@ -11,6 +11,9 @@ public class Color
 	public byte Alpha;
 	public Raylib_cs.Color AsRaylibColor => new Raylib_cs.Color(Red, Green, Blue, Alpha);
 
+	// Lets you use hex directly without the ctor
+	public static implicit operator Color(uint hex) => new Color(hex);
+
 	public Color(uint hex)
 	{
 		Raylib_cs.Color color = Raylib.GetColor(hex);
