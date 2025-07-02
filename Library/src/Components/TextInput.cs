@@ -8,11 +8,17 @@ public class TextInput : RenderableComponent
 {
 	public string Text = "";
 	public int CaretIndex = 0;
+	
+	// TODO: Make a caret class with all this + the index
+	private float caretLerpStart;
+	private float caretLerpEnd;
+	private float caretLerpAmount;
 
 	public float FontSize = 32;
+	public Color SelectionColor = 0x162F58_80;
 
 	private Selection selection;
-	private bool somethingsSelected => selection != null;
+	private bool selectingSomething => selection != null;
 
 	public override void Update()
 	{
@@ -34,7 +40,7 @@ public class TextInput : RenderableComponent
 		{
 			// If we've got something selected then use that,
 			// otherwise use the entire line/sentence
-			ClipboardText = somethingsSelected ? GetSelectedText() : GetCurrentContent();
+			ClipboardText = selectingSomething ? GetSelectedText() : GetCurrentContent();
 		}
 
 		// Deleting
@@ -61,11 +67,25 @@ public class TextInput : RenderableComponent
 		if (ShortcutDone(KeyboardKey.LeftControl, KeyboardKey.A)) SelectAll();
 	}
 
+	// Draw everything idk
 	public override void Render2D()
 	{
 		//!debug
 		Vector2 position = new Vector2(20);
 
+		// Draw the section
+		if (selectingSomething)
+		{
+			// Get the size of the selection
+			Vector2 selectionSize = MeasureText(GetSelectedText(), FontSize);
+
+			// Get the position of the selection
+			Vector2 selectionPosition = position + (MeasureText(GetContentBeforeCaret(), FontSize) * Vector2.UnitX);
+
+			// Draw the selection thingy (behind the text)
+			// TODO: Draw in the front
+			DrawSquare(selectionPosition, selectionSize, SelectionColor);
+		}
 
 		// Draw the text
 		DrawText(Text, position, Origin.TopLeft, 0f, FontSize, Color.White);
@@ -82,14 +102,14 @@ public class TextInput : RenderableComponent
 	private void WriteAfterCursor(string newText)
 	{
 		Text = Text.Insert(CaretIndex, newText);
-		CaretIndex += newText.Length;
+		MoveRight(newText.Length);
 	}
 
 	// Delete selected stuff
 	private void DeleteSelectedStuff()
 	{
 		// Check for if theres anything to delete
-		if (somethingsSelected == false) return;
+		if (selectingSomething == false) return;
 
 		//! this MIGHT be reused code idk though
 		Text = Text.Remove(selection.StartIndex, selection.EndIndex);
@@ -135,17 +155,23 @@ public class TextInput : RenderableComponent
 	private void GoToEndOfSentence() => throw new NotImplementedException();
 
 	// Move around
-	private void MoveLeft()
+	private void MoveLeft(int charactersToMove = 1)
 	{
 		// Check for if we have somewhere to move to
 		if (!Maths.InRange(CaretIndex, 0, Text.Length)) return;
-		CaretIndex--;
+		CaretIndex -= charactersToMove;
+
+		// Lerp the caret
+
 	}
-	private void MoveRight()
+	private void MoveRight(int charactersToMove = 1)
 	{
 		// Check for if we have somewhere to move to
 		if (!Maths.InRange(CaretIndex, 0, Text.Length)) return;
-		CaretIndex++;
+		CaretIndex += charactersToMove;
+
+		// Lerp the caret
+		caretLerpEnd = 0;
 	}
 
 	// Get selected text
@@ -153,7 +179,7 @@ public class TextInput : RenderableComponent
 	{
 		// Check for if we actually have anything selected 
 		// in the first place (kinda important ngl)
-		if (somethingsSelected == false) return null;
+		if (selectingSomething == false) return null;
 
 		// Get the selected text
 		return Text.Substring(selection.StartIndex, selection.Length);
@@ -172,7 +198,7 @@ public class TextInput : RenderableComponent
 	private void PrimeSelection()
 	{
 		// Make a new selection if there is not already one
-		if (somethingsSelected) return;
+		if (selectingSomething) return;
 
 		selection = new Selection()
 		{
@@ -187,6 +213,9 @@ public class TextInput : RenderableComponent
 		selection.StartIndex = 0;
 		selection.EndIndex = Text.Length;
 	}
+
+	// Get stuff around the caret
+	private string GetContentBeforeCaret() => Text.Substring(0, Text.Length - CaretIndex);
 
 
 
