@@ -1,4 +1,8 @@
-public class Maths
+using System.Numerics;
+
+namespace Smoke;
+
+public static class Maths
 {
 	public static bool InRange(int variable, int lower, int upper)
 	{
