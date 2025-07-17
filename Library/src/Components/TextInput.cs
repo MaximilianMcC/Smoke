@@ -45,6 +45,8 @@ public class TextInput : RenderableComponent
 		if (KeyPressedAndHeld(KeyboardKey.Backspace)) DeleteBeforeCaret();
 		if (KeyPressedAndHeld(KeyboardKey.Left)) carets.ForEach(caret => caret.MoveBackwards());
 		if (KeyPressedAndHeld(KeyboardKey.Right)) carets.ForEach(caret => caret.MoveForwards());
+		if (KeyPressedAndHeld(KeyboardKey.Home)) carets.ForEach(caret => caret.MoveToFront());
+		if (KeyPressedAndHeld(KeyboardKey.End)) carets.ForEach(caret => caret.MoveToEnd());
 	}
 
 	// Draw everything idk
@@ -124,8 +126,8 @@ public class TextInput : RenderableComponent
 			textInput = parent;
 		}
 
-		private float animationDuration = 1f;
-
+		// Move the caret backward
+		// TODO: Animate
 		public void MoveBackwards(int charactersToMove = 1)
 		{
 			Index -= charactersToMove;
@@ -141,6 +143,8 @@ public class TextInput : RenderableComponent
 			}
 		}
 
+		// Move the caret forward
+		// TODO: Animate
 		public void MoveForwards(int charactersToMove = 1)
 		{
 			Index += charactersToMove;
@@ -161,6 +165,20 @@ public class TextInput : RenderableComponent
 					Index = textInput.CurrentLine.Length;
 				}
 			}
+		}
+
+		// Move to the front of a line
+		// TODO: Do it dependant on content. Sentence instead of line for example
+		public void MoveToFront()
+		{
+			Index = 0;
+		}
+
+		// Move to the back/end of a line
+		// TODO: Do it dependant on content. Sentence instead of line for example
+		public void MoveToEnd()
+		{
+			Index = textInput.CurrentLine.Length;
 		}
 
 		// TODO: Add block caret support
