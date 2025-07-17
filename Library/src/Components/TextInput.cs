@@ -43,6 +43,7 @@ public class TextInput : RenderableComponent
 
 		// Handle fancy other buttons
 		if (KeyPressedAndHeld(KeyboardKey.Backspace)) DeleteBeforeCaret();
+		if (KeyPressedAndHeld(KeyboardKey.Delete)) DeleteAfterCaret();
 		if (KeyPressedAndHeld(KeyboardKey.Left)) carets.ForEach(caret => caret.MoveBackwards());
 		if (KeyPressedAndHeld(KeyboardKey.Right)) carets.ForEach(caret => caret.MoveForwards());
 		if (KeyPressedAndHeld(KeyboardKey.Home)) carets.ForEach(caret => caret.MoveToFront());
@@ -82,7 +83,10 @@ public class TextInput : RenderableComponent
 		// TODO: Make a caret handler class that does the looping for me
 		foreach (Caret caret in carets)
 		{
-			// Remove the text
+			// Make sure we don't go out of bounds
+			if (caret.Index - 1 < 0) continue;
+
+			// lol
 			caret.MoveBackwards();
 			Lines[caret.Line] = Lines[caret.Line].Remove(caret.Index, 1);
 		}
@@ -92,7 +96,13 @@ public class TextInput : RenderableComponent
 	// TODO: Rename to delete
 	private void DeleteAfterCaret()
 	{
-
+		// Loop over all the carets
+		// TODO: Make a caret handler class that does the looping for me
+		foreach (Caret caret in carets)
+		{
+			// Remove the text in front
+			Lines[caret.Line] = Lines[caret.Line].Remove(caret.Index, 1);
+		}
 	}
 
 	// TODO: Don't use a class
