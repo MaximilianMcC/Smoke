@@ -58,6 +58,7 @@ public class TextInput : RenderableComponent
 
 		// Draw the text normally ig
 		DrawText(Text, position, Origin.TopLeft, 0f, FontSize, Color.White);
+		carets.ForEach(caret => caret.Draw(position));
 
 		DrawText("KIA ORA", 100, Color.Black);
 	}
@@ -192,11 +193,25 @@ public class TextInput : RenderableComponent
 		}
 
 		// TODO: Add block caret support
-		public void Draw()
+		public void Draw(Vector2 textPosition)
 		{
-			// string textUpUntilCaret = ContentBeforeCaret();
-			// Vector2 caretPosition = position + (MeasureText(textUpUntilCaret, FontSize) + caret.VisualPosition * Vector2.UnitX);
-			// DrawSquare(caretPosition, new Vector2(FontSize / 15, FontSize), Color.White);
+			// Get how large the caret is
+			Vector2 caretSize = new Vector2(textInput.FontSize / 10, textInput.FontSize);
+
+			// Figure out where the caret starts (needed for non monospace fonts)
+			string textUpUntilCaretForLine = textInput.CurrentLine.Substring(0, Index);
+			float caretX = MeasureText(textUpUntilCaretForLine, textInput.FontSize).X;
+
+			// Build the carets initial position
+			Vector2 caretPosition = new Vector2(
+				caretX,
+				Line * textInput.FontSize
+			);
+
+			// Add the lerping animation bits
+
+			// Actually draw it
+			DrawSquare(textPosition + caretPosition, caretSize, Colors.White);
 		}
 	}
 }
