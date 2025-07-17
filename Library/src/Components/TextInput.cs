@@ -46,8 +46,8 @@ public class TextInput : RenderableComponent
 		if (KeyPressedAndHeld(KeyboardKey.Delete)) DeleteAfterCaret();
 		if (KeyPressedAndHeld(KeyboardKey.Left)) carets.ForEach(caret => caret.MoveBackwards());
 		if (KeyPressedAndHeld(KeyboardKey.Right)) carets.ForEach(caret => caret.MoveForwards());
-		if (KeyPressedAndHeld(KeyboardKey.Home)) carets.ForEach(caret => caret.MoveToFront());
-		if (KeyPressedAndHeld(KeyboardKey.End)) carets.ForEach(caret => caret.MoveToEnd());
+		if (KeyPressedAndHeld(KeyboardKey.Home)) carets.ForEach(caret => caret.MoveToIndex(0));
+		if (KeyPressedAndHeld(KeyboardKey.End)) carets.ForEach(caret => caret.MoveToIndex(CurrentLine.Length));
 	}
 
 	// Draw everything idk
@@ -132,6 +132,15 @@ public class TextInput : RenderableComponent
 		public int Index;
 		public int Line;
 
+		//? Animations go from 0f-1f
+		private Vector2 animationStartPosition;
+		private Vector2 animationEndPosition;
+		private Vector2 animationPositionPercentage;
+
+		private float animationDuration = 0.1f;
+		private bool animating = false;
+		private float lerpTime = 0f;
+
 		public Caret(TextInput parent)
 		{
 			textInput = parent;
@@ -141,13 +150,13 @@ public class TextInput : RenderableComponent
 		// TODO: Animate
 		public void MoveBackwards(int charactersToMove = 1)
 		{
-			Index -= charactersToMove;
+			MoveToIndex(Index - charactersToMove);
 
 			// Check for if we've gone too far backwards
 			if (Index < 0)
 			{
 				// Go to the start of the line
-				Index = 0;
+				MoveToIndex(0);
 
 				// If there is a line above, then go there
 				if (Line != 0) Line--;
@@ -158,7 +167,7 @@ public class TextInput : RenderableComponent
 		// TODO: Animate
 		public void MoveForwards(int charactersToMove = 1)
 		{
-			Index += charactersToMove;
+			MoveToIndex(Index + charactersToMove);
 
 			// Check for if we're at the end of the line
 			if (Index > textInput.CurrentLine.Length)
@@ -169,7 +178,7 @@ public class TextInput : RenderableComponent
 				{
 					// Go to the start of the next line
 					Line++;
-					Index = 0;
+					MoveToIndex(0);
 				}
 				else
 				{
@@ -178,18 +187,19 @@ public class TextInput : RenderableComponent
 			}
 		}
 
-		// Move to the front of a line
-		// TODO: Do it dependant on content. Sentence instead of line for example
-		public void MoveToFront()
+		public void MoveToIndex(int newIndex)
 		{
-			Index = 0;
-		}
+			// TODO: Make these const, or don't even have them at all
+			// Say what we want the animation to do
+			animationStartPosition = animationPositionPercentage;
+			animationEndPosition = Vector2.One;
 
-		// Move to the back/end of a line
-		// TODO: Do it dependant on content. Sentence instead of line for example
-		public void MoveToEnd()
-		{
-			Index = textInput.CurrentLine.Length;
+			// Begin the animation
+			animating = true;
+			lerpTime = 0;
+
+			// Actually use the index
+			Index = newIndex;
 		}
 
 		// TODO: Add block caret support
@@ -208,10 +218,28 @@ public class TextInput : RenderableComponent
 				Line * textInput.FontSize
 			);
 
-			// Add the lerping animation bits
+			// Animate the caret
+			Lerp();
 
 			// Actually draw it
-			DrawSquare(textPosition + caretPosition, caretSize, Colors.White);
+			DrawSquare(textPosition + (caretPosition * animationPositionPercentage), caretSize, Colors.White);
+		}
+
+		private void Lerp()
+		{
+			// Check if we should bother lerping
+			if (animating == false) return;
+
+			// Actually lerp
+			lerpTime += Runtime.DeltaTime / animationDuration;
+			animationPositionPercentage = Vector2.Lerp(animationStartPosition, animationEndPosition, lerpTime);
+
+			// Check for if we've finished lerping
+			if (lerpTime >= 1f)
+			{
+				animating = false;
+				lerpTime = 1f;
+			}
 		}
 	}
 }
