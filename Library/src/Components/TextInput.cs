@@ -134,8 +134,8 @@ public class TextInput : RenderableComponent
 
 		//? Animations go from 0f-1f
 		private Vector2 animationStartPosition;
-		private Vector2 animationEndPosition;
-		private Vector2 animationPositionPercentage;
+		private Vector2 animationEndPosition = Vector2.Zero;
+		private Vector2 animationPositionPercentage = Vector2.Zero;
 
 		private float animationDuration = 0.1f;
 		private bool animating = false;
@@ -189,17 +189,21 @@ public class TextInput : RenderableComponent
 
 		public void MoveToIndex(int newIndex)
 		{
-			// TODO: Make these const, or don't even have them at all
-			// Say what we want the animation to do
-			animationStartPosition = animationPositionPercentage;
-			animationEndPosition = Vector2.One;
+			// Actually use the index
+			Index = newIndex;
 
 			// Begin the animation
 			animating = true;
 			lerpTime = 0;
 
-			// Actually use the index
-			Index = newIndex;
+			// Figure out where the carets new physical position should be
+			string textUpUntilCaretForLine = textInput.CurrentLine.Substring(0, Index);
+			float caretX = MeasureText(textUpUntilCaretForLine, textInput.FontSize).X;
+
+			// Say what we want the animation to do
+			animationStartPosition = animationPositionPercentage;
+			animationEndPosition.X = caretX;
+			// animationEndPosition.Y = Line * textInput.FontSize;
 		}
 
 		// TODO: Add block caret support
@@ -209,12 +213,12 @@ public class TextInput : RenderableComponent
 			Vector2 caretSize = new Vector2(textInput.FontSize / 10, textInput.FontSize);
 
 			// Figure out where the caret starts (needed for non monospace fonts)
-			string textUpUntilCaretForLine = textInput.CurrentLine.Substring(0, Index);
-			float caretX = MeasureText(textUpUntilCaretForLine, textInput.FontSize).X;
+			// string textUpUntilCaretForLine = textInput.CurrentLine.Substring(0, Index);
+			// float caretX = MeasureText(textUpUntilCaretForLine, textInput.FontSize).X;
 
 			// Build the carets initial position
 			Vector2 caretPosition = new Vector2(
-				caretX,
+				animationPositionPercentage.X,
 				Line * textInput.FontSize
 			);
 
@@ -222,7 +226,7 @@ public class TextInput : RenderableComponent
 			Lerp();
 
 			// Actually draw it
-			DrawSquare(textPosition + (caretPosition * animationPositionPercentage), caretSize, Colors.White);
+			DrawSquare(textPosition + caretPosition, caretSize, Colors.White);
 		}
 
 		private void Lerp()
@@ -239,6 +243,9 @@ public class TextInput : RenderableComponent
 			{
 				animating = false;
 				lerpTime = 1f;
+
+				// Start at the current position for the next animation
+				animationStartPosition = animationEndPosition;
 			}
 		}
 	}
