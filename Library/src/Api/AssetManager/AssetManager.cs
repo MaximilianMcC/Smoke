@@ -67,6 +67,7 @@ public static partial class AssetManager
 		// Unload the debug assets
 		Raylib.UnloadImage(Images.PlaceholderAsset);
 		Raylib.UnloadTexture(Textures.PlaceholderAsset);
+		Raylib.UnloadSound(Sounds.PlaceholderAsset);
 
 		// Unload everything that has
 		// been Dynamically loaded
