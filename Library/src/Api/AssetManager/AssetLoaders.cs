@@ -72,6 +72,11 @@ public static partial class AssetManager
 		Raylib.UnloadFont(Fonts[fontKey]);
 	}
 
+	public static void UnloadSound(string soundKey)
+	{
+		Raylib.UnloadSound(Sounds[soundKey]);
+	}
+
 	// TODO: Don't do this assembly thing
 	public static string ReadTextFile(string filePath, Assembly assembly = null)
 	{

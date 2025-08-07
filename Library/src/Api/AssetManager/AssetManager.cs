@@ -11,6 +11,7 @@ public static partial class AssetManager
 	public static AssetDictionary<Image> Images = new(LoadImage("./assets/debug.png|internal"));
 	public static AssetDictionary<Texture2D> Textures = new(LoadTexture("./assets/debug.png|internal"));
 	public static AssetDictionary<Font> Fonts = new(Raylib.GetFontDefault());
+	public static AssetDictionary<Sound> Sounds = new();
 	//? etc...
 
 	private static byte[] GetAssetBytes(string assetPath, out string extension, Assembly assetAssembly = null)
@@ -72,6 +73,7 @@ public static partial class AssetManager
 		foreach (string key in Images.Keys) UnloadImage(key);
 		foreach (string key in Textures.Keys) UnloadTexture(key);
 		foreach (string key in Fonts.Keys) UnloadTexture(key);
+		foreach (string key in Sounds.Keys) UnloadSound(key);
 	}
 
 	public static void PrintAllAssets(Assembly assembly = null)

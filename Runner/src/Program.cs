@@ -14,6 +14,7 @@ class Program
 		Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
 		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow | ConfigFlags.AlwaysRunWindow);
 		Raylib.InitWindow(512, 512, "Loading title name or something idk");
+		Raylib.InitAudioDevice();
 		Raylib.SetExitKey(Raylib_cs.KeyboardKey.Null);
 
 		// Check for if we're loading from embedded or file
@@ -81,6 +82,7 @@ class Program
 		AssetManager.UnloadAllAssets();
 
 		// Close raylib
+		Raylib.CloseAudioDevice();
 		Raylib.CloseWindow();
 	}
 }
