@@ -11,7 +11,7 @@ public static partial class AssetManager
 	public static AssetDictionary<Image> Images = new(LoadImage("./assets/debug.png|internal"));
 	public static AssetDictionary<Texture2D> Textures = new(LoadTexture("./assets/debug.png|internal"));
 	public static AssetDictionary<Font> Fonts = new(Raylib.GetFontDefault());
-	public static AssetDictionary<Sound> Sounds = new();
+	public static AssetDictionary<Sound> Sounds = new(LoadSound("./assets/sound.wav|internal"));
 	//? etc...
 
 	private static byte[] GetAssetBytes(string assetPath, out string extension, Assembly assetAssembly = null)

@@ -72,6 +72,25 @@ public static partial class AssetManager
 		Raylib.UnloadFont(Fonts[fontKey]);
 	}
 
+	public static Sound LoadSound(string soundPath)
+	{
+		// Get the sound byte array and extension. If it doesn't
+		// exist then use whatever placeholder sound is loaded
+		byte[] bytes = GetAssetBytes(soundPath, out string extension);
+		if (bytes.Length == 0) return Sounds.PlaceholderAsset;
+
+		// load the sound's wave, then load
+		// the sound from the wave
+		Wave wave = Raylib.LoadWaveFromMemory(extension, bytes);
+		Sound sound = Raylib.LoadSoundFromWave(wave);
+
+		// Unload the wave since it's not needed anymore
+		Raylib.UnloadWave(wave);
+
+		// Give back the loaded sound
+		return sound;
+	}
+
 	public static void UnloadSound(string soundKey)
 	{
 		Raylib.UnloadSound(Sounds[soundKey]);
