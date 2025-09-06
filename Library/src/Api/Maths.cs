@@ -17,8 +17,8 @@ public static class Maths
 	public static Vector2 IndexToCoordinates(int index, int width)
 	{
 		return new Vector2(
-			index / width,
-			index % width
+			index % width,
+			index / width
 		);
 	}
 
