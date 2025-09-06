@@ -68,9 +68,9 @@ public partial class Graphics
 	}
 
 	// Outlines of squares
-	// TODO: Make it work with origins
-	public static void DrawSquareOutline(Transform2D transform, float thickness, Color color) => DrawSquare(transform.FullPosition, transform.Size, transform.Origin, transform.Rotation, color);
-	public static void DrawSquareOutline(Vector2 position, Vector2 size, float thickness, Color color) => DrawSquare(position, size, Origin.TopLeft, 0f, color);
+	// TODO: Rotation and origin support
+	public static void DrawSquareOutline(Transform2D transform, float thickness, Color color) => DrawSquareOutline(transform.FullPosition, transform.Size, transform.Origin, transform.Rotation, thickness, color);
+	public static void DrawSquareOutline(Vector2 position, Vector2 size, float thickness, Color color) => DrawSquareOutline(position, size, Origin.TopLeft, 0f, thickness, color);
 	public static void DrawSquareOutline(Vector2 position, Vector2 size, Vector2 origin, float rotation, float thickness, Color color)
 	{
 		Raylib.DrawRectangleLinesEx(
