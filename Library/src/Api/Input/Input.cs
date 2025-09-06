@@ -49,6 +49,9 @@ public class Input
 	public static Vector2 MousePosition() => Raylib.GetMousePosition();
 	public static bool MouseClicked(MouseButton mouseButton) => Raylib.IsMouseButtonPressed((Raylib_cs.MouseButton)mouseButton);
 	public static bool MouseHeldDown(MouseButton mouseButton) => Raylib.IsMouseButtonDown((Raylib_cs.MouseButton)mouseButton);
+
+	public static Vector2 MouseDelta => Raylib.GetMouseDelta();
+	public static bool MouseWasMoved => (Raylib.GetMouseDelta().X > 0f && Raylib.GetMouseDelta().Y > 0f);
 }
 
 public struct InputPreset
