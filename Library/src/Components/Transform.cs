@@ -65,13 +65,25 @@ public class Transform2D : Component
 	// TODO: Don't do this. use smoke one
 	internal protected Rectangle AsRaylibRectangle()
 	{
-		return new Rectangle(TopCorner, BottomCorner);
+		return new Rectangle(
+			TopCorner.X,
+			TopCorner.Y,
+			Size.X,
+			Size.Y
+		);
 	}
 
-
+	// TODO: Account for rotation
 	public bool Contains(Vector2 point)
 	{
-		return Raylib.CheckCollisionPointRec(point, AsRaylibRectangle());
+		Vector2 topLeft = FullPosition;
+		Vector2 bottomRight = FullPosition + Size;
+
+		return
+			point.X >= topLeft.X &&
+			point.X <= bottomRight.X &&
+			point.Y >= topLeft.Y &&
+			point.Y <= bottomRight.Y;
 	}
 
 
