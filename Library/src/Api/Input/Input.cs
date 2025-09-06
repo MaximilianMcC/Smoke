@@ -51,7 +51,7 @@ public class Input
 	public static bool MouseHeldDown(MouseButton mouseButton) => Raylib.IsMouseButtonDown((Raylib_cs.MouseButton)mouseButton);
 
 	public static Vector2 MouseDelta => Raylib.GetMouseDelta();
-	public static bool MouseWasMoved => (Raylib.GetMouseDelta().X > 0f && Raylib.GetMouseDelta().Y > 0f);
+	public static bool MouseWasMoved => Math.Abs(Raylib.GetMouseDelta().X) > 0f || Math.Abs(Raylib.GetMouseDelta().Y) > 0f;
 }
 
 public struct InputPreset
