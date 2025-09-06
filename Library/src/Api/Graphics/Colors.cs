@@ -16,12 +16,33 @@ public class Color
 
 	public Color(uint hex)
 	{
-		Raylib_cs.Color color = Raylib.GetColor(hex);
-		Red = color.R;
-		Green = color.G;
-		Blue = color.B;
-		Alpha = color.A;
+		// Check for if we supplied an alpha
+		if (hex <= 0xffffff)
+		{
+			// Extract the R, G, and B values
+			Red = (byte)((hex >> 16) & 0xff);
+			Green = (byte)((hex >> 8) & 0xff);
+			Blue = (byte)((hex >> 0) & 0xff);
+
+			// Set the alpha to be full
+			Alpha = byte.MaxValue;
+		}
+		else
+		{
+			// Extract the R, G, B and A values
+			Red = (byte)((hex >> 24) & 0xff);
+			Green = (byte)((hex >> 16) & 0xff);
+			Blue = (byte)((hex >> 8) & 0xff);
+			Alpha = (byte)((hex >> 0) & 0xff);
+		}
+
+		//? Two different implimentations to get the
+		//? R, G, and B values are used because in
+		//? the actual 'number' everything is written
+		//? backwards so the position of the bytes
+		//? is different with/without alpha
 	}
+
 
 	public Color(byte red, byte green, byte blue, byte alpha)
 	{
