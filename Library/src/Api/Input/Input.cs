@@ -45,8 +45,7 @@ public class Input
 	}
 
 	// TODO: Use properties with getters/setters
-	//? public static Vector2 MousePosition { get => Raylib.GetMousePosition(); }
-	public static Vector2 MousePosition() => Raylib.GetMousePosition();
+	public static Vector2 MousePosition => Raylib.GetMousePosition();
 	public static bool MouseClicked(MouseButton mouseButton) => Raylib.IsMouseButtonPressed((Raylib_cs.MouseButton)mouseButton);
 	public static bool MouseHeldDown(MouseButton mouseButton) => Raylib.IsMouseButtonDown((Raylib_cs.MouseButton)mouseButton);
 
