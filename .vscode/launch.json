@@ -11,7 +11,7 @@
 			"preLaunchTask": "build",
 			// If you have changed target frameworks, make sure to update the program path.
 			"program": "${workspaceFolder}/Engine/bin/Debug/net8.0/Engine.dll",
-			"args": ["new", "test"],
+			"args": ["new", "test-amongus-123"],
 			"cwd": "D:/temp/smoke",
 			// For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
 			"console": "internalConsole",

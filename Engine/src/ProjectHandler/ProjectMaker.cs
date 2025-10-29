@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 class ProjectMaker
@@ -11,7 +12,7 @@ class ProjectMaker
 		// Make sure the name is in the correct format,
 		// and that there is not already a project with
 		// the same name in the location
-		projectName = CleanName(rawName);
+		projectName = ToPascalCase(rawName);
 		rootPath = Path.Combine(Directory.GetCurrentDirectory(), projectName);
 		if (Directory.Exists(rootPath))
 		{
@@ -79,6 +80,7 @@ class ProjectMaker
 		csproj.Save(csprojPath);
 	}
 
+	// TODO: Add vscode folder or something
 	private static void AddGitIgnore()
 	{
 		// Create the command
@@ -111,41 +113,18 @@ class ProjectMaker
 	}
 
 	// Project names must be PascalCase
-	// TODO: Fix
-	private static string CleanName(string name)
+	private static string ToPascalCase(string text)
 	{
-		//? Snake and Kebab respectivly
-		char[] caseSeparators = new char[] { '_', '-' };
-		List<char> newName = name.ToCharArray().ToList();
+		// Split the words by '-', '_', and ' ' (snake and kebab case + a normal space)
+		string[] words = Regex.Split(text, "[-_ ]");
 
-		if (name == "") return "SmokeProject";
-
-		// First word must be capital
-		newName[0] = char.ToUpper(name[0]);
-
-		// Get rid of any weird case things
-		for (int i = 0; i < newName.Count; i++)
+		string pascalCase = "";
+		foreach (string word in words)
 		{
-			// Check for if we found a separator
-			if (caseSeparators.Contains(name[i]))
-			{
-				// Remove the separator
-				newName.RemoveAt(i);
-
-				// If there is a character infront of
-				// the seprator then make it uppercase
-				if (i < newName.Count)
-				{
-					newName[i] = char.ToUpper(newName[i]);
-				}
-
-				// Go back since we removed one
-				// before (indexs messed up)
-				i--;
-			}
+			// First letter a capital, everything else lower
+			pascalCase += char.ToUpper(word[0]) + word[1..].ToLower();
 		}
 
-		// Give back the new version
-		return new string(newName.ToArray());
+		return pascalCase;
 	}
 }
