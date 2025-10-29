@@ -20,8 +20,12 @@ class ProjectMaker
 			return;
 		}
 
+		Console.Write("Creating project...");
 		MakeDotnetProject();
 		EditCsproj();
+		AddGitIgnore();
+		CreateFiles();
+		Console.WriteLine($"\rDone! Created project '{projectName}' at {rootPath}\nOpen it in editor with 'smoke {projectName}'");
 	}
 
 	private static void MakeDotnetProject()
@@ -41,10 +45,7 @@ class ProjectMaker
 
 		// Run the command and wait for it to
 		// finish before continuing
-		using (Process process = Process.Start(command))
-		{
-			process.WaitForExit();
-		}
+		Process.Start(command).WaitForExit();
 	}
 
 	private static void EditCsproj()
@@ -76,6 +77,37 @@ class ProjectMaker
 
 		// Save the csproj edits
 		csproj.Save(csprojPath);
+	}
+
+	private static void AddGitIgnore()
+	{
+		// Create the command
+		ProcessStartInfo command = new ProcessStartInfo
+		{
+			FileName = "dotnet",
+			Arguments = $"new gitignore",
+			WorkingDirectory = rootPath,
+
+			RedirectStandardOutput = true,
+			RedirectStandardError = true,
+
+			UseShellExecute = false,
+			CreateNoWindow = true
+		};
+
+		// Run the command and wait for it to
+		// finish before continuing
+		Process.Start(command).WaitForExit();
+	}
+
+	private static void CreateFiles()
+	{
+		// First delete the default file it makes
+		File.Delete(Path.Join(rootPath, "Class1.cs"));
+
+		// Make a source and assets directory
+		Directory.CreateDirectory(Path.Join(rootPath, "src"));
+		Directory.CreateDirectory(Path.Join(rootPath, "assets"));
 	}
 
 	// Project names must be PascalCase
