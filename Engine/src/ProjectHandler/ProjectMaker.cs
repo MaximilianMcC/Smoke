@@ -26,7 +26,7 @@ class ProjectMaker
 		MakeDotnetProject();
 		EditCsproj();
 		AddGitIgnore();
-		CreateFiles();
+		SetupFolderStructure();
 		CreateJsonFile();
 		Console.WriteLine($"\rDone! Created project '{projectName}' at {rootPath}\nOpen it in editor with 'smoke {projectName}'");
 	}
@@ -104,7 +104,7 @@ class ProjectMaker
 		Process.Start(command).WaitForExit();
 	}
 
-	private static void CreateFiles()
+	private static void SetupFolderStructure()
 	{
 		// First delete the default file it makes
 		File.Delete(Path.Join(rootPath, "Class1.cs"));

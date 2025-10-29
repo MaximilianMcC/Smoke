@@ -1,40 +1,44 @@
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Smoke;
 
 internal class SmokeProject
 {
 	// Singleton
+	// TODO: Maybe don't use a singleton ngl
 	public static SmokeProject Instance { get; } = new();
 	private SmokeProject() { }
 
-	// TODO: Use a class and don't do the dynamic key thing
-	public string Namespace;
-	public string DisplayName;
+	public ProjectSettings Settings = null;
 
 	public void Load(string jsonFilePath)
 	{
 		// Deserialize the json
 		string jsonString = File.ReadAllText(jsonFilePath);
-		JObject json = JObject.Parse(jsonString);
-
-		// Start extracting stuff
-		Namespace = (string)json["Namespace"];
-		DisplayName = (string)json["Namespace"];
+		Settings = JsonConvert.DeserializeObject<ProjectSettings>(jsonString);
 
 		// Cheeky debug message
-		Console.WriteLine($"Loaded project of namespace '{Namespace}'");
+		Console.WriteLine($"Loaded project of namespace '{Settings.Namespace}'");
 	}
 
 	public void CreateDefault(string rootPath, string projectName)
 	{
 		// Start putting stuff in
-		JObject newProjectFile = new JObject();
-		newProjectFile["Namespace"] = projectName;
-		newProjectFile["Displayname"] = projectName;
+		ProjectSettings settings = new ProjectSettings()
+		{
+			Namespace = projectName,
+			DisplayName = projectName
+		};
 
 		// Save the json to a file
-		string jsonString = newProjectFile.ToString();
+		string jsonString = JsonConvert.SerializeObject(settings);
 		File.WriteAllText(Path.Join(rootPath, "Project.json"), jsonString);
+	}
+
+	// The json file
+	public class ProjectSettings
+	{
+		public string Namespace { get; set; }
+		public string DisplayName { get; set; }
 	}
 }
