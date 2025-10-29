@@ -1,1 +1,7 @@
-{}
+{
+	"files.exclude": {
+		"**/obj": true,
+		"**/bin": true,
+		"**/*.sln": true,
+	}
+}
