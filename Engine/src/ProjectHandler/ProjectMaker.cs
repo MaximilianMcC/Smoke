@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using Smoke;
 
 class ProjectMaker
 {
@@ -26,6 +27,7 @@ class ProjectMaker
 		EditCsproj();
 		AddGitIgnore();
 		CreateFiles();
+		CreateJsonFile();
 		Console.WriteLine($"\rDone! Created project '{projectName}' at {rootPath}\nOpen it in editor with 'smoke {projectName}'");
 	}
 
@@ -110,6 +112,11 @@ class ProjectMaker
 		// Make a source and assets directory
 		Directory.CreateDirectory(Path.Join(rootPath, "src"));
 		Directory.CreateDirectory(Path.Join(rootPath, "assets"));
+	}
+
+	private static void CreateJsonFile()
+	{
+		SmokeProject.Instance.CreateDefault(rootPath, projectName);
 	}
 
 	// Project names must be PascalCase

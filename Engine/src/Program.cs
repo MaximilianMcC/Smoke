@@ -29,6 +29,7 @@ class Program
 		else
 		{
 			// Opening an existing project
+			// Engine.Run();
 		}
 	}
 }
