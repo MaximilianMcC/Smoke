@@ -33,22 +33,7 @@ class ProjectMaker
 
 	private static void MakeDotnetProject()
 	{
-		// Create the command
-		ProcessStartInfo command = new ProcessStartInfo
-		{
-			FileName = "dotnet",
-			Arguments = $"new classlib -o \"{rootPath}\"",
-
-			RedirectStandardOutput = true,
-			RedirectStandardError = true,
-
-			UseShellExecute = false,
-			CreateNoWindow = true
-		};
-
-		// Run the command and wait for it to
-		// finish before continuing
-		Process.Start(command).WaitForExit();
+		Utils.RunCliCommand($"dotnet new classlib -o \"{rootPath}\"");
 	}
 
 	private static void EditCsproj()
@@ -85,23 +70,7 @@ class ProjectMaker
 	// TODO: Add vscode folder or something
 	private static void AddGitIgnore()
 	{
-		// Create the command
-		ProcessStartInfo command = new ProcessStartInfo
-		{
-			FileName = "dotnet",
-			Arguments = $"new gitignore",
-			WorkingDirectory = rootPath,
-
-			RedirectStandardOutput = true,
-			RedirectStandardError = true,
-
-			UseShellExecute = false,
-			CreateNoWindow = true
-		};
-
-		// Run the command and wait for it to
-		// finish before continuing
-		Process.Start(command).WaitForExit();
+		Utils.RunCliCommand($"dotnet new gitignore", rootPath);
 	}
 
 	private static void SetupFolderStructure()
