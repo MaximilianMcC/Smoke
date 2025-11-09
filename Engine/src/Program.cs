@@ -5,9 +5,11 @@ class Program
 		// Ensure we have supplied args
 		if (args.Length == 0)
 		{
-			Console.WriteLine("No arguments supplied. Please either make a new project, or open an existing project:");
+			Console.WriteLine("No arguments supplied. Please use one of the following");
 			Console.WriteLine("smoke new <PROJECT NAME>");
 			Console.WriteLine("smoke <PROJECT NAME>");
+			Console.WriteLine("smoke build <PROJECT ROOT> <debug|release>");
+			Console.WriteLine("smoke run <PROJECT ROOT>");
 			return;
 		}
 
@@ -25,6 +27,25 @@ class Program
 
 			// Make the new project
 			ProjectMaker.CreateNewProject(projectName);
+		}
+		else if (args[0].ToLower().Trim() == "build")
+		{
+			// Get the new projects root path
+			string projectRoot = Directory.GetCurrentDirectory();
+			if (args.Length > 0) projectRoot = args[1].Trim();
+
+			// Get the new projects build type
+			string buildType = "release";
+			if (args.Length >= 2) buildType = args[2].Trim();
+			if (buildType != "debug" && buildType != "release")
+			{
+				// TODO: Don't do here
+				Console.WriteLine($"please either use debug or release (not {buildType})");
+				return;
+			}
+
+			// Build it
+			Builder.Build(projectRoot, buildType == "debug");
 		}
 		else
 		{

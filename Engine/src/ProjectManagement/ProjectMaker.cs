@@ -33,7 +33,7 @@ class ProjectMaker
 
 	private static void MakeDotnetProject()
 	{
-		Utils.RunCliCommand($"dotnet new classlib -o \"{rootPath}\"");
+		Utils.RunSilentCliCommand($"dotnet new classlib -o \"{rootPath}\"");
 	}
 
 	private static void EditCsproj()
@@ -70,7 +70,7 @@ class ProjectMaker
 	// TODO: Add vscode folder or something
 	private static void AddGitIgnore()
 	{
-		Utils.RunCliCommand($"dotnet new gitignore", rootPath);
+		Utils.RunSilentCliCommand($"dotnet new gitignore", rootPath);
 	}
 
 	private static void SetupFolderStructure()
