@@ -45,4 +45,24 @@ class Utils
 		// finish before continuing
 		Process.Start(process).WaitForExit();
 	}
+
+	// TODO: Make it kill the program
+	public static bool IsDirectoryASmokeProject(string path)
+	{
+		// Must both have a .csproj and a .json file
+		bool HasCsproj = Directory.GetFiles(path, "*.csproj").FirstOrDefault() != null;
+		bool HasJson = Directory.GetFiles(path, "Project.json").FirstOrDefault() != null;
+
+		// Complain if we're missing the things
+		if ((HasCsproj && HasJson) == false)
+		{
+			Console.WriteLine($"Invalid smoke prokect at \"{path}\"! Ensure you have both a Project json and csproj file.\nYou can create a smoke project with `smoke new <NAME>`");
+
+			// Is not valid
+			return false;
+		}
+
+		// Is valid
+		return true;
+	}
 }

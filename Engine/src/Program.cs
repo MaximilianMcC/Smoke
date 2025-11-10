@@ -1,5 +1,10 @@
 class Program
 {
+	// TODO: Make a config file where this is specificed
+	//! hardcoded for now
+	//! ITS HARDCODED OK
+	public static string RunnerExePath = @"D:\code\c#\raylib\Smoke\Runner\bin\Debug\net8.0\Runner.exe";
+
 	public static void Main(string[] args)
 	{
 		// Ensure we have supplied args
@@ -34,6 +39,8 @@ class Program
 			string projectRoot = Directory.GetCurrentDirectory();
 			if (args.Length > 0) projectRoot = args[1].Trim();
 
+			if (Utils.IsDirectoryASmokeProject(projectRoot) == false) return;
+
 			// Get the new projects build type
 			string buildType = "release";
 			if (args.Length >= 2) buildType = args[2].Trim();
@@ -46,6 +53,15 @@ class Program
 
 			// Build it
 			Builder.Build(projectRoot, buildType == "debug");
+		}
+		else if (args[0].ToLower().Trim() == "run")
+		{
+			// Get the new projects root path
+			string projectRoot = Directory.GetCurrentDirectory();
+			if (args.Length > 0) projectRoot = args[1].Trim();
+			if (Utils.IsDirectoryASmokeProject(projectRoot) == false) return;
+
+			Runner.Debug(projectRoot, RunnerExePath);
 		}
 		else
 		{
