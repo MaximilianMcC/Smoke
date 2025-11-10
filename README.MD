@@ -11,6 +11,8 @@
 - [x] CLI Running projects
 - [x] Running projects via vscode
 - [x] Loading the DLL
-- [ ] Raylib window in runner
+- [x] Raylib window in runner
+- [ ] Basic GameObject structure
+- [ ] Serialization and deserilization of GameObjects
 
 On version 3 rn

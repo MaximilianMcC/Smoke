@@ -4,6 +4,10 @@
     <ProjectReference Include="..\Smoke\Smoke.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Raylib-cs" Version="7.0.2" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
