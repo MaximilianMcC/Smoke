@@ -9,6 +9,6 @@
 - [x] CLI Project creation
 - [x] CLI Building projects
 - [x] CLI Running projects
-- [ ] vscode Running projects (added by default when creating a project)
+- [x] vscode Running projects (added by default when creating a project)
 
 On version 3 rn
