@@ -1,3 +1,4 @@
+using System.Reflection;
 using Newtonsoft.Json;
 
 namespace Smoke;
@@ -11,11 +12,16 @@ internal class SmokeProject
 
 	public ProjectSettings Settings = null;
 
-	public void Load(string jsonFilePath)
+	public void Load(string rootPath)
 	{
 		// Deserialize the json
-		string jsonString = File.ReadAllText(jsonFilePath);
+		string jsonString = File.ReadAllText(Path.Combine(rootPath, "Project.json"));
 		Settings = JsonConvert.DeserializeObject<ProjectSettings>(jsonString);
+
+		// Load the dll to import all the actual game code
+		// TODO: Support hot reloading
+		string dllPath = Path.Combine(rootPath, "bin", "assemblies", $"{Settings.Namespace}.dll");
+		Assembly.LoadFrom(dllPath);
 
 		// Cheeky debug message
 		Console.WriteLine($"Loaded project of namespace '{Settings.Namespace}'");

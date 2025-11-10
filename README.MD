@@ -9,6 +9,8 @@
 - [x] CLI Project creation
 - [x] CLI Building projects
 - [x] CLI Running projects
-- [x] vscode Running projects (added by default when creating a project)
+- [x] Running projects via vscode
+- [x] Loading the DLL
+- [ ] Raylib window in runner
 
 On version 3 rn

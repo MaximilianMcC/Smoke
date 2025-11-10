@@ -1,8 +1,18 @@
+using System.Reflection;
+using Smoke;
+
 class Program
 {
 	public static void Main(string[] args)
 	{
-		// debug for now
-		Console.WriteLine("Using the project file " + args[0]);
+		// Load the smoke project from argument
+		SmokeProject.Instance.Load(args[0]);
+
+		//! debug print all loaded assemblies
+		foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+		{
+			Console.WriteLine(assembly.Location);
+		}
+			
 	}
 }
