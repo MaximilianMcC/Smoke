@@ -12,7 +12,13 @@
 - [x] Running projects via vscode
 - [x] Loading the DLL
 - [x] Raylib window in runner
-- [ ] Basic GameObject structure
-- [ ] Serialization and deserilization of GameObjects
+- [x] Basic GameObject structure
+- [x] Serialization and deserilization of GameObjects
+- [x] Scenes
+- [ ] 2D Camera
+- [ ] 3D Camera
+- [ ] Creating game objects visually via the editor
+- [ ] Adding components to the editor
+- [ ] Editing component properties via the editor
 
 On version 3 rn
