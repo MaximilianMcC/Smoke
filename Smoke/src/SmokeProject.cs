@@ -1,36 +1,34 @@
 using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace Smoke;
 
 internal class SmokeProject
 {
-	// Singleton
-	// TODO: Maybe don't use a singleton ngl
-	public static SmokeProject Instance { get; } = new();
-	private SmokeProject() { }
+	public static SmokeConfiguration Config = null;
+	internal static string ConfigJson;
 
-	public ProjectSettings Settings = null;
-
-	public void Load(string rootPath)
+	public static void Load(string rootPath)
 	{
 		// Deserialize the json
-		string jsonString = File.ReadAllText(Path.Combine(rootPath, "Project.json"));
-		Settings = JsonConvert.DeserializeObject<ProjectSettings>(jsonString);
+		ConfigJson = File.ReadAllText(Path.Combine(rootPath, "Project.json"));
+		Config = JsonConvert.DeserializeObject<SmokeConfiguration>(ConfigJson);
 
 		// Load the dll to import all the actual game code
 		// TODO: Support hot reloading
-		string dllPath = Path.Combine(rootPath, "bin", "assemblies", $"{Settings.Namespace}.dll");
+		string dllPath = Path.Combine(rootPath, "bin", "assemblies", $"{Config.Namespace}.dll");
 		Assembly.LoadFrom(dllPath);
 
 		// Cheeky debug message
-		Console.WriteLine($"Loaded project of namespace '{Settings.Namespace}'");
+		Console.WriteLine($"Loaded project of namespace '{Config.Namespace}'");
 	}
 
-	public void CreateDefault(string rootPath, string projectName)
+	public static void CreateDefault(string rootPath, string projectName)
 	{
 		// Start putting stuff in
-		ProjectSettings settings = new ProjectSettings()
+		SmokeConfiguration settings = new SmokeConfiguration()
 		{
 			Namespace = projectName,
 			DisplayName = projectName
@@ -42,9 +40,11 @@ internal class SmokeProject
 	}
 
 	// The json file
-	public class ProjectSettings
+	public class SmokeConfiguration
 	{
 		public string Namespace { get; set; }
 		public string DisplayName { get; set; }
+
+		public string CurrentScene { get; set; }
 	}
 }

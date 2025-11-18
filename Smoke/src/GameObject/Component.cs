@@ -1,14 +1,14 @@
 namespace Smoke;
-public abstract class GameObject
+public partial class Component
 {
 	/// <summary>
-	/// This runs ONCE for the <i>entire</i> smoke game/project. Use it to load assets and stuff.
+	/// This runs ONCE for the <i>entire</i> smoke game/project when the very first instance is created. Use it to load assets and stuff.
 	/// <para>Method is executed before <c>Start()</c></para>
 	/// </summary>
 	protected internal virtual void LoadType() { }
 
 	/// <summary>
-	/// Runs once when the game obeject is spawned in.
+	/// Runs once when the game object is spawned in.
 	/// </summary>
 	protected internal virtual void Start() { }
 
@@ -30,15 +30,15 @@ public abstract class GameObject
 	/// <summary>
 	/// Runs once every frame after regular drawing.
 	/// </summary>
-	protected internal virtual void DebugRender3D() { }
+	protected internal virtual void RenderDebug3D() { }
 
 	/// <summary>
 	/// Runs once every frame after regular drawing.
 	/// </summary>
-	protected internal virtual void DebugRender2D() { }
+	protected internal virtual void RenderDebug2D() { }
 
 	/// <summary>
-	/// Runs when the current instance is killed/deleteed/removed.
+	/// Runs when the current instance is killed/deleted/removed.
 	/// </summary>
 	protected internal virtual void CleanUp() { }
 

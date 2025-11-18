@@ -85,7 +85,7 @@ class ProjectMaker
 
 	private static void CreateJsonFile()
 	{
-		SmokeProject.Instance.CreateDefault(rootPath, projectName);
+		SmokeProject.CreateDefault(rootPath, projectName);
 	}
 
 	// Project names must be PascalCase
