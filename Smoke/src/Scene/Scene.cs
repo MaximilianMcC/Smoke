@@ -17,9 +17,41 @@ public class Scene
 		}
 	}
 
+	internal void Update()
+	{
+		foreach (GameObject gameObject in GameObjects)
+		{
+			foreach (Component component in gameObject.Components)
+			{
+				component.Update();
+			}
+		}
+	}
+
+	internal void Render3D()
+	{
+		foreach (GameObject gameObject in GameObjects)
+		{
+			foreach (Component component in gameObject.Components)
+			{
+				component.Render3D();
+			}
+		}
+	}
+
+	internal void Render2D()
+	{
+		foreach (GameObject gameObject in GameObjects)
+		{
+			foreach (Component component in gameObject.Components)
+			{
+				component.Render2D();
+			}
+		}
+	}
+
 	internal void Unload()
 	{
-		//? Apparently a nested foreach is quicker than linq
 		foreach (GameObject gameObject in GameObjects)
 		{
 			foreach (Component component in gameObject.Components)

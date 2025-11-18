@@ -21,11 +21,17 @@ class Program
 		// Main raylib loop
 		while (Raylib.WindowShouldClose() == false)
 		{
+			SceneManager.CurrentScene.Update();
+
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
-			Raylib.DrawText(SmokeProject.Config.DisplayName, 10, 10, 30, Color.White);
+			// SceneManager.CurrentScene.Render3D();
+			SceneManager.CurrentScene.Render2D();
 			Raylib.EndDrawing();
 		}
+
+		// Unload whatever scene we're on rn
+		SceneManager.CurrentScene.Unload();
 
 		// Close raylib
 		Raylib.CloseWindow();
