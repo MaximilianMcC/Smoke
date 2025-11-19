@@ -16,7 +16,8 @@ class Program
 		Raylib.SetExitKey(KeyboardKey.Null);
 
 		// Load the first level
-		SceneManager.Load(SmokeProject.Config.CurrentScene);
+		SceneManager.DeserializeAllScenes();
+		SceneManager.Load(SmokeProject.Config.StartingScene);
 
 		// Main raylib loop
 		while (Raylib.WindowShouldClose() == false)

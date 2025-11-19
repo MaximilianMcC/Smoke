@@ -4,8 +4,11 @@ namespace Smoke;
 public class GameObject
 {
 	// A game object is nothing more than a container
-	public List<Component> Components;
+	public List<Component> Components = [];
 
-	// Remove constructors
-	private GameObject() { }
+	public string DisplayName = "GameObject";
+
+	// Remove constructors for the user
+	//? you're also not allowed to use them btw
+	internal GameObject() { }
 }

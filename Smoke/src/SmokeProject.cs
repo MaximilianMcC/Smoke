@@ -9,11 +9,26 @@ internal class SmokeProject
 {
 	public static SmokeConfiguration Config = null;
 	internal static string ConfigJson;
+	private static string jsonPath;
+
+	// TODO: Maybe do this in another way also idk if this really needs to be public
+	public static JsonSerializer JsonDeserializerSettings = JsonSerializer.Create(new JsonSerializerSettings()
+	{
+		// Stuff for assemblies
+		TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+		SerializationBinder = new DefaultSerializationBinder(),
+
+		// Defines the datatype in a "$type" property
+		TypeNameHandling = TypeNameHandling.Auto,
+	});
 
 	public static void Load(string rootPath)
 	{
+		// Get the project json
+		jsonPath = Path.Combine(rootPath, "Project.json");
+
 		// Deserialize the json
-		ConfigJson = File.ReadAllText(Path.Combine(rootPath, "Project.json"));
+		ConfigJson = File.ReadAllText(jsonPath);
 		Config = JsonConvert.DeserializeObject<SmokeConfiguration>(ConfigJson);
 
 		// Load the dll to import all the actual game code
@@ -25,18 +40,27 @@ internal class SmokeProject
 		Console.WriteLine($"Loaded project of namespace '{Config.Namespace}'");
 	}
 
+	public static void Save()
+	{
+		// Combine Config and all scenes into a single json thing
+    	JObject json = JObject.FromObject(Config, JsonDeserializerSettings);
+    	json["Scenes"] = JArray.FromObject(SceneManager.Scenes, JsonDeserializerSettings);
+
+		// Write it
+		File.WriteAllText(jsonPath, json.ToString());
+	}
+
 	public static void CreateDefault(string rootPath, string projectName)
 	{
 		// Start putting stuff in
-		SmokeConfiguration settings = new SmokeConfiguration()
+		Config = new SmokeConfiguration()
 		{
 			Namespace = projectName,
 			DisplayName = projectName
 		};
 
 		// Save the json to a file
-		string jsonString = JsonConvert.SerializeObject(settings);
-		File.WriteAllText(Path.Join(rootPath, "Project.json"), jsonString);
+		Save();
 	}
 
 	// The json file
@@ -45,6 +69,6 @@ internal class SmokeProject
 		public string Namespace { get; set; }
 		public string DisplayName { get; set; }
 
-		public string CurrentScene { get; set; }
+		public string StartingScene { get; set; }
 	}
 }

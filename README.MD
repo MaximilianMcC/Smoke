@@ -17,6 +17,7 @@
 - [x] Scenes
 - [ ] 2D Camera
 - [ ] 3D Camera
+- [x] Creating game objects via the editor
 - [ ] Creating game objects visually via the editor
 - [ ] Adding components to the editor
 - [ ] Editing component properties via the editor
