@@ -1,3 +1,6 @@
+using System.Numerics;
+using System.Reflection;
+using ImGuiNET;
 using Raylib_cs;
 using Smoke;
 using TinyDialogsNet;
@@ -12,7 +15,7 @@ class GameObjectEditor
 		{
 			// Make the game object and add it to the scene
 			GameObject newGameObject = new GameObject();
-			SceneManager.CurrentScene.GameObjects.Add(newGameObject);
+			SceneManager.CurrentScene.RootGameObjects.Add(newGameObject);
 
 			// Ask for a name
 			// TODO: Use smoke ui stuff for this

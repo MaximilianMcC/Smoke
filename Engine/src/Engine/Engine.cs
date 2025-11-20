@@ -1,4 +1,6 @@
+using ImGuiNET;
 using Raylib_cs;
+using rlImGui_cs;
 using Smoke;
 
 class Engine
@@ -10,9 +12,12 @@ class Engine
 
 		// Create the raylib window
 		Raylib.SetTraceLogLevel(TraceLogLevel.Warning);
-		Raylib.InitWindow(854, 480, $"Smoke Editor ({SmokeProject.Config.DisplayName})");
 		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow | ConfigFlags.AlwaysRunWindow);
+		Raylib.InitWindow(854, 480, $"Smoke Editor ({SmokeProject.Config.DisplayName})");
 		Raylib.SetExitKey(KeyboardKey.Null);
+
+		// Setup imgui
+		rlImGui.Setup(true);
 
 		// Load the first scene
 		// TODO: Maybe don't do this way idk
@@ -33,11 +38,17 @@ class Engine
 			GameObjectEditor.Update();
 
 			Raylib.BeginDrawing();
+			rlImGui.Begin();
 			Raylib.ClearBackground(Color.Magenta);
+
+			EditorUi.DrawGameObjectList();
+
+			rlImGui.End();
 			Raylib.EndDrawing();
 		}
 
 		// Close raylib
+		rlImGui.Shutdown();
 		Raylib.CloseWindow();
 	}
 }

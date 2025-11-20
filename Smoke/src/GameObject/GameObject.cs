@@ -5,6 +5,7 @@ public class GameObject
 {
 	// A game object is nothing more than a container
 	public List<Component> Components = [];
+	public List<GameObject> Children = [];
 
 	public string DisplayName = "GameObject";
 
