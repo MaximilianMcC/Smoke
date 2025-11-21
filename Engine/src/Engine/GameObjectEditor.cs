@@ -13,14 +13,16 @@ class GameObjectEditor
 		// TODO: Maybe ctrl+n for new game object, then shift+a for new component
 		if (Raylib.IsKeyDown(KeyboardKey.LeftControl) && (Raylib.IsKeyPressed(KeyboardKey.N) || Raylib.IsKeyPressedRepeat(KeyboardKey.N)))
 		{
-			// Make the game object and add it to the scene
+			// Make the game object with a name
+			// TODO: Use imgui for this
 			GameObject newGameObject = new GameObject();
-			SceneManager.CurrentScene.RootGameObjects.Add(newGameObject);
-
-			// Ask for a name
-			// TODO: Use smoke ui stuff for this
 			(bool _, string text) = TinyDialogs.InputBox(InputBoxType.Text, "Name", "Game Object Name:", "MyAwesomeGameObject");
 			newGameObject.DisplayName = text;
+
+			// If we have a game object already selected then
+			// make it a child. Otherwise make it a 'root'
+			if (EditorUi.SelectedGameObject == null) SceneManager.CurrentScene.RootGameObjects.Add(newGameObject);
+			else EditorUi.SelectedGameObject.Children.Add(newGameObject);
 		}
 	}
 }
