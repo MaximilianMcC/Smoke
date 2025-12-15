@@ -18,4 +18,19 @@ public partial class Component
 			LoadType();
 		}
 	}
+
+	// Only run if we're in debug mode
+	internal void InternalRenderDebug3D()
+	{
+		if (Runtime.Debug == false) return;
+		RenderDebug3D();
+	}
+
+	// Only run if we're in debug mode
+	internal void InternalRenderDebug2D()
+	{
+		if (Runtime.Debug == false) return;
+		RenderDebug2D();
+	}
+
 }

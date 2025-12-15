@@ -22,16 +22,46 @@ class Program
 		// Main raylib loop
 		while (Raylib.WindowShouldClose() == false)
 		{
-			SceneManager.CurrentScene.Update();
+			Scene scene = SceneManager.CurrentScene;
 
+
+
+			scene.Update();
+
+			
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
-			// SceneManager.CurrentScene.Render3D();
-			SceneManager.CurrentScene.Render2D();
+
+			// Check for if we have a camera
+			if (scene.ActiveCamera == null)
+			{
+				Raylib.DrawText("You need to chuck in a camera\nif you wanna see anything", 10, 10, 30, Color.White);
+			}
+			else
+			{
+				// Draw 3D stuff
+				if (scene.ActiveCamera is Smoke.Camera3D camera3D)
+				{
+					Raylib.BeginMode3D(camera3D.AsRaylibVersion);
+					scene.Render3D();
+					scene.DebugRender3D();
+					Raylib.EndMode3D();
+				}
+
+				// Draw 2D stuff
+				if (scene.ActiveCamera is Smoke.Camera2D camera2D)
+				{
+					Raylib.BeginMode2D(camera2D.AsRaylibVersion);
+					scene.Render2D();
+					scene.DebugRender2D();
+					Raylib.EndMode2D();
+				}
+			}
 			Raylib.EndDrawing();
 		}
 
 		// Unload whatever scene we're on rn
+		// TODO: unload type for everything?
 		SceneManager.CurrentScene.Unload();
 
 		// Close raylib

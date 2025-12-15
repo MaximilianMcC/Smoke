@@ -2,6 +2,11 @@ namespace Smoke;
 public partial class Component
 {
 	/// <summary>
+	/// The game object that this component is attached to.
+	/// </summary>
+	public GameObject GameObject { get; private set; }
+
+	/// <summary>
 	/// This runs ONCE for the <i>entire</i> smoke game/project when the very first instance is created. Use it to load assets and stuff.
 	/// <para>Method is executed before <c>Start()</c></para>
 	/// </summary>
@@ -28,12 +33,12 @@ public partial class Component
 	protected internal virtual void Render2D() { }
 
 	/// <summary>
-	/// Runs once every frame after regular drawing.
+	/// Runs once every frame after regular 3D drawing.
 	/// </summary>
 	protected internal virtual void RenderDebug3D() { }
 
 	/// <summary>
-	/// Runs once every frame after regular drawing.
+	/// Runs once every frame after regular 2D drawing.
 	/// </summary>
 	protected internal virtual void RenderDebug2D() { }
 

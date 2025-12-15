@@ -4,6 +4,9 @@ public class Scene
 	public string Name;	
 	public List<GameObject> RootGameObjects;
 
+	// TODO: json ignore
+	public Camera ActiveCamera = null;
+
 	//! DON'T do this AT ALL
 	// TODO: rewrite.
 	internal void Add(GameObject newGameObject)
@@ -36,6 +39,16 @@ public class Scene
 	internal void Render2D()
 	{
 		RootGameObjects.ForEach(gameObject => gameObject.Render2D());
+	}
+
+	internal void DebugRender3D()
+	{
+		RootGameObjects.ForEach(gameObject => gameObject.RenderDebug3D());
+	}
+
+	internal void DebugRender2D()
+	{
+		RootGameObjects.ForEach(gameObject => gameObject.RenderDebug2D());
 	}
 
 	internal void Unload()

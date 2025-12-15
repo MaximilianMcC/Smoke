@@ -6,11 +6,18 @@ public class GameObject
 	// A game object is nothing more than a container
 	public List<Component> Components = [];
 	public List<GameObject> Children = [];
+	public GameObject Parent = null;
+	public Guid Guid { get; private set; }
+
 	public string DisplayName = "GameObject";
 
 	// Remove constructors for the user
 	//? you're also not allowed to use them btw max
-	internal GameObject() { }
+	internal GameObject()
+	{
+		// Give the game object an id
+		Guid = Guid.NewGuid();
+	}
 
 	private void ForAllComponents(Action<Component> action)
 	{
@@ -53,12 +60,12 @@ public class GameObject
 
 	internal void RenderDebug3D()
 	{
-		ForAllComponents(component => component.RenderDebug3D());
+		ForAllComponents(component => component.InternalRenderDebug3D());
 	}
 
 	internal void RenderDebug2D()
 	{
-		ForAllComponents(component => component.RenderDebug2D());
+		ForAllComponents(component => component.InternalRenderDebug2D());
 	}
 
 	internal void CleanUp()
@@ -71,4 +78,10 @@ public class GameObject
 		ForAllComponents(component => component.CleanUpType());
 	}
 
+
+	
+	// Component access stuff
+	// TODO: Make a TryGetComponent that return a bool and has an out value
+	public T GetComponent<T>() => Components.OfType<T>().FirstOrDefault();
+	public List<T> GetComponents<T>() => Components.OfType<T>().ToList();
 }
