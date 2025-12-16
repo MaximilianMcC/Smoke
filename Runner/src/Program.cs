@@ -15,6 +15,10 @@ class Program
 		Raylib.SetConfigFlags(ConfigFlags.ResizableWindow | ConfigFlags.AlwaysRunWindow);
 		Raylib.SetExitKey(KeyboardKey.Null);
 
+		// Create the render texture to draw everything on
+		// So that the window can be resized and whatnot
+		RenderTexture2D output = Raylib.LoadRenderTexture((int)Graphics.WindowSize.X, (int)Graphics.WindowSize.Y);
+
 		// Load the first level
 		SceneManager.DeserializeAllScenes();
 		SceneManager.Load(SmokeProject.Config.StartingScene);
@@ -24,15 +28,10 @@ class Program
 		{
 			Scene scene = SceneManager.CurrentScene;
 
-
-
+			// Update
 			scene.Update();
 
-			
-			Raylib.BeginDrawing();
-			Raylib.ClearBackground(Color.Magenta);
-
-			// Check for if we have a camera
+			// Draw
 			if (scene.ActiveCamera == null)
 			{
 				Raylib.DrawText("You need to chuck in a camera\nif you wanna see anything", 10, 10, 30, Color.White);
@@ -40,29 +39,30 @@ class Program
 			else
 			{
 				// Draw 3D stuff
-				if (scene.ActiveCamera is Smoke.Camera3D camera3D)
-				{
-					Raylib.BeginMode3D(camera3D.AsRaylibVersion);
+				Raylib.BeginMode3D(scene.ActiveCamera.AsRaylibVersion);
 					scene.Render3D();
 					scene.DebugRender3D();
-					Raylib.EndMode3D();
-				}
+				Raylib.EndMode3D();
 
 				// Draw 2D stuff
-				if (scene.ActiveCamera is Smoke.Camera2D camera2D)
-				{
-					Raylib.BeginMode2D(camera2D.AsRaylibVersion);
-					scene.Render2D();
-					scene.DebugRender2D();
-					Raylib.EndMode2D();
-				}
+				// TODO: Use a camera
+				scene.Render2D();
+				scene.DebugRender2D();
 			}
+
+			// Draw to the screen
+			Raylib.BeginDrawing();
+			Raylib.ClearBackground(Color.Magenta);
+			Graphics.DrawTextureOverWholeScreen(output);
 			Raylib.EndDrawing();
 		}
 
 		// Unload whatever scene we're on rn
 		// TODO: unload type for everything?
 		SceneManager.CurrentScene.Unload();
+
+		// Unload the output render texture
+		Raylib.UnloadRenderTexture(output);
 
 		// Close raylib
 		Raylib.CloseWindow();
